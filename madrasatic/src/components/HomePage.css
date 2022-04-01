@@ -1,0 +1,19 @@
+
+#acceuil {
+  background: url(../images/Background.png) no-repeat;
+  background-size: 100%;    
+  }
+  
+  
+#cartedevisite1 {
+  background: url(../images/Cartedevisite1.png) no-repeat ;
+  height: 100vh;
+}
+#cartedevisite2 {
+  background: url(../images/Cartedevisite2.png) no-repeat ;
+  height: 100vh;
+}
+#Contact {
+  background: url(../images/Contact.png) no-repeat ;
+  height: 100vh;
+}
