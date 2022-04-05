@@ -1,0 +1,374 @@
+body {
+    background-color: #eeeeee;
+}
+.auth {
+padding: 0%;
+display: flex;
+align-items: center;
+max-width: 54%;
+margin: 0px;
+margin-left: 18%;
+margin-top: 5%;
+}
+.auth a {
+font-size: 160%;
+margin-top: 1%;
+color: gray;
+margin-left: 0%;
+margin-right:0%;
+text-decoration: none;
+padding:1%;
+}
+.auth a:hover {
+color: #24344f;
+}
+.auth1 {
+padding: 0%;
+margin-right:8%;
+width:40%;
+text-align: center;
+}
+
+.auth2 {
+width: 40%;
+text-align: center;
+}
+
+.Connexion {
+padding: 0%;
+max-width: 54%;
+margin-top: 4%;
+margin-left: 18%;
+}
+.inscription {
+padding: 0%;
+max-width: 54%;
+margin-top: 4%;
+margin-left: 18%;
+}
+.inputField input {
+padding: 2%;
+width: 90%;
+border-radius: 17px;
+margin-bottom: 11%;
+/* border-color: grey; */
+text-indent: 13%;
+/* background-color: #F2F4F4 ; */
+}
+.icon {
+position: absolute;
+left:19%;
+margin-top: 0%;
+padding: 0.5% 0.6%;
+color: gray;
+}
+.forgottenpassword{
+padding: 0%;
+display: flex;
+max-width: 150%;
+margin: 0%;
+margin-top: 1%;
+}
+.forgottenpassword a{
+font-size: 100%;
+color: #24344f;
+}
+.insc button {
+background-color: #24344f;
+width: 25%;
+padding:2%;
+margin-left: 62%;
+border-radius: 17px;
+border-color: #24344f;
+color: white;
+}
+
+.conx button{
+background-color: #24344f;
+color: white;
+padding:8%;
+border-color: #24344f;
+margin-left: 70%;
+margin-right: 155%;
+border-radius: 17px;
+}
+
+/* .card {
+width: 30%;
+padding:2% ;
+margin-top: 12%;
+margin-left: 6%;
+} */
+
+.card input{
+padding: 1%;
+width: 50%;
+border-radius: 17px;
+margin-top: 4%;
+margin-bottom: 11%;
+border-color: grey;
+text-indent: 13%;
+background-color: white;
+margin-left: 9%;
+
+}
+.iconemail {
+position: absolute;
+left: 10%;
+margin-top: 0%;
+padding: 5% 8px;
+color: gray;
+}
+.email label {
+    margin-top: 10%;
+    margin-left: 10%;
+}
+.card button{
+background-color:#24344f;
+width: 16%;
+padding:1%;
+margin-left: 43%;
+border-radius: 17px;
+border-color: #24344f;
+color: white;
+}
+.mailEnvoye {
+width: 40%;
+padding:2% ;
+margin-top: 14%;
+margin-left: 3%;
+align-items: center;
+}
+.mailEnvoye p{
+font-size: 30px;
+font-family: 'Times New Roman', Times, serif;
+}
+
+.Profil {
+width: 40%;
+padding: 2%;
+margin-top: 4%;
+margin-left: 7%;
+
+}
+.Profil input {
+padding: 2%;
+width: 60%;
+border-radius: 17px;
+margin-bottom: 11%;
+text-indent: 13%;
+/* background-color: #F2F4F4 ; */
+}
+.icon3 {
+position: absolute;
+left: 10%;
+margin-top: 0%;
+padding: 0.9% 8px;
+color: gray;
+}
+.modifier {
+padding: 0%;
+display: inline-flex;
+max-width: 150%;
+margin: 0%;
+margin-top: 1%;
+}
+.img {
+padding: 1%;
+margin-top: 2%;
+}
+.modifier button {
+background-color: #b78429;
+color: white;
+padding:14%;
+border-color: #b78429;
+margin-left: 200%;
+margin-right: 155%;
+border-radius: 17px;
+}
+
+
+@media screen and (max-width:1200px) and (min-width:900px){
+.auth {
+max-width: 53%;
+margin-left: 20%;
+margin-top: 10%;
+}
+.auth1 {
+margin-right:20%;
+}
+.inscription {
+max-width: 60%;
+margin-left: 20%;
+}
+.Connexion {
+max-width: 60%;
+margin-left: 20%;
+}
+.card input{
+    text-indent: 17%;
+}
+.card button{
+width: 20.5%;
+padding:1%;
+margin-left: 38.5%;
+}
+.icon {
+left:20%;
+padding: 0.5% 0.6%;
+}
+.insc button {
+width: 29%;
+padding:2%;
+margin-left: 58%;
+}
+.conx button{
+padding:7%;
+margin-left: 60%;
+}
+
+}
+
+
+@media screen and (max-width:900px) and (min-width:600px){
+.auth {
+max-width: 60%;
+margin-left: 20%;
+margin-top: 5%;
+}
+.auth a {
+font-size: 160%;
+}
+.auth1 {
+margin-right:15%;
+}
+.inscription {
+padding: 0%;
+max-width: 63%;
+margin-left: 20%;
+}
+.Connexion {
+max-width: 63%;
+margin-left: 20%;
+}
+.icon {
+left:25.5%;
+padding: 0.9% 0.6%;
+
+}
+.insc button {
+width: 28%;
+padding:1%;
+margin-left: 60%;
+}
+.conx button {
+width: 110%;
+padding:4%;
+margin-left: 140%;
+}
+.logo{
+width:9%;
+}
+.card button{
+width: 20%;
+padding:1%;
+margin-left: 39%;
+}
+.mailEnvoyer{
+width:47%;
+}
+.iconemail {
+padding: 4.9% 8px;
+}
+}
+
+@media screen and (max-width:600px) and (min-width:400px){
+.auth {
+max-width: 60%;
+margin-left: 22%;
+margin-top: 10%;
+}
+.auth1 {
+margin-right:20%;
+}
+.auth a {
+font-size: 130%;
+}
+.inscription {
+padding: 0%;
+max-width: 60%;
+margin-left: 22%;
+}
+.Connexion {
+max-width: 70%;
+margin-left: 22%;
+}
+.icon {
+left:27%;
+padding: 1% 0.6%;
+
+}
+.insc button {
+width: 35%;
+padding:2%;
+margin-left: 58%;
+}
+.conx button {
+/* width: 70%; */
+padding:3%;
+margin-left: 45%;
+}
+.logo{
+width:9%;
+}
+.mailEnvoyer{
+width:50%;
+}
+.iconemail {
+padding: 4.8% 8px;
+}
+.card button{
+width: 22%;
+padding:1%;
+margin-left: 37%;
+}
+.card input{
+    text-indent: 17%;
+}
+}
+
+@media screen and (max-width:400px){
+.auth {
+max-width: 50%;
+margin-left: 25%;
+margin-top: 35%;
+}
+.auth1 {
+margin-right:20%;
+}
+.auth a {
+font-size: 100%;
+}
+.inscription {
+padding: 0%;
+max-width: 60%;
+margin-left: 25%;
+}
+.Connexion {
+max-width: 60%;
+margin-left: 25%;
+}
+.icon {
+left:27%;
+padding: 1.3% 0.6%;
+
+}
+.insc button {
+width: 33%;
+padding:4%;
+margin-left: 55%;
+}
+.logo{
+width:9%;
+}
+}

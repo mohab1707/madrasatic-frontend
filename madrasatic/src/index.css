@@ -4,9 +4,37 @@ body {
   font-family: 'Montserrat', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #212121;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+@media screen and (min-width:900px){
+.shadow {
+  background-color:white;
+  max-width: 45%;
+  margin-left: 10%;
+  border-radius: 20px;
+  margin-top: 0.2%;
+}
+}
+@media screen and (max-width:900px) and (min-width:600px){
+  .shadow {
+    background-color: white;
+    max-width: 70%;
+    margin-left: 10%;
+    border-radius: 20px;
+    margin-top: 0.2%;
+  }
+}
+@media screen and (max-width:600px){
+  .shadow {
+    background-color: white;
+    max-width: 80%;
+    margin-left: 8%;
+    border-radius: 20px;
+    margin-top: 2%;
+  }
 }
