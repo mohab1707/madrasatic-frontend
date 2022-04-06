@@ -29,7 +29,9 @@ export const Inscription = () => {
                 console.log("y'a une erreur");
                 console.log(response.json());
             }
-            
+            return response.json();
+        }).then(data => {
+            console.log(data);
         })
         // .catch(Error=>{
         //     console.log(Error)

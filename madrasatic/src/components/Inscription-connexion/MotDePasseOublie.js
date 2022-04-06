@@ -1,17 +1,18 @@
 import { useState } from "react";
 import {MdEmail} from "react-icons/md"
-import { Redirect } from "react-router-dom"
+import { Redirect  } from "react-router-dom"
 export const MotDePasseOublie= () => {
     const [email , setEmail] = useState('');
     const [reussi , setReussi ] = useState(false);
     const [detail,setDetail] = useState('');
+    
 
     const forgotPassword = (e) => {
-        e.preventDefault();    
+        e.preventDefault();  
         fetch('http://localhost:8000/madrasatic/password-reset/', {
           method: 'POST',
           headers: { "Content-Type": "application/json"},
-          body: JSON.stringify({email: email}), 
+          body: JSON.stringify({email: email }), 
         }).then((response) => {
             if (response.ok)
             {
@@ -20,14 +21,17 @@ export const MotDePasseOublie= () => {
             return response.json();     
         }).then((data) => {
             console.log(data);
-            setDetail(data.detail);
+            // setDetail(data.detail);
         } )
       }
     return(
 
         <div className="card">
             {
-            reussi? <Redirect to="mailEnvoye" />: null
+            reussi? <>
+                    <p>Un email de confirmaion vous a été envoyé</p>
+                    <Redirect to ="/emailEnvoye"></Redirect>
+                </> : null
             }
             <div className="email">
                     <label><b>Entrez votre adresse email :</b></label>

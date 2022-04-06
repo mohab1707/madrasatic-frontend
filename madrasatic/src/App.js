@@ -8,9 +8,10 @@ import { InscriptionOuConnexion } from './components/Inscription-connexion/Iscri
 import { Connexion } from './components/Inscription-connexion/Connexion';
 import { Inscription } from './components/Inscription-connexion/Inscription';
 import { MotDePasseOublie } from './components/Inscription-connexion/MotDePasseOublie';
+import { RecupererMotDePasseOublie } from './components/Inscription-connexion/RecupererMotDePasse';
+import { EmailEnvoye } from './components/Inscription-connexion/EmailEnvoye';
 
 export default function App() {
-  
 
   return (
     <Router>
@@ -39,6 +40,18 @@ export default function App() {
         </Route>
         < Route path="/Home">
           <Gestion_des_comptes></Gestion_des_comptes>
+        </Route>
+        < Route path="/password-reset-confirm/:uidb64/:token">
+          <NavBar />
+          <div className='shadow shadow-5'>
+            <br></br>
+            <RecupererMotDePasseOublie></RecupererMotDePasseOublie>
+          </div>
+        </Route>
+        < Route path="/emailEnvoye">
+          <div className='shadow shadow-5'>
+              <EmailEnvoye />
+            </div>
         </Route>
       </Switch>
      
