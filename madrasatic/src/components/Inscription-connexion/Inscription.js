@@ -8,11 +8,13 @@ export const Inscription = () => {
     const [nom , setNom] = useState('');
     const [email , setEmail] = useState('');
     const [motDePasse , setMotDePasse] = useState('');
-    const [adresse , setAdresse] = useState('mon-adresse');
-    const [tel , setTel] = useState('0548963215');
     const [motDePasseConfirmation , setmotDePasseConfirmation] = useState('');
     const [reussi , setReussi ] = useState(false);
-    const [erreur,setErreur]=useState('');
+    const [erreurUsername,setErreurUsername]=useState();
+    const [erreurEmail,setErreurEmail]=useState();
+    const [erreurPassword1,setErreurPassword1]=useState();
+    const [erreurPassword2,setErreurPassword2]=useState();
+    const [erreur_non_field_errors,setErreur_non_field_errors]=useState();
     const register = (e) => {
         e.preventDefault(); 
         fetch("http://127.0.0.1:8000/madrasatic/register/", {
@@ -22,21 +24,23 @@ export const Inscription = () => {
         }).then((response) => {
             if(response.ok)
             {
-                console.log("hiii");
+                console.log("ça marche!!");
                 setReussi(true);
+                
             }else
             {
                 console.log("y'a une erreur");
-                console.log(response.json());
+                // setErreur(response.json().catch());
+                // console.log(response.json());
             }
             return response.json();
         }).then(data => {
-            console.log(data);
+            setErreurUsername(data.username);
+            setErreurEmail(data.email);
+            setErreurPassword1(data.password1);
+            setErreurPassword2(data.password2);
+            setErreur_non_field_errors(data.non_field_errors);
         })
-        // .catch(Error=>{
-        //     console.log(Error)
-        //     setErreur(Error.toString);
-        // })
       }
     return(
         <div className="inscription">
@@ -55,6 +59,7 @@ export const Inscription = () => {
                         value = {nom}
                         onChange = {(e) => setNom(e.target.value)}
                     />
+                    {erreurUsername ? <p style={{color: 'red'} }>{erreurUsername}</p> : null}
                 </div>
                 <div className="inputField">
                     <div className="icon">
@@ -69,6 +74,7 @@ export const Inscription = () => {
                     />
                     
                 </div>
+                {erreurEmail ? <p style={{color: 'red'} }>{erreurEmail}</p> : null}
                 <div className="inputField">
                     <div className="icon">
                         <RiLockPasswordFill />
@@ -81,6 +87,7 @@ export const Inscription = () => {
                         onChange = {(e) => setMotDePasse(e.target.value)}
                     />
                 </div>
+                {erreurPassword1 ? <p style={{color: 'red'} }>{erreurPassword1}</p> : null}
                 <div className="inputField">
                     <div className="icon">
                         <RiLockPasswordFill />
@@ -93,14 +100,13 @@ export const Inscription = () => {
                         onChange = {(e) => setmotDePasseConfirmation(e.target.value)}
                     />
                 </div>
+                {erreurPassword2 ? <p style={{color: 'red'} }>{erreurPassword2}</p> : null}
+                {erreur_non_field_errors ? <p style={{color: 'red'} }>{erreur_non_field_errors}</p> : null}
             </form> 
             <div className="insc">
                 <button type='submit' onClick={register}> S'inscrire </button>
             </div>
             <br></br>
-            <div>
-                {erreur? <p>{erreur}</p> : null}
-            </div>
         </div>
     );
 }

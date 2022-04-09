@@ -3,16 +3,14 @@ import {RiLockPasswordFill} from "react-icons/ri";
 import { Redirect } from "react-router-dom"
 import { useParams } from "react-router-dom";
 export const RecupererMotDePasseOublie= () => {
-    const [email , setEmail] = useState('');
     const [reussi , setReussi ] = useState(false);
-    const [detail,setDetail] = useState('');
     const [motDePasse , setMotDePasse] = useState('');
     const [motDePasseConfirmation , setmotDePasseConfirmation] = useState('');
-    const token = useParams();
-    const uidb64 = useParams();
+    const {uidb64} = useParams();
+    const {token} = useParams();
     const changePassword = (e) => {
         e.preventDefault();    
-        fetch(`http://localhost:8000/madrasatic/password-reset-confirm/${uidb64}/${token}`, {
+        fetch(`http://localhost:8000/madrasatic/password-reset-confirm/${uidb64}/${token}/`, {
           method: 'POST',
           headers: { "Content-Type": "application/json"},
           body: JSON.stringify({new_password1 : motDePasse, new_password2: motDePasseConfirmation , uid: uidb64 , token : token}), 

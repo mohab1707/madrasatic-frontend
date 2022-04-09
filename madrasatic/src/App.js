@@ -10,7 +10,8 @@ import { Inscription } from './components/Inscription-connexion/Inscription';
 import { MotDePasseOublie } from './components/Inscription-connexion/MotDePasseOublie';
 import { RecupererMotDePasseOublie } from './components/Inscription-connexion/RecupererMotDePasse';
 import { EmailEnvoye } from './components/Inscription-connexion/EmailEnvoye';
-
+import { Bare } from './components/PageAcceuil/Bare';
+import { Profil } from './components/PageAcceuil/Profil';
 export default function App() {
 
   return (
@@ -38,13 +39,13 @@ export default function App() {
             <MotDePasseOublie />
           </div>
         </Route>
-        < Route path="/Home">
+        < Route exact path="/Home">
           <Gestion_des_comptes></Gestion_des_comptes>
         </Route>
-        < Route path="/password-reset-confirm/:uidb64/:token">
+        < Route path="/madrasatic/password-reset-confirm/:uidb64/:token">
           <NavBar />
+          <br></br>
           <div className='shadow shadow-5'>
-            <br></br>
             <RecupererMotDePasseOublie></RecupererMotDePasseOublie>
           </div>
         </Route>
@@ -52,6 +53,16 @@ export default function App() {
           <div className='shadow shadow-5'>
               <EmailEnvoye />
             </div>
+        </Route>
+        < Route exact path="/HomePage">
+          <Bare />
+        </Route>
+        < Route exact path="/Profil">
+          <Bare />
+          <div className='shadow1 shadow-5'>
+          <br></br>
+            <Profil />
+          </div>
         </Route>
       </Switch>
      

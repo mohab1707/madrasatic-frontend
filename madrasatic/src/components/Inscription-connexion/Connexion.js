@@ -6,8 +6,12 @@ import { Redirect } from "react-router-dom"
 export const Connexion = () => {
     const [email , setEmail] = useState('');
     const [motDePasse , setMotDePasse] = useState('');
-    const [reussi , setReussi ] = useState(false);
-
+    const [admin , setAdmin ] = useState(false);
+    const [role , setRole ] = useState();
+    const [utilisateur ,setUtilisateur] = useState(false);
+    const [erreurEmail,setErreurEmail]=useState();
+    const [erreurPassword,setErreurPassword]=useState();
+    const [erreur_non_field_errors,setErreur_non_field_errors]=useState();
     const login = (e) => {
         e.preventDefault();    
         fetch("http://127.0.0.1:8000/madrasatic/login/", {
@@ -17,30 +21,47 @@ export const Connexion = () => {
         }).then((response) => {
             if(response.ok)
             {
-
-                console.log(response);
-                
-                // sessionStorage.setItem("key", key);
-                setReussi(true);
+                fetch("http://127.0.0.1:8000/madrasatic/user/", {
+                    method: "GET",
+                    headers: { "Content-Type": "application/json",'Accept': 'application/json' }, 
+                    }).then((response) => {
+                        if(response.ok)
+                        {
+                            console.log("donnees recup");
+                        }else
+                        {
+                            console.log("y'a une erreur");
+                        }
+                        return response.json();
+                    }).then(data => {
+                        setRole(data.role);
+                    })
+                    if(role==='Admin') {
+                        setAdmin(true);
+                    }else{
+                        setUtilisateur(true);
+                    }
             }
             else{
-                console.log(response);
+                console.log("erreur");
             }
              return response.json();   
         }).then((data) => {
             const key = data.key;
             sessionStorage.setItem("key", key);
-            console.log(data.key);
+            setErreurEmail(data.email);
+            setErreurPassword(data.password);
+            setErreur_non_field_errors(data.non_field_errors);
         }
-        ).catch(Error)
-        {
-            console.log(Error);
-        }
+        )
       }
     return ( 
         <div className="Connexion">
             {
-            reussi? <Redirect to='/Home' /> : null
+            admin? <Redirect to='/Home' /> : null
+            }
+            {
+            utilisateur? <Redirect to='/HomePage' /> : null
             }
             <form>
                 <div className="inputField">
@@ -56,6 +77,7 @@ export const Connexion = () => {
                     />
                     
                 </div>
+                {erreurEmail ? <p style={{color: 'red'} }>{erreurEmail}</p> : null}
                 <div className="inputField">
                     <div className="icon">
                         <RiLockPasswordFill />
@@ -68,6 +90,8 @@ export const Connexion = () => {
                         onChange = {(e) => setMotDePasse(e.target.value)}
                     />
                 </div>
+                {erreurPassword ? <p style={{color: 'red'} }>{erreurPassword}</p> : null}
+                {erreur_non_field_errors ? <p style={{color: 'red'} }>{erreur_non_field_errors}</p> : null}
             </form>
             <div className="forgottenpassword">
                     <Link to="/ForgetPassword">Mot de passe oublié?</Link>

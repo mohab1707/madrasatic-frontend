@@ -19,6 +19,13 @@ code {
   border-radius: 20px;
   margin-top: 0.2%;
 }
+.shadow1 {
+  background-color:white;
+  max-width: 45%;
+  margin-left: 10%;
+  border-radius: 20px;
+  margin-top: 7%;
+}
 }
 @media screen and (max-width:900px) and (min-width:600px){
   .shadow {
@@ -28,6 +35,13 @@ code {
     border-radius: 20px;
     margin-top: 0.2%;
   }
+  .shadow1 {
+    background-color:white;
+    max-width: 45%;
+    margin-left: 10%;
+    border-radius: 20px;
+    margin-top: 5%;
+  }
 }
 @media screen and (max-width:600px){
   .shadow {
@@ -36,5 +50,12 @@ code {
     margin-left: 8%;
     border-radius: 20px;
     margin-top: 2%;
+  }
+  .shadow1 {
+    background-color:white;
+    max-width: 45%;
+    margin-left: 10%;
+    border-radius: 20px;
+    margin-top: 5%;
   }
 }
