@@ -19,32 +19,33 @@ export const Profil = () => {
     const [erreurUsername,setErreurUsername]=useState();
     const [erreurAddress,setErreurAddress]=useState();
     const [erreurTel,setErreurTel]=useState();
-    // useEffect(()=> {
-    //     fetch("http://127.0.0.1:8000/madrasatic/user/", {
-    //       method: "GET",
-    //       headers: { "Content-Type": "application/json",'Accept': 'application/json' }, 
-    //     }).then((response) => {
-    //         if(response.ok)
-    //         {
-    //             console.log("donnees recup");
-    //         }else
-    //         {
-    //             console.log("y'a une erreur");
-    //         }
-    //         return response.json();
-    //     }).then(data => {
-    //         setAdresse(data.address);
-    //         setId(data.id);
-    //         setNom(data.username);
-    //         setTel(data.tel);
-    //         // console.log(data);
-    //     })
-    // },[]);
+    const token = sessionStorage.getItem(key);
+    useEffect(()=> {
+        fetch("http://127.0.0.1:8000/madrasatic/user/", {
+          method: "GET",
+          headers: { "Content-Type": "application/json",'Accept': 'application/json' , "Authorization":`Token ${token}`}, 
+        }).then((response) => {
+            if(response.ok)
+            {
+                console.log("donnees recup");
+            }else
+            {
+                console.log("y'a une erreur");
+            }
+            return response.json();
+        }).then(data => {
+            setAdresse(data.address);
+            setId(data.id);
+            setNom(data.username);
+            setTel(data.tel);
+            // console.log(data);
+        })
+    },[]);
     const update = (e) => {
         e.preventDefault(); 
         fetch(`http://localhost:8000/madrasatic/updateprofile/${id}/`, {
           method: "PATCH",
-          headers: { "Content-Type": "application/json",'Accept': 'application/json' },
+          headers: { "Content-Type": "application/json",'Accept': 'application/json' ,"Authorization":`Token ${token}`},
           body: JSON.stringify({username : nom , address : adresse , tel : tel , img : image}), 
         }).then((response) => {
             if(response.ok)
@@ -121,9 +122,6 @@ export const Profil = () => {
                 <button type='submit' onClick={update}> Confirmer</button>
             </div>
             <br></br>
-            {/* <div>
-                {erreur? <p>{erreur}</p> : null}
-            </div> */}
         </div>
     );
 }

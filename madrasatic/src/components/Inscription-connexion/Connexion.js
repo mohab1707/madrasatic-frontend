@@ -23,7 +23,7 @@ export const Connexion = () => {
             {
                 fetch("http://127.0.0.1:8000/madrasatic/user/", {
                     method: "GET",
-                    headers: { "Content-Type": "application/json",'Accept': 'application/json' }, 
+                    headers: { "Content-Type": "application/json",'Accept': 'application/json'}, 
                     }).then((response) => {
                         if(response.ok)
                         {

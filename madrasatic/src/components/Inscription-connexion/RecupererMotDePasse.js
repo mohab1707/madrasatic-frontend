@@ -6,8 +6,7 @@ export const RecupererMotDePasseOublie= () => {
     const [reussi , setReussi ] = useState(false);
     const [motDePasse , setMotDePasse] = useState('');
     const [motDePasseConfirmation , setmotDePasseConfirmation] = useState('');
-    const {uidb64} = useParams();
-    const {token} = useParams();
+     const {uidb64 , token} = useParams();
     const changePassword = (e) => {
         e.preventDefault();    
         fetch(`http://localhost:8000/madrasatic/password-reset-confirm/${uidb64}/${token}/`, {
