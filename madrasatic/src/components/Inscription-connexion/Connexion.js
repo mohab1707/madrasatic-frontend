@@ -1,17 +1,46 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {MdEmail} from "react-icons/md"
-import {RiLockPasswordFill} from "react-icons/ri"
+import {RiLockPasswordFill, RiSendToBack} from "react-icons/ri"
 import { Link } from "react-router-dom";
 import { Redirect } from "react-router-dom"
 export const Connexion = () => {
     const [email , setEmail] = useState('');
     const [motDePasse , setMotDePasse] = useState('');
     const [admin , setAdmin ] = useState(false);
+    const [ok , setOk ] = useState(false);
     const [role , setRole ] = useState();
     const [utilisateur ,setUtilisateur] = useState(false);
     const [erreurEmail,setErreurEmail]=useState();
     const [erreurPassword,setErreurPassword]=useState();
     const [erreur_non_field_errors,setErreur_non_field_errors]=useState();
+    const redirect =((e)=>{
+        e.preventDefault();
+        const token=sessionStorage.getItem("key");
+        console.log("tokeen est : ",token);
+        fetch("http://127.0.0.1:8000/madrasatic/user/", {
+            method: "GET",
+            headers: { "Content-Type": "application/json",'Accept': 'application/json',"Authorization":`Token ${token}`}, 
+            }).then((response) => {
+                if(response.ok)
+                {
+                    console.log("donnees recup");
+                }else
+                {
+                    console.log(response);
+                    console.log("y'a une erreur");
+                }
+                return response.json();
+            }).then(data => {
+                console.log(data);
+                setRole(data.role);
+            })
+            console.log(role);
+            if(role==='Admin') {
+                setAdmin(true);
+            }else{
+                setUtilisateur(true);
+            }
+    })
     const login = (e) => {
         e.preventDefault();    
         fetch("http://127.0.0.1:8000/madrasatic/login/", {
@@ -21,26 +50,8 @@ export const Connexion = () => {
         }).then((response) => {
             if(response.ok)
             {
-                fetch("http://127.0.0.1:8000/madrasatic/user/", {
-                    method: "GET",
-                    headers: { "Content-Type": "application/json",'Accept': 'application/json'}, 
-                    }).then((response) => {
-                        if(response.ok)
-                        {
-                            console.log("donnees recup");
-                        }else
-                        {
-                            console.log("y'a une erreur");
-                        }
-                        return response.json();
-                    }).then(data => {
-                        setRole(data.role);
-                    })
-                    if(role==='Admin') {
-                        setAdmin(true);
-                    }else{
-                        setUtilisateur(true);
-                    }
+                console.log("reussi");
+                setOk(true);
             }
             else{
                 console.log("erreur");
@@ -53,7 +64,35 @@ export const Connexion = () => {
             setErreurPassword(data.password);
             setErreur_non_field_errors(data.non_field_errors);
         }
-        )
+        ).then(()=>{
+            const token=sessionStorage.getItem("key");
+            fetch("http://127.0.0.1:8000/madrasatic/user/", {
+            method: "GET",
+            headers: { "Content-Type": "application/json",'Accept': 'application/json',"Authorization":`Token ${token}`}, 
+            }).then((response) => {
+                if(response.ok)
+                {
+                    console.log("donnees recup");
+                }else
+                {
+                    console.log("la reponse ",response);
+                    console.log("y'a une erreur");
+                }
+                return response.json();
+            }).then(data => {
+                console.log("data.role",data.role);
+                setRole(data.role);
+            })
+            
+        }).then(()=>{
+            console.log("role",role);
+            if(role==='Admin') {
+                setAdmin(true);
+            }else{
+                setUtilisateur(true);
+            }
+        });
+        
       }
     return ( 
         <div className="Connexion">
