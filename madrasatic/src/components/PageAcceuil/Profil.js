@@ -320,7 +320,7 @@ export const Profil = () => {
           <input
             type="file"
             accept="image/jpeg,image/png,image/gif"
-            onChange={(e) => setImage(e.target.files[0].name)}
+            onChange={(e) => setImage(e.target.files[0])}
           />
         </div>
       </form>
