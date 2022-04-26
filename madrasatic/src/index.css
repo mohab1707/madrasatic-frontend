@@ -4,7 +4,8 @@ body {
   font-family: 'Montserrat', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #212121;
+  /* background-color: #212121; */
+  background-color: #ccd4f2;
 }
 
 code {
@@ -18,6 +19,14 @@ code {
   margin-left: 10%;
   border-radius: 20px;
   margin-top: 0.2%;
+}
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* background-color: #212121; */
+  background-color: #60061e;
 }
 .shadow1 {
   background-color:white;

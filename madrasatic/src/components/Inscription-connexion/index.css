@@ -1,5 +1,6 @@
 body {
-    background-color: #eeeeee;
+    background-color: #e2e0fd;
+    /* background-color: #f1fcfd; */
 }
 .auth {
 padding: 0%;
@@ -50,6 +51,7 @@ margin-left: 18%;
 padding: 2%;
 width: 90%;
 border-radius: 17px;
+/* margin-top: 5%; */
 margin-bottom: 11%;
 /* border-color: grey; */
 text-indent: 13%;

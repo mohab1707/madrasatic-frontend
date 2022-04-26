@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SortableTbl from "react-sort-search-table";
 import ReactDOM from "react-dom";
 import styled from "styled-components";
@@ -11,138 +11,30 @@ export const TableComptes = () => {
 	max-width: 1200px;
 	margin: 0 auto;
 `;
-
-let MyData = [
-	{
-		N: 1,
-		_id: "151155",
-		Nomprenom: "ABABSA MOHAMED",
-		Email: "m.ababsa@esi-sba.dz",
-		Role: "Etudiant",
-		ActiveDesactive: "Active",
-	},
-	{
-		N: 2,
-		_id: "1511585",
-		Nomprenom: "ABABSA MOHAMED",
-		Email: "m.ababsa@esi-sba.dz",
-		Role: "Etudiant",
-		ActiveDesactive: "Active",
-	},
-    {
-		N: 3,
-		_id: "158225",
-		Nomprenom: "ABABSA MOHAMED",
-		Email: "m.ababsa@esi-sba.dz",
-		Role: "Etudiant",
-		ActiveDesactive: "Active",
-	},
-    {
-		N: 4,
-		_id: "15118456",
-		Nomprenom: "ABABSA MOHAMED",
-		Email: "m.ababsa@esi-sba.dz",
-		Role: "Etudiant",
-		ActiveDesactive: "Active",
-	},
-    {
-		N: 5,
-		_id: "15118456",
-		Nomprenom: "ABABSA MOHAMED",
-		Email: "m.ababsa@esi-sba.dz",
-		Role: "Etudiant",
-		ActiveDesactive: "Active",
-	},
-    {
-		N: 6,
-		_id: "15118456",
-		Nomprenom: "ABABSA MOHAMED",
-		Email: "m.ababsa@esi-sba.dz",
-		Role: "Etudiant",
-		ActiveDesactive: "Active",
-	},
-    {
-		N: 7,
-		_id: "15118456",
-		Nomprenom: "ABABSA MOHAMED",
-		Email: "m.ababsa@esi-sba.dz",
-		Role: "Etudiant",
-		ActiveDesactive: "Active",
-	},
-    {
-		N: 8,
-		_id: "15118456",
-		Nomprenom: "ABABSA MOHAMED",
-		Email: "m.ababsa@esi-sba.dz",
-		Role: "Etudiant",
-		ActiveDesactive: "Active",
-	},
-    {
-		N: 9,
-		_id: "15118456",
-		Nomprenom: "ABABSA MOHAMED",
-		Email: "m.ababsa@esi-sba.dz",
-		Role: "Etudiant",
-		ActiveDesactive: "Active",
-	},
-    {
-		N: 10,
-		_id: "15118456",
-		Nomprenom: "ABABSA MOHAMED",
-		Email: "m.ababsa@esi-sba.dz",
-		Role: "Etudiant",
-		ActiveDesactive: "Active",
-	},
-    {
-		N: 11,
-		_id: "15118456",
-		Nomprenom: "ABABSA MOHAMED",
-		Email: "m.ababsa@esi-sba.dz",
-		Role: "Etudiant",
-		ActiveDesactive: "Active",
-	},
-    {
-		N: 12,
-		_id: "15118456",
-		Nomprenom: "ABABSA MOHAMED",
-		Email: "m.ababsa@esi-sba.dz",
-		Role: "Etudiant",
-		ActiveDesactive: "Active",
-	},
-    {
-		N: 13,
-		_id: "15118456",
-		Nomprenom: "ABABSA MOHAMED",
-		Email: "m.ababsa@esi-sba.dz",
-		Role: "Etudiant",
-		ActiveDesactive: "Active",
-	},
-    {
-		N: 14,
-		_id: "15118456",
-		Nomprenom: "ABABSA MOHAMED",
-		Email: "m.ababsa@esi-sba.dz",
-		Role: "Etudiant",
-		ActiveDesactive: "Active",
-	},
-    {
-		N: 15,
-		_id: "15118456",
-		Nomprenom: "ABABSA MOHAMED",
-		Email: "m.ababsa@esi-sba.dz",
-		Role: "Etudiant",
-		ActiveDesactive: "Active",
-	},
-    {
-		N: 16,
-		_id: "15118456",
-		Nomprenom: "ABABSA MOHAMED",
-		Email: "m.ababsa@esi-sba.dz",
-		Role: "Etudiant",
-		ActiveDesactive: "Active",
-	},
-];
-
+const token = sessionStorage.getItem("key");
+const[MyData,setMyData]=useState(null);
+useEffect(() => {
+    fetch("http://127.0.0.1:8000/madrasatic/manageusers/", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization":`Token ${token}`
+      },
+    }).then((response) => {
+        if (response.ok) {
+          console.log("donnees recup");
+        } else {
+          console.log("y'a une erreur");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data.results);
+		setMyData(data.results);
+		
+      });
+  }, []);
 const AffecterRole = (props) => {
 	const { rowData, tdData } = props;
 	function editRol() {
@@ -171,11 +63,11 @@ const ChangerEtat = (props) => {
 
 const ComptesTblPage = (props) => {
 	let col = [
-		"N",
-		"Nomprenom",
-		"Email",
-		"Role",
-		"ActiveDesactive",
+		"id",
+		"username",
+		"email",
+		"role",
+		"is_active",
 		"AffecterRole",
 		"ActiverDesactiver",
 	];
@@ -190,7 +82,7 @@ const ComptesTblPage = (props) => {
 	];
     return (
 		<Wrap>
-			<SortableTbl
+			{MyData && <SortableTbl
 				tblData={MyData}
 				tHead={tHead}
 				customTd={[
@@ -199,7 +91,7 @@ const ComptesTblPage = (props) => {
 				]}
 				dKey={col}
 				search={true}
-			/>
+			/>}
 		</Wrap>
 	);
 };

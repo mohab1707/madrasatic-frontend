@@ -12,6 +12,7 @@ import { RecupererMotDePasseOublie } from './components/Inscription-connexion/Re
 import { EmailEnvoye } from './components/Inscription-connexion/EmailEnvoye';
 import { Bare } from './components/PageAcceuil/Bare';
 import { Profil } from './components/PageAcceuil/Profil';
+import { ChangePassword } from './components/Inscription-connexion/ChangePassword';
 export default function App() {
 
   return (
@@ -62,6 +63,13 @@ export default function App() {
           <div className='shadow1 shadow-5'>
           <br></br>
             <Profil />
+          </div>
+        </Route>
+        < Route exact path="/ChangePassword">
+          <Bare />
+          <div className='shadow1 shadow-5'>
+          {/* <br></br> */}
+            <ChangePassword />
           </div>
         </Route>
       </Switch>

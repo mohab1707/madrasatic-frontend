@@ -1,4 +1,7 @@
-
+body {
+  /* background-color: #eeeeee; */
+  background-color: #01214f;
+}
 #acceuil {
   background: url(../images/Background.png) no-repeat;
   background-size: 100%;    

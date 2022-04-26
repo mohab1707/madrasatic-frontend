@@ -4,9 +4,7 @@ import { Redirect  } from "react-router-dom"
 export const MotDePasseOublie= () => {
     const [email , setEmail] = useState('');
     const [reussi , setReussi ] = useState(false);
-    const [detail,setDetail] = useState('');
-    
-
+    const [erreurEmail,setErreurEmail]=useState();
     const forgotPassword = (e) => {
         e.preventDefault();  
         fetch('http://localhost:8000/madrasatic/password-reset/', {
@@ -21,6 +19,7 @@ export const MotDePasseOublie= () => {
             return response.json();     
         }).then((data) => {
             console.log(data);
+            setErreurEmail(data.email);
             // setDetail(data.detail);
         } )
       }
@@ -46,6 +45,7 @@ export const MotDePasseOublie= () => {
                         value = {email}
                         onChange = {(e) => setEmail(e.target.value)}
                     />
+                    {erreurEmail ? <p style={{color: 'red',marginLeft:'9%'} }>{erreurEmail}</p> : null}
             </div>
             <button onClick={forgotPassword}>Confirmer</button>
             <br></br> <br></br>

@@ -44,9 +44,9 @@ export const Bare = () => {
         {
             reussi? <Redirect to='/' /> : null
         }
-        <MDBNavbar expand='lg' light bgColor='light' fixed='top'>
+        <MDBNavbar expand='lg' light fixed='top' style={{backgroundColor:'#24344f'}}>
             <MDBContainer fluid>
-            <MDBNavbarBrand href='/HomePage'>MADRASA-TIC</MDBNavbarBrand>
+            <MDBNavbarBrand href='/HomePage'style={{color:'#ffffff'}}>MADRASA-TIC</MDBNavbarBrand>
 
             <MDBNavbarToggler
             type='button'
@@ -55,20 +55,21 @@ export const Bare = () => {
             aria-expanded='false'
             aria-label='Toggle navigation'
             onClick={() => setShowNavRight(!showNavRight)}
+            style={{color:'#ffffff'}}
             >
-            <MDBIcon icon='bars' fas />
+            <MDBIcon icon='bars' fas style={{color:'#ffffff'}}/>
             </MDBNavbarToggler>
 
             <MDBCollapse navbar show={showNavRight}>
                 <MDBNavbarNav right fullWidth={false} className='mb-2 mb-lg-0'>
                     <MDBNavbarItem>
-                        <MDBNavbarLink href=''>Haja</MDBNavbarLink>
+                        <MDBNavbarLink href='' style={{color:'#ffffff'}}>Annonces</MDBNavbarLink>
                     </MDBNavbarItem>
                     <MDBNavbarItem>
                         <MDBDropdown>
-                            <MDBDropdownToggle tag='a' className='nav-link'>
+                            <MDBDropdownToggle tag='a' className='nav-link'style={{color:'#ffffff'}}>
                                 
-                                 <i class="fas fa-user"></i>
+                                 <i class="fas fa-user" style={{color:'#ffffff'}}></i>
         
                             </MDBDropdownToggle>
                         <MDBDropdownMenu>
