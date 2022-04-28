@@ -63,7 +63,10 @@ export const Bare = () => {
             <MDBCollapse navbar show={showNavRight}>
                 <MDBNavbarNav right fullWidth={false} className='mb-2 mb-lg-0'>
                     <MDBNavbarItem>
-                        <MDBNavbarLink href='' style={{color:'#ffffff'}}>Annonces</MDBNavbarLink>
+                        <MDBNavbarLink href='' style={{color:'#ffffff'}}>Mes annonces</MDBNavbarLink>
+                        <MDBNavbarLink href='' style={{color:'#ffffff'}}>les annonces</MDBNavbarLink>
+                        <MDBNavbarLink href='' style={{color:'#ffffff'}}>Mes déclarations</MDBNavbarLink>
+                        <MDBNavbarLink href='' style={{color:'#ffffff'}}>Les déclarations</MDBNavbarLink>
                     </MDBNavbarItem>
                     <MDBNavbarItem>
                         <MDBDropdown>

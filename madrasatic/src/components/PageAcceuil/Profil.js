@@ -10,7 +10,8 @@ import { Link } from "react-router-dom";
 export const Profil = () => {
   const [nom, setNom] = useState("");
   const [image, setImage] = useState(null);
-  const [motDePasse, setMotDePasse] = useState("");
+  const [admin, setAdmin] = useState(false);
+  const [Utilisateur, setUtilisateur] = useState(false);
   const [id, setId] = useState();
   const [adresse, setAdresse] = useState("");
   const [tel, setTel] = useState("");
@@ -41,6 +42,12 @@ export const Profil = () => {
         setId(data.id);
         setNom(data.username);
         setTel(data.tel);
+        console.log(data.role)
+        if (data.is_superuser)
+          setAdmin(true);
+        else{
+          setUtilisateur(true);
+        }
         // console.log(data);
       });
   }, []);
@@ -80,7 +87,8 @@ export const Profil = () => {
   };
   return (
     <div className="inscription">
-      {reussi ? <Redirect to="/HomePage" /> : null}
+      {reussi && Utilisateur ? <Redirect to="/HomePage" /> : null}
+      {reussi && admin ? <Redirect to="/Home" /> : null}
       <form>
         <div className="inputField">
           <div className="icon">

@@ -81,7 +81,7 @@ const SortableTblPager = (props) => {
 					disabled={prevDisableStyle}
 					onClick={subPage}
 				>
-					Prev
+					Precedant
 				</button>
 				<DropdownGroup
 					selected={curr + 1}
@@ -95,7 +95,7 @@ const SortableTblPager = (props) => {
 					disabled={nextDisableStyle}
 					onClick={addPagge}
 				>
-					Next
+					Suivant
 				</button>
 				<div>display</div>
 				<DropdownGroup
@@ -104,7 +104,7 @@ const SortableTblPager = (props) => {
 					defaultCSS={defaultCSS}
 					callback={setCurrentRowsPerPage}
 				/>
-				<div>rows per page</div>
+				<div>ligne par page</div>
 			</div>
 			<div className="right">
 				Page {curr + 1} of total {props.totalPage}, total{" "}

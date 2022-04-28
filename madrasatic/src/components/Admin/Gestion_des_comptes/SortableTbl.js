@@ -125,6 +125,7 @@ const SortableTbl = (props) => {
 		});
 
 		setFilterString(e.target.value);
+		// console.log('dataaaaaaaaaaaa+ '+e.target.value);
 		setData(newData);
 	}
 	function sortData(dKey, nAsc) {
@@ -180,7 +181,7 @@ const SortableTbl = (props) => {
 							type="text"
 							name=""
 							value={filterString}
-							placeholder="Filter Result"
+							placeholder="Filtrer les resultat"
 							onChange={appplyfilter}
 						/>
 					</div>
@@ -220,7 +221,7 @@ const SortableTbl = (props) => {
 						{empty && (
 							<tr>
 								<td colSpan={dKey.length}>
-									<div className="wrap">No Data</div>
+									<div className="wrap">Aucun utilisateur</div>
 								</td>
 							</tr>
 						)}

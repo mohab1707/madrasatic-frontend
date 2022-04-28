@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import SortableTbl from "react-sort-search-table";
-import ReactDOM from "react-dom";
 import styled from "styled-components";
 import { SelectRole } from "./SelectRole";
 import { ActiverDesactiver } from "./ActiverDesactiver";
@@ -72,7 +71,7 @@ const ComptesTblPage = (props) => {
 		"ActiverDesactiver",
 	];
 	let tHead = [
-		"#",
+		"id",
 		"Nom et Prénom",
 		"Email",
 		"Role",
