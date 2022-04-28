@@ -56,29 +56,29 @@ const UserList = ( {MyData}) => {
             });          
             }
     return (
-        <MDBContainer>
+        <MDBContainer className='users'>
             {MyData.map(user =>(
-                <MDBRow >
+                <MDBRow className='user'>
                     {console.log(user.id)}
-                    <MDBCol>{user.id}</MDBCol>
-                    <MDBCol>{user.username}</MDBCol>
-                    <MDBCol>{user.email}</MDBCol>
-                    <MDBCol>{user.role}</MDBCol>
-                   {user.is_active ? <MDBCol>Activé</MDBCol> : <MDBCol>Desactivé</MDBCol>}
-                    <MDBCol>
+                    <MDBCol md='1'>{user.id}</MDBCol>
+                    <MDBCol md='2'>{user.username}</MDBCol>
+                    <MDBCol md='2'>{user.email}</MDBCol>
+                    <MDBCol md='1'>{user.role}</MDBCol>
+                   {user.is_active ? <MDBCol md='1'>Activé</MDBCol> : <MDBCol md='1'>Desactivé</MDBCol>}
+                    <MDBCol md='2'>
                         <select value={role} onChange={e=>{setRole(e.target.value)}}>
                             <option>Utilisateur</option>
                             <option>Admin</option>
                         </select>
 
                     </MDBCol>
-                    <MDBCol>
+                    <MDBCol md='2'>
                         {/* <p>activer/desactiverbutton</p> */}
                         <MDBRadio name='flexRadioDefault' id='1' value='Activer' label='Activer' onChange={(e)=>{changeActive(e)}}/>
                         <MDBRadio name='flexRadioDefault' id='2' label='Désactiver' value='Désactiver' onChange={(e)=>{changeActive(e)}}/>
 
                     </MDBCol>
-                    <MDBCol>
+                    <MDBCol md='1'>
                     <button onClick={()=>sauvegarde(user.id)}>sauvegarder</button>
 
                     </MDBCol>

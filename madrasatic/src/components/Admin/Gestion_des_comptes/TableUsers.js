@@ -41,19 +41,19 @@ const TableUsers = () => {
     return (
 
         <MDBContainer>
-            <MDBContainer>
+            <MDBContainer className='head'>
                 <MDBRow>
-                    <MDBCol><h4>ID</h4></MDBCol>
-                    <MDBCol><h4>Nom d'utilisateur</h4></MDBCol>
-                    <MDBCol><h4>Email</h4></MDBCol>
-                    <MDBCol><h4>Role</h4></MDBCol>
-                    <MDBCol><h4>Etat</h4></MDBCol>
-                    <MDBCol><h4>Affecter le Role</h4></MDBCol>
-                    <MDBCol><h4>Activer/Désactiver</h4></MDBCol>
-                    <MDBCol><h4>Enregistr</h4></MDBCol>
+                    <MDBCol md='1'><h6>Id</h6></MDBCol>
+                    <MDBCol md='2'><h6>Nom d'utilisateur</h6></MDBCol>
+                    <MDBCol md='2'><h4>Email</h4></MDBCol>
+                    <MDBCol md='1'><h6>Role</h6></MDBCol>
+                    <MDBCol md='1'><h6>Etat</h6></MDBCol>
+                    <MDBCol md='2'><h6>Affecter le Role</h6></MDBCol>
+                    <MDBCol md='2'><h6>Activer/Désactiver</h6></MDBCol>
+                    <MDBCol md='1'><h6>Enregistrer</h6></MDBCol>
                 </MDBRow>
             </MDBContainer>
-            <MDBContainer>
+            <MDBContainer className='users'>
                 {MyData && <UserList MyData={MyData}></UserList>}
             </MDBContainer>
         </MDBContainer>

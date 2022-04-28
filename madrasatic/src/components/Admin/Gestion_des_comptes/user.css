@@ -1,0 +1,16 @@
+.users {
+    background-color: white;
+}
+.user {
+    padding: 10px 16px;
+    margin: 20px 0;
+    border-bottom: 1px solid #fafafa;
+  }
+.user:hover {
+    box-shadow: 1px 3px 5px rgba(0,0,0,0.1);
+  }
+.user button {
+    color: white;
+    background-color: #b78429;
+    border-radius: 8px;
+}
