@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from "react-dom";
 import UserList from './UserList';
+import './tableusers.css';
 import {
     MDBContainer,
     MDBRow,

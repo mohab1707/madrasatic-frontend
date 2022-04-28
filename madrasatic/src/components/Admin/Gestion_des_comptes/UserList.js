@@ -2,6 +2,7 @@ import {MDBContainer,MDBRow,MDBCol,} from 'mdb-react-ui-kit';
 import React, { useState }  from 'react';
 import { MDBRadio } from 'mdb-react-ui-kit';
 import Select from 'react-select';
+import './user.css';
 const UserList = ( {MyData}) => {
     const options = [
         { value: 'Admin', label: 'Administrateur' },
