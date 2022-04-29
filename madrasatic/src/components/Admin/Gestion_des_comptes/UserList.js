@@ -9,6 +9,7 @@ const UserList = ( {MyData}) => {
         window.location.reload(false);
       }
     const sauvegarde=(id,e)=>{
+        e.preventDefault();
         console.log('id+ '+id);
         console.log(role[2])
         const token = sessionStorage.getItem("key");
@@ -31,8 +32,9 @@ const UserList = ( {MyData}) => {
                 return response.json();
             }).then((data)=>{
                 console.log(data);
-            });
-            refreshPage();     
+            }).then(()=>{
+                refreshPage(); 
+            });    
             }
     return (
         <MDBContainer className='users'>
@@ -50,7 +52,7 @@ const UserList = ( {MyData}) => {
                     <MDBCol md='1'>{user.role}</MDBCol>
                    {user.is_active ? <MDBCol md='1'>Activé</MDBCol> : <MDBCol md='1'>Desactivé</MDBCol>}
                     <MDBCol md='2'>
-                        <select onChange={e=>setRole(e.target.value)}>
+                        <select onChange={e=>{setRole(e.target.value); console.log("roole"+role)}}>
                             <option value='Utilisateur'>Utilisateur</option>
                             <option value='Admin'>Admin</option>
                             <option value='Responsable'>Responsable</option>

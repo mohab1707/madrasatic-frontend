@@ -14,7 +14,7 @@ export const Declaration =()=>{
         <h2 style={{textAlign:'center'}}>Liste des déclarations</h2>
     {declaration.map(blog => (
       <div className="blog-preview" >
-        <Link to="">
+        <Link to="/HomePage">
           <h2>Intitulé :{ blog.nomD }</h2>
           <p>Utilisateur :{ blog.email}</p>
           {/* <p>Catégorie :{ blog.catg }</p> */}
