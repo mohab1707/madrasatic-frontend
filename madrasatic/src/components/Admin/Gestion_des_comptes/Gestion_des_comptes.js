@@ -10,35 +10,41 @@ import {
     MDBNavbarLink,
     MDBNavbarToggler,
     MDBCollapse,
-    MDBFooter,
-    MDBRow,
-    MDBCol,
-    MDBInput,
-    MDBTextArea,
-    MDBValidation,
-    MDBValidationItem,
     MDBDropdown,
     MDBDropdownToggle,
     MDBDropdownMenu,
     MDBDropdownItem,
     MDBDropdownLink,
-    MDBTable,
-    MDBTableHead,
-    MDBTableBody
     } from 'mdb-react-ui-kit';
-import { SelectRole } from './SelectRole';
-import { ActiverDesactiver } from './ActiverDesactiver';
-import { TableComptes } from './TableComptes';
+    import { Redirect } from "react-router-dom"
 import 'bootstrap/dist/css/bootstrap.min.css';
-import TableUsers from './TableUsers';
 
 export const Gestion_des_comptes = () => {
     const [showNavRight, setShowNavRight] = useState(false);
+    const [reussi , setReussi ] = useState(false);
+    const deconnexion =(e) => {
+        e.preventDefault();
+        fetch("http://127.0.0.1:8000/madrasatic/logout/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+        }).then((response) => {
+            if(response.ok)
+            {
+                setReussi(true);
+            }else
+            {
+                console.log("y'a une erreur");
+            }
+        })
+    }
   return (
     <header>
+         {
+            reussi? <Redirect to='/' /> : null
+        }
         <MDBNavbar expand='lg' light style={{backgroundColor:'#24344f'}} fixed='top'>
             <MDBContainer fluid>
-            <MDBNavbarBrand href='#'style={{color:'#ffffff'}}>MADRASA-TIC</MDBNavbarBrand>
+            <MDBNavbarBrand href='/Home'style={{color:'#ffffff'}}>MADRASA-TIC</MDBNavbarBrand>
 
             <MDBNavbarToggler
             type='button'
@@ -55,7 +61,7 @@ export const Gestion_des_comptes = () => {
             <MDBCollapse navbar show={showNavRight}>
                 <MDBNavbarNav right fullWidth={false} className='mb-2 mb-lg-0'>
                     <MDBNavbarItem>
-                        <MDBNavbarLink href='' style={{color:'#ffffff'}}>Gestion des comptes</MDBNavbarLink>
+                        <MDBNavbarLink href='/Home' style={{color:'#ffffff'}}>Gestion des comptes</MDBNavbarLink>
                     </MDBNavbarItem>
                     <MDBNavbarItem>
                         <MDBDropdown>
@@ -66,10 +72,10 @@ export const Gestion_des_comptes = () => {
                             </MDBDropdownToggle>
                         <MDBDropdownMenu>
                             <MDBDropdownItem>
-                                <MDBDropdownLink href='/Profil'>Mon Profil</MDBDropdownLink>
+                                <MDBDropdownLink href='/ProfilAdmin'>Mon Profil</MDBDropdownLink>
                             </MDBDropdownItem>
                             <MDBDropdownItem>
-                                <MDBDropdownLink>Se déconnecter</MDBDropdownLink>
+                                <MDBBtn className='text-white' color='dark' onClick={deconnexion}>Se déconnecter</MDBBtn>
                             </MDBDropdownItem>
                         </MDBDropdownMenu>
                         </MDBDropdown>
@@ -78,14 +84,6 @@ export const Gestion_des_comptes = () => {
             </MDBCollapse>
             </MDBContainer>
         </MDBNavbar>
-        <MDBContainer fluid>
-            <MDBContainer style={{margin:'10%'}}>
-                {/* <TableComptes></TableComptes> */}
-                <TableUsers/>
-            </MDBContainer>
-        
-
-        </MDBContainer>
     </header>
     
   )

@@ -6,11 +6,11 @@
     margin: 20px 0;
     border-bottom: 1px solid #fafafa;
   }
-.user:hover {
+/* .user:hover {
     box-shadow: 1px 3px 5px rgba(0,0,0,0.1);
-  }
+  } */
 .user button {
     color: white;
-    background-color: #b78429;
+    background-color: #24344d;
     border-radius: 8px;
 }

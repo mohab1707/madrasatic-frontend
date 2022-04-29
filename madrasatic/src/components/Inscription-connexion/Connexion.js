@@ -7,6 +7,7 @@ export const Connexion = () => {
     const [email , setEmail] = useState('');
     const [motDePasse , setMotDePasse] = useState('');
     const [admin , setAdmin ] = useState(false);
+    const [responsable , setResponsable ] = useState(false);
     const [utilisateur ,setUtilisateur] = useState(false);
     const [erreurEmail,setErreurEmail]=useState();
     const [erreurPassword,setErreurPassword]=useState();
@@ -37,11 +38,15 @@ export const Connexion = () => {
                     }
                     return response.json();
                 }).then(data => {
+                    console.log("rooooole + "+data.role);
+                    console.log(data.is_superuser);
                     if(data.role=="('Utilisateur', 'User')"){
                         setUtilisateur(true);
                     }
-                    else{
+                    if (data.is_superuser==true){
                         setAdmin(true);
+                    }else{
+                        setUtilisateur(true);
                     }
                 })                
             }

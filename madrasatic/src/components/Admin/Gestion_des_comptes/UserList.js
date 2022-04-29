@@ -1,44 +1,21 @@
 import {MDBContainer,MDBRow,MDBCol,} from 'mdb-react-ui-kit';
-import React, { useState }  from 'react';
+import React, { useReducer, useState,useEffect }  from 'react';
 import { MDBRadio } from 'mdb-react-ui-kit';
-import Select from 'react-select';
-import './user.css';
+import './user.css'
 const UserList = ( {MyData}) => {
-    const options = [
-        { value: 'Admin', label: 'Administrateur' },
-        { value: 'Responsable', label: 'Responsable' },
-        { value: 'Chef Service', label: 'Chef Service' },
-        // { value: 'Autres', label: 'Autres' }
-      ]
-    const [ActiveDesactive,setActiveDesactive]=useState();
-    const [role,setRole]=useState();
-    const [is_active,setIs_active]=useState();
-    const token=sessionStorage.getItem("key");
-    const changeActive=(e=>{
-      e.preventDefault();
-      setActiveDesactive(e.target.value);
-      console.log("is active ou desactive + "+ActiveDesactive);
-      if(ActiveDesactive == 'Activer')
-      {
-        setIs_active(true);
-        console.log("activeeer");
+    const [role,setRole]=useState(sessionStorage.getItem("role"));
+    const [is_active,setIs_active]=useState(sessionStorage.getItem("is_active"));
+    function refreshPage() {
+        window.location.reload(false);
       }
-      else if(ActiveDesactive == 'Désactiver')
-      {
-        setIs_active(false);
-        console.log("desactiiiiveeer"+is_active);
-      }    
-    })
-
-    const changeRole=(e=>{
-        console.log("rooole + "+e.target.value);
-        setRole(e.target.value);
-    })
-
-    const sauvegarde=(id)=>{
+    const sauvegarde=(id,e)=>{
         console.log('id+ '+id);
+        console.log(role[2])
         const token = sessionStorage.getItem("key");
-        // const id = id;
+        if(role == "('Utilisateur', 'User')") 
+        {
+            setRole('Utilisateur')
+        };
          fetch(`http://127.0.0.1:8000/madrasatic/manageusers/${id}/`, {
             method: "PUT",
             headers: { "Content-Type": "application/json",'Accept': 'application/json',"Authorization":`Token ${token}`}, 
@@ -54,33 +31,40 @@ const UserList = ( {MyData}) => {
                 return response.json();
             }).then((data)=>{
                 console.log(data);
-            });          
+            });
+            refreshPage();     
             }
     return (
         <MDBContainer className='users'>
             {MyData.map(user =>(
-                <MDBRow className='user'>
-                    {console.log(user.id)}
+                <MDBRow className='user' key={user.id}>
+                    {
+                        sessionStorage.setItem("role",user.role)
+                    }
+                    {
+                        sessionStorage.setItem("is_active",user.is_active)
+                    }
                     <MDBCol md='1'>{user.id}</MDBCol>
                     <MDBCol md='2'>{user.username}</MDBCol>
                     <MDBCol md='2'>{user.email}</MDBCol>
                     <MDBCol md='1'>{user.role}</MDBCol>
                    {user.is_active ? <MDBCol md='1'>Activé</MDBCol> : <MDBCol md='1'>Desactivé</MDBCol>}
                     <MDBCol md='2'>
-                        <select value={role} onChange={e=>{setRole(e.target.value)}}>
-                            <option>Utilisateur</option>
-                            <option>Admin</option>
+                        <select onChange={e=>setRole(e.target.value)}>
+                            <option value='Utilisateur'>Utilisateur</option>
+                            <option value='Admin'>Admin</option>
+                            <option value='Responsable'>Responsable</option>
+                            <option value='Service'>Service</option>
                         </select>
+                        {/* <Select ></Select> */}
 
                     </MDBCol>
                     <MDBCol md='2'>
-                        {/* <p>activer/desactiverbutton</p> */}
-                        <MDBRadio name='flexRadioDefault' id='1' value='Activer' label='Activer' onChange={(e)=>{changeActive(e)}}/>
-                        <MDBRadio name='flexRadioDefault' id='2' label='Désactiver' value='Désactiver' onChange={(e)=>{changeActive(e)}}/>
-
+                        <MDBRadio  name='flexRadioDefault' id='1' value='Activer' label='Activer' onChange={(e)=>{setIs_active(true)}}/>
+                        <MDBRadio name='flexRadioDefault' id='2' label='Désacttiver' value='Désactiver' onChange={(e)=>{setIs_active(false)}}/>
                     </MDBCol>
                     <MDBCol md='1'>
-                    <button onClick={()=>sauvegarde(user.id)}>sauvegarder</button>
+                    <button onClick={(e)=>sauvegarde(user.id,e)}>sauvegarder</button>
 
                     </MDBCol>
                 </MDBRow>

@@ -10,6 +10,8 @@ export const ChangePassword= () => {
     const [erreurPassword1,setErreurPassword1]= useState('');
     const [erreurPassword2,setErreurPassword2]= useState('');
     const [erreurPassword,setErreurPassword]= useState('');
+    const is_superuser=sessionStorage.getItem("is_superuser");
+    console.log("is superuser + "+is_superuser);
     const token=sessionStorage.getItem("key");
     const changePassword = (e) => {
         e.preventDefault();    
@@ -33,13 +35,18 @@ export const ChangePassword= () => {
       }
     return(
 
-        <div className="card">
+        <div className="inscription">
             {
-            reussi? <Redirect to="/HomePage"/>: null
+            reussi && is_superuser ? <Redirect to="/Home"/>: null
             }
-            <div className="email">
-                    <label><b>Entrez votre ancien et nouveau mot de passe:</b></label>
-                    <div className="iconemail">
+            {
+            reussi && !is_superuser ? <Redirect to="/HomePage"/>: null
+            }
+            <div className="inputField">
+                    <br></br>
+                    <label><b>Changer mot de passe:</b></label>
+                    <br></br><br></br>
+                    <div className="icon">
                         <RiLockPasswordFill />
                     </div>
                     <input
@@ -50,7 +57,7 @@ export const ChangePassword= () => {
                        onChange = {(e) => setAncienMotDePasse(e.target.value)}
                     />
                     {erreurPassword ? <p style={{color: 'red',marginLeft:'9%'} }>{erreurPassword}</p> : null}
-                    <div className="iconemail">
+                    <div className="icon">
                         <RiLockPasswordFill />
                     </div>
                     <input
@@ -61,7 +68,7 @@ export const ChangePassword= () => {
                         onChange = {(e) => setMotDePasse(e.target.value)}
                     />
                     {erreurPassword1 ? <p style={{color: 'red',marginLeft:'9%'} }>{erreurPassword1}</p> : null}
-                    <div className="iconemail">
+                    <div className="icon">
                         <RiLockPasswordFill />
                     </div>
                     <input
@@ -73,7 +80,9 @@ export const ChangePassword= () => {
                     />
                     {erreurPassword2 ? <p style={{color: 'red',marginLeft:'9%'} }>{erreurPassword2}</p> : null}
             </div>
+            <div className="insc">
             <button onClick={changePassword}>Confirmer</button>
+            </div>
             <br></br> <br></br>
         </div>
     );

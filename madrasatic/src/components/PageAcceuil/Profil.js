@@ -21,6 +21,7 @@ export const Profil = () => {
   const [erreurAddress, setErreurAddress] = useState();
   const [erreurTel, setErreurTel] = useState();
   const token = sessionStorage.getItem("key");
+  const is_superuser=sessionStorage.getItem("is_superuser");
   useEffect(() => {
     fetch("http://127.0.0.1:8000/madrasatic/user/", {
       method: "GET",
@@ -44,9 +45,13 @@ export const Profil = () => {
         setTel(data.tel);
         console.log(data.role)
         if (data.is_superuser)
+        {
           setAdmin(true);
+          sessionStorage.setItem("is_superuser",true);
+        }
         else{
           setUtilisateur(true);
+          sessionStorage.setItem("is_superuser",false);
         }
         // console.log(data);
       });
@@ -146,8 +151,8 @@ export const Profil = () => {
         </button>
       </div>
       <div className="forgottenpassword">
-                    <Link to="/ChangePassword">Changer le mot de passe?</Link>
-            </div>
+          {is_superuser ? <Link to="/ChangePasswordAdmin">Changer le mot de passe?</Link> : <Link to="/ChangePassword">Changer le mot de passe?</Link>}
+      </div>
       <br></br>
     </div>
   );

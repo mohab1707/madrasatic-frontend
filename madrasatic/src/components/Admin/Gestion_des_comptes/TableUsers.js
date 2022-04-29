@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import ReactDOM from "react-dom";
 import UserList from './UserList';
-import './tableusers.css';
 import {
     MDBContainer,
     MDBRow,
@@ -9,12 +8,11 @@ import {
     } from 'mdb-react-ui-kit';
 
 
-
-const TableUsers = () => {
+import './tableusers.css'
+export const TableUsers = () => {
 
     const token = sessionStorage.getItem("key");
     const[MyData,setMyData]=useState(null);
-
     useEffect(() => {
         fetch("http://127.0.0.1:8000/madrasatic/manageusers/", {
           method: "GET",
@@ -35,10 +33,8 @@ const TableUsers = () => {
             console.log(data.results);
             setMyData(data.results);
             console.log("element 0 :"+MyData);
-            
           });
       }, []);
-
     return (
 
         <MDBContainer>
@@ -46,7 +42,7 @@ const TableUsers = () => {
                 <MDBRow>
                     <MDBCol md='1'><h6>Id</h6></MDBCol>
                     <MDBCol md='2'><h6>Nom d'utilisateur</h6></MDBCol>
-                    <MDBCol md='2'><h4>Email</h4></MDBCol>
+                    <MDBCol md='2'><h6>Email</h6></MDBCol>
                     <MDBCol md='1'><h6>Role</h6></MDBCol>
                     <MDBCol md='1'><h6>Etat</h6></MDBCol>
                     <MDBCol md='2'><h6>Affecter le Role</h6></MDBCol>
@@ -61,6 +57,4 @@ const TableUsers = () => {
     
     );
 }
-
-export default TableUsers;
 

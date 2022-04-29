@@ -13,6 +13,10 @@ import { EmailEnvoye } from './components/Inscription-connexion/EmailEnvoye';
 import { Bare } from './components/PageAcceuil/Bare';
 import { Profil } from './components/PageAcceuil/Profil';
 import { ChangePassword } from './components/Inscription-connexion/ChangePassword';
+import {MDBContainer} from 'mdb-react-ui-kit';
+import { TableUsers } from './components/Admin/Gestion_des_comptes/TableUsers';
+import { AjoutDeclaration } from './components/Déclarations/AjoutDeclarations';
+import { Declaration } from './components/Déclarations/Declaration';
 export default function App() {
 
   return (
@@ -42,6 +46,11 @@ export default function App() {
         </Route>
         < Route exact path="/Home">
           <Gestion_des_comptes></Gestion_des_comptes>
+          <MDBContainer fluid>
+            <MDBContainer style={{margin:'10%'}}>
+               <TableUsers/>
+            </MDBContainer>
+        </MDBContainer>
         </Route>
         < Route path="/madrasatic/password-reset-confirm/:uidb64/:token">
           <NavBar />
@@ -57,6 +66,10 @@ export default function App() {
         </Route>
         < Route exact path="/HomePage">
           <Bare />
+          <div className='shadow1 shadow-5'>
+          <br></br>
+            <Declaration />
+          </div>
         </Route>
         < Route exact path="/Profil">
           <Bare />
@@ -65,11 +78,37 @@ export default function App() {
             <Profil />
           </div>
         </Route>
+        < Route exact path="/ProfilAdmin">
+          <Gestion_des_comptes />
+          <div className='shadow1 shadow-5'>
+          <br></br>
+            <Profil />
+          </div>
+        </Route>
         < Route exact path="/ChangePassword">
           <Bare />
           <div className='shadow1 shadow-5'>
-          {/* <br></br> */}
             <ChangePassword />
+          </div>
+        </Route>
+        < Route exact path="/ChangePasswordAdmin">
+          <Gestion_des_comptes />
+          <div className='shadow1 shadow-5'>
+            <ChangePassword />
+          </div>
+        </Route>
+        < Route exact path="/NewDeclaration">
+          <Bare />
+          <div className='shadow1 shadow-5'>
+          <br></br>
+            <AjoutDeclaration/>
+          </div>
+        </Route>
+        < Route exact path="/Declaration">
+          <Bare />
+          <div className='shadow1 shadow-5'>
+          <br></br>
+            <Declaration />
           </div>
         </Route>
       </Switch>

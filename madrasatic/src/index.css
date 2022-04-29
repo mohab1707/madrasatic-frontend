@@ -35,6 +35,13 @@ body {
   border-radius: 20px;
   margin-top: 7%;
 }
+.shadow2 {
+  background-color:white;
+  max-width: 65%;
+  margin-left: 10%;
+  border-radius: 20px;
+  margin-top: 5%;
+}
 }
 @media screen and (max-width:900px) and (min-width:600px){
   .shadow {
@@ -51,6 +58,13 @@ body {
     border-radius: 20px;
     margin-top: 5%;
   }
+  .shadow2 {
+    background-color:white;
+    max-width: 65%;
+    margin-left: 10%;
+    border-radius: 20px;
+    margin-top: 5%;
+  }
 }
 @media screen and (max-width:600px){
   .shadow {
@@ -63,6 +77,13 @@ body {
   .shadow1 {
     background-color:white;
     max-width: 45%;
+    margin-left: 10%;
+    border-radius: 20px;
+    margin-top: 5%;
+  }
+  .shadow2 {
+    background-color:white;
+    max-width: 65%;
     margin-left: 10%;
     border-radius: 20px;
     margin-top: 5%;
