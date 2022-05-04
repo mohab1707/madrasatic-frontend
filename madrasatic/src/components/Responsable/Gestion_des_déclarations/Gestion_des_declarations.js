@@ -1,4 +1,5 @@
-import React , { useState } from 'react'
+import React , { useState } from 'react';
+import { TableDeclarationEnvoyee } from './TableDeclarationEnvoyee';
 import {
     MDBNavbar,
     MDBNavbarBrand,
@@ -19,7 +20,7 @@ import {
     import { Redirect } from "react-router-dom"
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-export const Gestion_des_comptes = () => {
+export const Gestion_des_declarations = () => {
     const [showNavRight, setShowNavRight] = useState(false);
     const [reussi , setReussi ] = useState(false);
     const deconnexion =(e) => {
@@ -61,22 +62,13 @@ export const Gestion_des_comptes = () => {
             <MDBCollapse navbar show={showNavRight}>
                 <MDBNavbarNav right fullWidth={false} className='mb-2 mb-lg-0'>
                     <MDBNavbarItem>
-                        <MDBNavbarLink href='/Home' style={{color:'#ffffff'}}>Gestion des comptes</MDBNavbarLink>
-                    </MDBNavbarItem>
-                    <MDBNavbarItem>
                         <MDBDropdown>
                             <MDBDropdownToggle tag='a' className='nav-link'>
                                 Gestion des déclarations
                             </MDBDropdownToggle>
                             <MDBDropdownMenu>
                                 <MDBDropdownItem>
-                                    <MDBDropdownLink>Les déclarations</MDBDropdownLink>
-                                </MDBDropdownItem>
-                                <MDBDropdownItem>
-                                    <MDBDropdownLink>Mes déclarations</MDBDropdownLink>
-                                </MDBDropdownItem>
-                                <MDBDropdownItem>
-                                    <MDBDropdownLink>Créer une déclaration</MDBDropdownLink>
+                                    <MDBDropdownLink>Les déclarations envoyées</MDBDropdownLink>
                                 </MDBDropdownItem>
                             </MDBDropdownMenu>
                         </MDBDropdown>
@@ -101,6 +93,7 @@ export const Gestion_des_comptes = () => {
                 </MDBNavbarNav>
             </MDBCollapse>
             </MDBContainer>
+            <TableDeclarationEnvoyee></TableDeclarationEnvoyee>
         </MDBNavbar>
     </header>
     
