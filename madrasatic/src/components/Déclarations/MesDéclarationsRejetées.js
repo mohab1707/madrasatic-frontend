@@ -3,11 +3,11 @@ import { MdYoutubeSearchedFor } from 'react-icons/md';
 import { Link } from "react-router-dom";
 import { AfficherDeclaration } from './AfficherDeclaration';
 import './Declaration.css'
-export const Declaration =()=>{
+export const MesDéclarationRejetées =()=>{
     const token = sessionStorage.getItem("key");
-    const[MyData,setMyData]=useState(null);
+    const[MyData,setMyData]=useState([]);
     useEffect(()=>{
-      fetch("http://127.0.0.1:8000/madrasatic/declarationslist/", {
+      fetch("http://127.0.0.1:8000/madrasatic/declaration_rejection/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -23,6 +23,7 @@ export const Declaration =()=>{
             return response.json();
           })
           .then((data) => {
+            console.log("les decla rejetees")
             console.log(data.results);
             setMyData(data.results);
             console.log(MyData);

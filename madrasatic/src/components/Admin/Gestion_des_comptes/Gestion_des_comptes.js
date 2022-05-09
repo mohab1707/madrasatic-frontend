@@ -65,24 +65,6 @@ export const Gestion_des_comptes = () => {
                     </MDBNavbarItem>
                     <MDBNavbarItem>
                         <MDBDropdown>
-                            <MDBDropdownToggle tag='a' className='nav-link'>
-                                Gestion des déclarations
-                            </MDBDropdownToggle>
-                            <MDBDropdownMenu>
-                                <MDBDropdownItem>
-                                    <MDBDropdownLink>Les déclarations</MDBDropdownLink>
-                                </MDBDropdownItem>
-                                <MDBDropdownItem>
-                                    <MDBDropdownLink>Mes déclarations</MDBDropdownLink>
-                                </MDBDropdownItem>
-                                <MDBDropdownItem>
-                                    <MDBDropdownLink>Créer une déclaration</MDBDropdownLink>
-                                </MDBDropdownItem>
-                            </MDBDropdownMenu>
-                        </MDBDropdown>
-                    </MDBNavbarItem>
-                    <MDBNavbarItem>
-                        <MDBDropdown>
                             <MDBDropdownToggle tag='a' className='nav-link' style={{color:'#ffffff'}}>
                                 
                                  <i class="fas fa-user" style={{color:'#ffffff'}}></i>

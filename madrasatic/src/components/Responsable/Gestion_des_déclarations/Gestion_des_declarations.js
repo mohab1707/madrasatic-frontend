@@ -45,7 +45,7 @@ export const Gestion_des_declarations = () => {
         }
         <MDBNavbar expand='lg' light style={{backgroundColor:'#24344f'}} fixed='top'>
             <MDBContainer fluid>
-            <MDBNavbarBrand href='/Home'style={{color:'#ffffff'}}>MADRASA-TIC</MDBNavbarBrand>
+            <MDBNavbarBrand href='/HomeResponsable'style={{color:'#ffffff'}}>MADRASA-TIC</MDBNavbarBrand>
 
             <MDBNavbarToggler
             type='button'
@@ -63,7 +63,7 @@ export const Gestion_des_declarations = () => {
                 <MDBNavbarNav right fullWidth={false} className='mb-2 mb-lg-0'>
                     <MDBNavbarItem>
                         <MDBDropdown>
-                            <MDBDropdownToggle tag='a' className='nav-link'>
+                            <MDBDropdownToggle tag='a' className='nav-link' style={{color:'#ffffff'}}>
                                 Gestion des déclarations
                             </MDBDropdownToggle>
                             <MDBDropdownMenu>
@@ -93,7 +93,6 @@ export const Gestion_des_declarations = () => {
                 </MDBNavbarNav>
             </MDBCollapse>
             </MDBContainer>
-            <TableDeclarationEnvoyee></TableDeclarationEnvoyee>
         </MDBNavbar>
     </header>
     

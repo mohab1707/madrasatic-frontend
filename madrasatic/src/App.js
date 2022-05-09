@@ -17,6 +17,12 @@ import {MDBContainer} from 'mdb-react-ui-kit';
 import { TableUsers } from './components/Admin/Gestion_des_comptes/TableUsers';
 import { AjoutDeclaration } from './components/Déclarations/AjoutDeclarations';
 import { Declaration } from './components/Déclarations/Declaration';
+import { Gestion_des_declarations } from './components/Responsable/Gestion_des_déclarations/Gestion_des_declarations';
+import { TableDeclarationEnvoyee } from './components/Responsable/Gestion_des_déclarations/TableDeclarationEnvoyee';
+import DeclarationEnvoyee from './components/Responsable/Gestion_des_déclarations/DeclarationEnvoyee';
+import { DeclarationDelete } from './components/Responsable/Gestion_des_déclarations/DeclarationDelete';
+import { DemanderComplement } from './components/Responsable/DemanderComplement';
+import { MesDéclarationRejetées } from './components/Déclarations/MesDéclarationsRejetées';
 export default function App() {
 
   return (
@@ -71,6 +77,11 @@ export default function App() {
             <Declaration />
           </div>
         </Route>
+        < Route exact path="/HomeResponsable">
+          <Gestion_des_declarations />
+          <br></br>
+            <TableDeclarationEnvoyee />
+        </Route>
         < Route exact path="/Profil">
           <Bare />
           <div className='shadow1 shadow-5'>
@@ -109,6 +120,29 @@ export default function App() {
           <div className='shadow1 shadow-5'>
           <br></br>
             <Declaration />
+          </div>
+        </Route>
+        < Route exact path="/DeclarationEnvoyer/:id">
+          <Gestion_des_declarations />
+          <br></br>
+            <DeclarationEnvoyee />
+        </Route>
+        < Route exact path="/RejeterDecla/:id">
+          <Gestion_des_declarations />
+          <div className='shadow1 shadow-5'>
+            <DeclarationDelete />
+          </div>
+        </Route>
+        < Route exact path="/DeclarationIncomplete/:id">
+          <Gestion_des_declarations />
+          <div className='shadow1 shadow-5'>
+            <DemanderComplement />
+          </div>
+        </Route>
+        < Route exact path="/MesDéclarationsRejetées">
+          <Gestion_des_declarations />
+          <div className='shadow1 shadow-5'>
+            <MesDéclarationRejetées />
           </div>
         </Route>
       </Switch>

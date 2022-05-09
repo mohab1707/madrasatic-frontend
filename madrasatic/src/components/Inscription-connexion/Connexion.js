@@ -46,7 +46,11 @@ export const Connexion = () => {
                     if (data.is_superuser==true){
                         setAdmin(true);
                     }else{
+                        if(data.role=='Responsable'){
+                            setResponsable(true);
+                        }else{
                         setUtilisateur(true);
+                        }
                     }
                 })                
             }
@@ -71,6 +75,9 @@ export const Connexion = () => {
             }
             {
             utilisateur? <Redirect to='/HomePage' /> : null
+            }
+            {
+            responsable? <Redirect to='/HomeResponsable' /> : null
             }
             <form>
                 <div className="inputField">

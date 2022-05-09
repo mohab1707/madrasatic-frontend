@@ -13,7 +13,7 @@ const UserList = ( {MyData}) => {
         console.log('id+ '+id);
         console.log(role[2])
         const token = sessionStorage.getItem("key");
-        if(role == "('Utilisateur', 'User')") 
+        if((role == "('Utilisateur', 'User')"))
         {
             setRole('Utilisateur')
         };
@@ -34,6 +34,7 @@ const UserList = ( {MyData}) => {
                 console.log(data);
             }).then(()=>{
                 refreshPage(); 
+                // setRole("role");
             });    
             }
     return (

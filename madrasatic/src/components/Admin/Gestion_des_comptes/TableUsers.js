@@ -1,5 +1,4 @@
 import React, { useEffect, useReducer, useState } from 'react';
-import ReactDOM from "react-dom";
 import UserList from './UserList';
 import {
     MDBContainer,

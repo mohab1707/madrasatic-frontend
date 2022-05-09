@@ -30,8 +30,6 @@ export const Inscription = () => {
             }else
             {
                 console.log("y'a une erreur");
-                // setErreur(response.json().catch());
-                // console.log(response.json());
             }
             return response.json();
         }).then(data => {
