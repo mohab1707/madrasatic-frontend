@@ -8,7 +8,7 @@ export const Declaration =()=>{
     const token = sessionStorage.getItem("key");
     const[MyData,setMyData]=useState(null);
     useEffect(()=>{
-      fetch("http://127.0.0.1:8000/madrasatic/declarationslist/", {
+      fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

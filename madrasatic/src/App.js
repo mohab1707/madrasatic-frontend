@@ -24,6 +24,8 @@ import { DeclarationDelete } from './components/Responsable/Gestion_des_déclara
 import { DemanderComplement } from './components/Responsable/DemanderComplement';
 import { MesDeclarationsEnregistrées } from './components/Déclarations/DeclarationsEnregistrées';
 import { MesDéclarationCompleter } from './components/Déclarations/MesDéclarationsACompleter';
+import { CompleterDeclaration } from './components/Déclarations/CompleterDeclaration';
+import { ModifierDeclarationEnregistrée } from './components/Déclarations/ModifierDeclaEnregistrée';
 export default function App() {
 
   return (
@@ -141,15 +143,29 @@ export default function App() {
           </div>
         </Route>
         < Route exact path="/MesDéclarationsACompleter">
-          <Gestion_des_declarations />
-          <div className='shadow1 shadow-5'>
+        <Bare />
+          {/* <div className='shadow1 shadow-5'> */}
             <MesDéclarationCompleter />
-          </div>
+          {/* </div> */}
         </Route>
         < Route exact path="/MesDeclarationsEnregistrées">
           <Bare />
-          <div className='shadow1 shadow-5'>
+          {/* <div className='shadow1 shadow-5'> */}
             <MesDeclarationsEnregistrées />
+          {/* </div> */}
+        </Route>
+        < Route exact path="/CompleterDeclaration/:idDeclaration">
+          <Bare />
+          <div className='shadow1 shadow-5'>
+          <br></br>
+            <CompleterDeclaration />
+          </div>
+        </Route>
+        < Route exact path="/ModifierDeclarationEnregistrée/:idDeclaration">
+          <Bare />
+          <div className='shadow1 shadow-5'>
+          <br></br>
+            <ModifierDeclarationEnregistrée />
           </div>
         </Route>
       </Switch>

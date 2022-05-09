@@ -46,7 +46,7 @@ export const Connexion = () => {
                     if(data.role=="('Utilisateur', 'User')"){
                         setUtilisateur(true);
                     }
-                    if (data.is_superuser==true){
+                    if (data.role=== 'Admin'){
                         setAdmin(true);
                     }else{
                         if(data.role=='Responsable'){

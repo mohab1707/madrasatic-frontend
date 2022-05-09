@@ -11,7 +11,7 @@ import './tableusers.css'
 export const TableUsers = () => {
 
     const token = sessionStorage.getItem("key");
-    const[MyData,setMyData]=useState(null);
+    const[MyData,setMyData]=useState([]);
     useEffect(() => {
         fetch("http://127.0.0.1:8000/madrasatic/manageusers/", {
           method: "GET",
@@ -31,7 +31,7 @@ export const TableUsers = () => {
           .then((data) => {
             console.log(data.results);
             setMyData(data.results);
-            console.log("element 0 :"+MyData);
+            // console.log("element 0 :"+MyData);
           });
       }, []);
     return (
