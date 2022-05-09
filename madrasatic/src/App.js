@@ -22,7 +22,8 @@ import { TableDeclarationEnvoyee } from './components/Responsable/Gestion_des_d�
 import DeclarationEnvoyee from './components/Responsable/Gestion_des_déclarations/DeclarationEnvoyee';
 import { DeclarationDelete } from './components/Responsable/Gestion_des_déclarations/DeclarationDelete';
 import { DemanderComplement } from './components/Responsable/DemanderComplement';
-import { MesDéclarationRejetées } from './components/Déclarations/MesDéclarationsRejetées';
+import { MesDeclarationsEnregistrées } from './components/Déclarations/DeclarationsEnregistrées';
+import { MesDéclarationCompleter } from './components/Déclarations/MesDéclarationsACompleter';
 export default function App() {
 
   return (
@@ -72,10 +73,10 @@ export default function App() {
         </Route>
         < Route exact path="/HomePage">
           <Bare />
-          <div className='shadow1 shadow-5'>
+          {/* <div className='shadow1 shadow-5'> */}
           <br></br>
             <Declaration />
-          </div>
+          {/* </div> */}
         </Route>
         < Route exact path="/HomeResponsable">
           <Gestion_des_declarations />
@@ -139,10 +140,16 @@ export default function App() {
             <DemanderComplement />
           </div>
         </Route>
-        < Route exact path="/MesDéclarationsRejetées">
+        < Route exact path="/MesDéclarationsACompleter">
           <Gestion_des_declarations />
           <div className='shadow1 shadow-5'>
-            <MesDéclarationRejetées />
+            <MesDéclarationCompleter />
+          </div>
+        </Route>
+        < Route exact path="/MesDeclarationsEnregistrées">
+          <Bare />
+          <div className='shadow1 shadow-5'>
+            <MesDeclarationsEnregistrées />
           </div>
         </Route>
       </Switch>

@@ -1,21 +1,13 @@
-import React, { useEffect, useReducer, useState } from 'react';
-import ReactDOM from "react-dom";
-import { ListeDeclarationEnvoyee } from './ListeDeclarationEnvoyee';
-import './tabledeclarations.css';
-
-import {
-    MDBContainer,
-    MDBRow,
-    MDBCol,
-    } from 'mdb-react-ui-kit';
-
-
-
-export const TableDeclarationEnvoyee = () => {
+import { useEffect, useState } from 'react';
+import { MdYoutubeSearchedFor } from 'react-icons/md';
+import { Link } from "react-router-dom";
+import { AfficherDeclaration } from './AfficherDeclaration';
+import './Declaration.css'
+export const MesDéclarationCompleter =()=>{
     const token = sessionStorage.getItem("key");
-    const[MyData,setMyData]=useState(null);
+    const[MyData,setMyData]=useState([]);
     useEffect(()=>{
-      fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
+      fetch("http://127.0.0.1:8000/madrasatic/declaration_complement_demand/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -31,20 +23,16 @@ export const TableDeclarationEnvoyee = () => {
             return response.json();
           })
           .then((data) => {
+            console.log("les decla rejetees")
             console.log(data.results);
             setMyData(data.results);
             console.log(MyData);
           });
     },[])
-
-    
-    return (
-            <MDBContainer>
-            {MyData && <ListeDeclarationEnvoyee MyData={MyData}></ListeDeclarationEnvoyee>}
-            </MDBContainer>
-    
-    );
+    return(
+    <div className="blog-list">
+        <h2 style={{textAlign:'center'}}>Liste des déclarations</h2>
+        {MyData && <AfficherDeclaration declaration={MyData}/>}
+  </div>
+    )
 }
-
-
-

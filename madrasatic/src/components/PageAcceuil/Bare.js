@@ -83,10 +83,10 @@ export const Bare = () => {
                                 <MDBDropdownLink href='/Profil'>Mon Profil</MDBDropdownLink>
                             </MDBDropdownItem>
                             <MDBDropdownItem>
-                                <MDBDropdownLink href='/Profil'>Mes déclarations</MDBDropdownLink>
+                                <MDBDropdownLink href='/MesDeclarationsEnregistrées'>Déclarations enregistrées</MDBDropdownLink>
                             </MDBDropdownItem>
                             <MDBDropdownItem>
-                                <MDBDropdownLink href='/MesDéclarationsRejetées'>Mes déclarations rejetées</MDBDropdownLink>
+                                <MDBDropdownLink href='/MesDéclarationsACompleter'>Déclarations à compléter</MDBDropdownLink>
                             </MDBDropdownItem>
                             <MDBDropdownItem>
                                 <MDBDropdownLink href='/Profil'>Mes annonces</MDBDropdownLink>

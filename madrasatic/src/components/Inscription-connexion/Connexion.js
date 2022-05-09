@@ -12,8 +12,10 @@ export const Connexion = () => {
     const [erreurEmail,setErreurEmail]=useState();
     const [erreurPassword,setErreurPassword]=useState();
     const [erreur_non_field_errors,setErreur_non_field_errors]=useState();
+    const [isPending,setIsPending]=useState(false);
     const login = (e) => {
-        e.preventDefault();    
+        e.preventDefault();  
+        setIsPending(true);  
         fetch("http://127.0.0.1:8000/madrasatic/login/", {
           method: "POST",
           headers: { "Content-Type": "application/json"},
@@ -35,6 +37,7 @@ export const Connexion = () => {
                     {
                         console.log("la reponse ",response);
                         console.log("y'a une erreur");
+                       
                     }
                     return response.json();
                 }).then(data => {
@@ -52,10 +55,12 @@ export const Connexion = () => {
                         setUtilisateur(true);
                         }
                     }
+                    setIsPending(false);
                 })                
             }
             else{
                 console.log("erreur");
+                setIsPending(false);
             }
              return response.json();   
         }).then((data) => {
@@ -64,12 +69,18 @@ export const Connexion = () => {
             setErreurEmail(data.email);
             setErreurPassword(data.password);
             setErreur_non_field_errors(data.non_field_errors);
+            setIsPending(false);
         }
         )
         
       }
     return ( 
+        <>
+        {isPending ? <div class="spinner-border" role="status" style={{marginLeft:'35%',marginTop:'15%'}}>
+                <span class="visually-hidden" >Loading...</span>
+            </div> : 
         <div className="Connexion">
+            
             {
             admin? <Redirect to='/Home' /> : null
             }
@@ -118,5 +129,7 @@ export const Connexion = () => {
             <br></br>
             <br></br>
         </div> 
+        }
+        </>
      );
 }
