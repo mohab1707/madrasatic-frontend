@@ -1,5 +1,5 @@
 .create {
-    max-width: 400px;
+    max-width: 90%;
     margin: 0 auto;
     text-align: center;
   }
@@ -21,7 +21,8 @@
     display: block;
   }
   .create button {
-    background: #24344f;
+    background: #b78429;
+    border-color: #24344f;
     width: 100px;
     color: #fff;
     border: 0;

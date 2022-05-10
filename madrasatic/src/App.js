@@ -26,6 +26,7 @@ import { MesDeclarationsEnregistrées } from './components/Déclarations/Declara
 import { MesDéclarationCompleter } from './components/Déclarations/MesDéclarationsACompleter';
 import { CompleterDeclaration } from './components/Déclarations/CompleterDeclaration';
 import { ModifierDeclarationEnregistrée } from './components/Déclarations/ModifierDeclaEnregistrée';
+import { Footer } from './components/Inscription-connexion/Footer';
 export default function App() {
 
   return (
@@ -35,8 +36,11 @@ export default function App() {
           <NavBar />
           <div className='shadow shadow-5'>
             <br></br>
-            <InscriptionOuConnexion />
-            <Connexion />
+              <InscriptionOuConnexion />
+              <Connexion />
+          </div>
+          <div style={{marginTop:'150px'}}>
+            <Footer></Footer>
           </div>
         </Route>
         < Route exact path="/inscription">
@@ -51,6 +55,9 @@ export default function App() {
           <NavBar />
           <div className='shadow shadow-5'>
             <MotDePasseOublie />
+          </div>
+          <div style={{marginTop:'150px'}}>
+            <Footer></Footer>
           </div>
         </Route>
         < Route exact path="/Home">
@@ -91,6 +98,9 @@ export default function App() {
           <br></br>
             <Profil />
           </div>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'50px' }}>
+            &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
+          </div>
         </Route>
         < Route exact path="/ProfilAdmin">
           <Gestion_des_comptes />
@@ -104,11 +114,17 @@ export default function App() {
           <div className='shadow1 shadow-5'>
             <ChangePassword />
           </div>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'50px' }}>
+            &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
+          </div>
         </Route>
         < Route exact path="/ChangePasswordAdmin">
           <Gestion_des_comptes />
           <div className='shadow1 shadow-5'>
             <ChangePassword />
+          </div>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'50px' }}>
+            &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
           </div>
         </Route>
         < Route exact path="/NewDeclaration">
@@ -116,6 +132,9 @@ export default function App() {
           <div className='shadow1 shadow-5'>
           <br></br>
             <AjoutDeclaration/>
+          </div>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'50px' }}>
+            &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
           </div>
         </Route>
         < Route exact path="/Declaration">

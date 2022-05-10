@@ -125,6 +125,7 @@ export const AjoutDeclaration =()=>{
             reussi? <Redirect to='/HomePage' /> : null
       }
       <h2>Ajouter une déclaration</h2>
+      <hr style={{border: '2px solid #b78429'}}/>
       <form >
         <label>Objet de la déclaration:</label>
         <input 

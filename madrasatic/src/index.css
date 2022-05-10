@@ -6,6 +6,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   /* background-color: #212121; */
   background-color: #ccd4f2;
+  background-image: linear-gradient(to right top, #8e8e8e 0%, #8da0b1 100%);
 }
 
 code {
@@ -14,11 +15,12 @@ code {
 }
 @media screen and (min-width:900px){
 .shadow {
-  background-color:white;
+  background-color:  #e8e8e8;
   max-width: 45%;
   margin-left: 10%;
   border-radius: 20px;
   margin-top: 0.2%;
+  border: 2px solid #b78429;
 }
 body {
   margin: 0;
@@ -34,6 +36,7 @@ body {
   margin-left: 10%;
   border-radius: 20px;
   margin-top: 7%;
+  border: 2px solid #b78429;
 }
 .shadow2 {
   background-color:white;
@@ -54,7 +57,7 @@ body {
   .shadow1 {
     background-color:white;
     max-width: 45%;
-    margin-left: 10%;
+    margin-left: 50%;
     border-radius: 20px;
     margin-top: 5%;
   }
@@ -77,7 +80,7 @@ body {
   .shadow1 {
     background-color:white;
     max-width: 45%;
-    margin-left: 10%;
+    margin-left: 50%;
     border-radius: 20px;
     margin-top: 5%;
   }

@@ -1,5 +1,5 @@
 body {
-    background-color: #e2e0fd;
+    /*background-image: linear-gradient(to right top, #3e567c 0%, #8da0b1 100%);*/
     /* background-color: #f1fcfd; */
 }
 .auth {
@@ -70,14 +70,13 @@ display: flex;
 max-width: 150%;
 margin: 0%;
 margin-top: 1%;
-position: relative;
 }
 .forgottenpassword a{
 font-size: 100%;
 color: #24344f;
 }
 .insc button {
-background-color: #24344f;
+background-color: #b78429;
 width: 25%;
 padding:2%;
 margin-left: 62%;
@@ -87,7 +86,7 @@ color: white;
 }
 
 .conx button{
-background-color: #24344f;
+background-color: #b78429;
 color: white;
 padding:8%;
 border-color: #24344f;
@@ -127,7 +126,7 @@ color: gray;
     margin-left: 10%;
 }
 .card button{
-background-color:#24344f;
+background-color:#b78429;
 width: 16%;
 padding:1%;
 margin-left: 43%;
