@@ -28,7 +28,8 @@ export const DemanderComplement= () => {
                     setIdResponsable(data.id);
                 });
         },[])
-        const demandercomplement=(()=>{
+        const demandercomplement=((e)=>{
+            e.preventDefault(); 
             console.log("id decla"+id +" idresponsable +" + idResponsable);
             fetch(`http://127.0.0.1:8000/madrasatic/declaration_complement_demand/`, {
                 method: "POST",

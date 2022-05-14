@@ -80,7 +80,7 @@ export const ModifierDeclarationEnregistrée =()=>{
       setImage(data.image)
     })
     },[]);
-    const saveDeclaration=((e)=>{
+    const saveDeclaration=((e)=>{ 
       const form_data = new FormData();
       form_data.append("auteur",auteur);
       form_data.append("priorité", priorité);
@@ -144,7 +144,8 @@ export const ModifierDeclarationEnregistrée =()=>{
       console.log(data);
     })
     })
-    const supprimerDeclaration=(()=>{
+    const supprimerDeclaration=((e)=>{
+      e.preventDefault(); 
         fetch(`http://localhost:8000/madrasatic/declarationdelete/${idDeclaration}/`, {
       method: "DELETE",
       headers: {

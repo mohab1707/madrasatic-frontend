@@ -15,6 +15,7 @@ export const ListeDeclarationEnvoyee = ( {MyData}) => {
         setConsulter(true);
         
     })
+    
     const afficher=(val)=>{
         if (val === 'publiée') {
             fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/?etat=publiée", {
@@ -208,7 +209,7 @@ export const ListeDeclarationEnvoyee = ( {MyData}) => {
                                 </table>
                                 
                             </Card.Header>
-                            {data.map(dec => (
+                            {data.filter(decla=>decla.parent_declaration === null).map(dec => (
                             <Card.Body className='px-0 py-2'  onClick={()=>{detail(dec.id)}}>       
                                 <Table responsive hover>
                                     <tbody>

@@ -62,16 +62,9 @@ export const Gestion_des_declarations = () => {
             <MDBCollapse navbar show={showNavRight}>
                 <MDBNavbarNav right fullWidth={false} className='mb-2 mb-lg-0'>
                     <MDBNavbarItem>
-                        <MDBDropdown>
-                            <MDBDropdownToggle tag='a' className='nav-link' style={{color:'#ffffff'}}>
-                                Gestion des déclarations
-                            </MDBDropdownToggle>
-                            <MDBDropdownMenu>
-                                <MDBDropdownItem>
-                                    <MDBDropdownLink>Les déclarations envoyées</MDBDropdownLink>
-                                </MDBDropdownItem>
-                            </MDBDropdownMenu>
-                        </MDBDropdown>
+                    <MDBNavbarItem>
+                        <MDBNavbarLink href='/NewCatégorie' style={{color:'#ffffff'}}>Nouvelle catégorie</MDBNavbarLink>
+                    </MDBNavbarItem>
                     </MDBNavbarItem>
                     <MDBNavbarItem>
                         <MDBDropdown>
@@ -82,7 +75,10 @@ export const Gestion_des_declarations = () => {
                             </MDBDropdownToggle>
                         <MDBDropdownMenu>
                             <MDBDropdownItem>
-                                <MDBDropdownLink href='/ProfilAdmin'>Mon Profil</MDBDropdownLink>
+                                <MDBDropdownLink href='/ProfilResponsable'>Mon Profil</MDBDropdownLink>
+                            </MDBDropdownItem>
+                            <MDBDropdownItem>
+                                <MDBDropdownLink href='/Categories'>Catégories</MDBDropdownLink>
                             </MDBDropdownItem>
                             <MDBDropdownItem>
                                 <MDBBtn className='text-white' color='dark' onClick={deconnexion}>Se déconnecter</MDBBtn>

@@ -27,6 +27,9 @@ import { MesDéclarationCompleter } from './components/Déclarations/MesDéclara
 import { CompleterDeclaration } from './components/Déclarations/CompleterDeclaration';
 import { ModifierDeclarationEnregistrée } from './components/Déclarations/ModifierDeclaEnregistrée';
 import { Footer } from './components/Inscription-connexion/Footer';
+import { AjoutCatégorie } from './components/Catégories/NouvelleCatégorie';
+import { Categories } from './components/Catégories/Catégories';
+import { ListeDeclaPourAttacher } from './components/Responsable/Gestion_des_déclarations/ListeDeclaPourAttacher';
 export default function App() {
 
   return (
@@ -92,6 +95,11 @@ export default function App() {
           <br></br>
             <TableDeclarationEnvoyee />
         </Route>
+        < Route exact path="/AttacherDeclaration/:idparent">
+          <Gestion_des_declarations />
+          <br></br>
+            <ListeDeclaPourAttacher />
+        </Route>
         < Route exact path="/Profil">
           <Bare />
           <div className='shadow1 shadow-5'>
@@ -107,6 +115,27 @@ export default function App() {
           <div className='shadow1 shadow-5'>
           <br></br>
             <Profil />
+          </div>
+        </Route>
+        < Route exact path="/ProfilResponsable">
+          <Gestion_des_declarations/>
+          <div className='shadow1 shadow-5'>
+          <br></br>
+            <Profil />
+          </div>
+        </Route>
+        < Route exact path="/NewCatégorie">
+          <Gestion_des_declarations/>
+          <div className='shadow1 shadow-5'>
+          <br></br>
+            <AjoutCatégorie />
+          </div>
+        </Route>
+        < Route exact path="/Categories">
+          <Gestion_des_declarations />
+          <br></br>
+          <div className='shadow1 shadow-5'>
+            <Categories />
           </div>
         </Route>
         < Route exact path="/ChangePassword">

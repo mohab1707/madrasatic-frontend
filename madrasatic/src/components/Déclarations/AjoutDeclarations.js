@@ -4,7 +4,7 @@ import { MdSentimentSatisfied } from 'react-icons/md';
 import { Redirect } from "react-router-dom"
 import './Declaration.css'
 export const AjoutDeclaration =()=>{
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState("");
     const [categories,setCategories]=useState([]);
     const [objet,setObjet]=useState("");
     const [auteur,setAuteur]=useState("");

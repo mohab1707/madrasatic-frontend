@@ -69,7 +69,7 @@ export const Bare = () => {
                         <MDBNavbarLink href='' style={{color:'#ffffff'}}>Annonces</MDBNavbarLink>
                     </MDBNavbarItem>
                     <MDBNavbarItem>
-                        <MDBNavbarLink href='/Declaration' style={{color:'#ffffff'}}>Déclarations</MDBNavbarLink>
+                        <MDBNavbarLink href='/HomePage' style={{color:'#ffffff'}}>Déclarations</MDBNavbarLink>
                     </MDBNavbarItem>
                     <MDBNavbarItem>
                         <MDBDropdown>

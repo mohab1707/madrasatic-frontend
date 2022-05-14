@@ -82,6 +82,7 @@ export const CompleterDeclaration =()=>{
     })
     },[]);
     const saveDeclaration=((e)=>{
+
       const form_data = new FormData();
       form_data.append("auteur",auteur);
       form_data.append("priorité", priorité);
