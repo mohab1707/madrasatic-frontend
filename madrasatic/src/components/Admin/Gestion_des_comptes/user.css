@@ -5,10 +5,15 @@
     padding: 10px 16px;
     margin: 20px 0;
     border-bottom: 1px solid #fafafa;
+    border: 2px solid #44e0b3;
+    border-radius: 8px;
+
   }
-/* .user:hover {
+ .user:hover {
     box-shadow: 1px 3px 5px rgba(0,0,0,0.1);
-  } */
+    border-color: #44e0b3;
+  } 
+
 .user button {
     color: white;
     background-color: #24344d;

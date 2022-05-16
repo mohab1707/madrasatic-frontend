@@ -36,7 +36,9 @@ export const TableUsers = () => {
       }, []);
     return (
 
-        <MDBContainer>
+        <MDBContainer className='utilisateurs'>
+            <h2>Liste des utilisateurs</h2>
+            <hr style={{border: '2px solid #b78429'}}/>
             <MDBContainer className='head'>
                 <MDBRow>
                     <MDBCol md='1'><h6>Id</h6></MDBCol>

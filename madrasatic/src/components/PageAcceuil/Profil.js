@@ -94,6 +94,8 @@ export const Profil = () => {
     <div className="inscription">
       {reussi && Utilisateur ? <Redirect to="/HomePage" /> : null}
       {reussi && admin ? <Redirect to="/Home" /> : null}
+      <h2>Mis à jour mon profile</h2>
+      <hr style={{border: '2px solid #b78429'}}/>
       <form>
         <div className="inputField">
           <div className="icon">

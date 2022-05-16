@@ -5,11 +5,41 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* background-color: #212121; */
-  background-color: #ccd4f2;
-  background-image: linear-gradient(to right top, #8e8e8e 0%, #8da0b1 100%);
+  /*background-color: #ccd4f2;*/
 }
+.identifier {
+  background: url(./images/Background.png) no-repeat;
+  background-size: 100%; 
+  }
 
-code {
+  .profilclass {
+    background-image: linear-gradient(to right top, white 0%, #8da0b1 80%, #1f2833 100%);
+  }
+
+  .ajoutdeclarationclass {
+    background-image: linear-gradient(to right top, white 0%, #8da0b1 80%, #1f2833 100%);
+  }
+
+  .changerpassword {
+    background-image: linear-gradient(to right top, white 0%, #8da0b1 80%, #1f2833 100%);
+  }
+
+  .gestiondescomptes {
+    background-image: linear-gradient(to right top, white 0%, #8da0b1 80%, #1f2833 100%);
+  }
+
+  .ajoutcategorieclass {
+    background-image: linear-gradient(to right top, white 0%, #8da0b1 80%, #1f2833 100%);
+  }
+
+  .categoriesclass {
+    background-image: linear-gradient(to right top, white 0%, #8da0b1 80%, #1f2833 100%);
+  }
+
+  .mesdeclarations {
+    background-image: linear-gradient(to right top, white 0%, #8da0b1 80%, #1f2833 100%);
+  }
+/*code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
@@ -28,24 +58,24 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* background-color: #212121; */
-  background-color: #60061e;
-}
-.shadow1 {
+  /*background-color: #60061e;
+}*/
+/*.shadow1 {
   background-color:white;
   max-width: 45%;
   margin-left: 10%;
   border-radius: 20px;
   margin-top: 7%;
   border: 2px solid #b78429;
-}
-.shadow2 {
+}*/
+/*.shadow2 {
   background-color:white;
   max-width: 65%;
   margin-left: 10%;
   border-radius: 20px;
   margin-top: 5%;
-}
-}
+}*/
+/*}
 @media screen and (max-width:900px) and (min-width:600px){
   .shadow {
     background-color: white;
@@ -53,8 +83,8 @@ body {
     margin-left: 10%;
     border-radius: 20px;
     margin-top: 0.2%;
-  }
-  .shadow1 {
+  }*/
+  /*.shadow1 {
     background-color:white;
     max-width: 45%;
     margin-left: 50%;
@@ -91,4 +121,4 @@ body {
     border-radius: 20px;
     margin-top: 5%;
   }
-}
+}*/

@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 import { MdSentimentSatisfied } from 'react-icons/md';
 import { Redirect } from "react-router-dom"
+import { MDBContainer } from 'mdb-react-ui-kit';
 import '../Déclarations/Declaration.css'
 export const AjoutCatégorie =()=>{
     const [services,setServices]=useState([]);
@@ -57,7 +58,8 @@ export const AjoutCatégorie =()=>{
     })
     })
     return(
-    <div className="create">
+      <MDBContainer className='form'>
+        <div className="create">
       {
             reussi? <Redirect to='/HomeResponsable' /> : null
       }
@@ -82,5 +84,6 @@ export const AjoutCatégorie =()=>{
         <button onClick={validateCategorie}>Valider</button>
       </form>
     </div>
+      </MDBContainer>
     )
 }
