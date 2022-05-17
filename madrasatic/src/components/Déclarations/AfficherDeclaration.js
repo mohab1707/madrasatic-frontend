@@ -2,10 +2,59 @@ import { Link } from "react-router-dom";
 import './Declaration.css'
 import {Row, Col, Card, Form, Button, InputGroup, FormControl, DropdownButton, Dropdown,Table} from 'react-bootstrap';
 import { Categories } from "../Catégories/Catégories";
-import { useState } from "react";
-export const AfficherDeclaration= ( {declaration}) => {
+import { useEffect, useState } from "react";
+import {BsThreeDotsVertical} from "react-icons/bs"
+import {
+  MDBDropdown,
+  MDBDropdownToggle,
+  MDBDropdownMenu,
+  MDBDropdownItem,
+  MDBDropdownLink,
+  MDBBtn
+  } from 'mdb-react-ui-kit';
+  import ReactPaginate from "react-paginate";
+export const AfficherDeclaration= () => {
     const [nomCategorie,setNomCategorie]=useState("");
+    const [confirmé,setConfirmé]=useState("");
+    const [signalé,setSignalé]=useState("");
+    const [nombre,setNombre]=useState("");
+    const [nombrePages,setNombresPages]=useState("");
     const token = sessionStorage.getItem("key");
+    const [pageCourrente,setPageCourrente]=useState(1);
+    const[declaration,setMyData]=useState([]);
+    useEffect(()=>{
+      if (pageCourrente == 1){
+          fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "Authorization":`Token ${token}`
+              },
+            }).then((response) => {
+                return response.json();
+              })
+              .then((data) => {
+                setMyData(data.results);
+                setNombre(data.count);
+                setNombresPages(Math.ceil(data.count /5));
+              });
+            }else{
+              fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/?page=${pageCourrente}`, {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                  "Accept": "application/json",
+                  "Authorization":`Token ${token}`
+                },
+              }).then((response) => {
+                  return response.json();
+                })
+                .then((data) => {
+                  setMyData(data.results);
+                });
+            }
+    },[declaration]);
     const Categories=(cat)=>{
         fetch("http://127.0.0.1:8000/madrasatic/categories/"+cat+"/", {
       method: "GET",
@@ -27,18 +76,112 @@ export const AfficherDeclaration= ( {declaration}) => {
         setNomCategorie(data.name);
       });
     }
+    const confirmer=(id)=>{
+        console.log("elle est confirmé par :" + confirmé);
+        fetch(`http://localhost:8000/madrasatic/responsable_declarations/${id}/`, {
+          method: "PUT",
+          headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json",
+              "Authorization":`Token ${token}`
+          },
+          body:JSON.stringify({confirmée_par:confirmé+1})
+          }).then((response) => {
+              if (response.ok) {
+              console.log("confirmé modifier");
+              } else {
+              console.log("y'a une erreur");
+              }
+              return response.json();
+          })
+    }
+    const recupdata=((id)=>{
+      fetch(`http://localhost:8000/madrasatic/responsable_declarations/${id}/`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization":`Token ${token}`
+        },
+        }).then((response) => {
+            if (response.ok) {
+            console.log("signalé par et recup par récuperer");
+            } else {
+            console.log("y'a une erreur");
+            }
+            return response.json();
+        }).then((data)=>{
+          setSignalé(data.signalée_par);
+          setConfirmé(data.confirmée_par);
+        })
+    })
+    const signaler=(id,e)=>{
+        e.preventDefault();
+          console.log("elle est signalé par :",signalé)
+            fetch(`http://localhost:8000/madrasatic/responsable_declarations/${id}/`, {
+              method: "PUT",
+              headers: {
+                  "Content-Type": "application/json",
+                  "Accept": "application/json",
+                  "Authorization":`Token ${token}`
+              },
+              body:JSON.stringify({signalée_par:signalé+1})
+              }).then((response) => {
+                  if (response.ok) {
+                  console.log("signalé par  modifié");
+                  } else {
+                  console.log("y'a une erreur");
+                  }
+                  return response.json();
+              })
+        
+    }
+    const ChangePage=((data)=>{
+      console.log(data.selected);
+      setPageCourrente(data.selected+1);
+      if(pageCourrente == 1){
+        fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization":`Token ${token}`
+          },
+        }).then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            setMyData(data.results);
+          });
+      }else{
+        fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/?page=${pageCourrente}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization":`Token ${token}`
+          },
+        }).then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            setMyData(data.results);
+          });
+      }
+    })
     return (
         <div >
-          <Col md={10} xl={10} style={{marginTop:'5%'}}>
+          <Col md={10} xl={12} style={{marginTop:'7%'}}>
                         <Card className='Recent-Users'>
                             <Card.Header>
                                 <Card.Title as='h3'>Liste des déclarations</Card.Title>
                             </Card.Header>
-                            {declaration.filter(decla=>decla.parent_declaration === null).map(dec => (
-                            <Card.Body className='px-0 py-2'  onClick={()=>{console.log("j'ai cliqué sur +" + dec.id)}}>
+                            {declaration.filter(decla=>decla.parent_declaration === null).filter(decl=>decl.signalée_par < 3).map(dec => (
+                            <Card.Body className='px-0 py-2'  onClick={()=>{recupdata(dec.id)}}>
                                 <Table responsive hover>
                                     <tbody>
                                     <tr className="unread">
+          
                                         <td><img  style={{width: '150px'}} src={dec.image} alt="activity-user"/></td>
                                         <td>
                                             <h6 className="mb-1">Objet :{dec.objet}</h6>
@@ -48,13 +191,50 @@ export const AfficherDeclaration= ( {declaration}) => {
                                             <h6 className="text-muted"><i className="fa fa-circle text-c-green f-10 m-r-15"/>Catégorie :{dec.catégorie}</h6>
                                             <h6 className="text-muted"><i className="fa fa-circle text-c-green f-10 m-r-15"/>Priorité :{dec.priorité}</h6>
                                         </td>
-                                        {/* <td><a href={DEMO.BLANK_LINK} className="label theme-bg2 text-white f-12">Reject</a><a href={DEMO.BLANK_LINK} className="label theme-bg text-white f-12">Approve</a></td> */}
+                                        <br></br><br></br>
+                                          <MDBDropdown>
+                                       <MDBDropdownToggle tag='a' className='nav-link'style={{left:"90%",
+                                              fontSize:"30px",
+                                              padding: "0% 0%",color:'black'}}>                                          
+                                      </MDBDropdownToggle >
+                                     
+                                  <MDBDropdownMenu>
+                                      <MDBDropdownItem>
+                                          <MDBDropdownLink onClick={(e)=>{confirmer(dec.id,e)}}>Confirmer</MDBDropdownLink>
+                                      </MDBDropdownItem>
+                                      <MDBDropdownItem>
+                                          <MDBDropdownLink onClick={(e)=>{signaler(dec.id,e)}}>Signaler</MDBDropdownLink>
+                                      </MDBDropdownItem>
+                                      
+                                    <MDBDropdownItem>
+                            </MDBDropdownItem>
+                        </MDBDropdownMenu>
+                        </MDBDropdown>
+                                       
                                     </tr>
                                   </tbody>
                                 </Table>
                               </Card.Body>
                               ))} 
                         </Card>
+                        <ReactPaginate 
+                    previousLabel={"<<"}
+                    nextLabel={">>"}
+                    breakLabel={"..."}
+                    pageCount={nombrePages}
+                    onPageChange={ChangePage}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={3}
+                    containerClassName={"pagination justify-content-center"}
+                    pageClassName={"page-item"}
+                    pageLinkClassName={"page-link"}
+                    previousClassName={"page-item"}
+                    previousLinkClassName={"page-link"}
+                    nextClassName={"page-item"}
+                    nextLinkClassName={"page-link"}
+                    breakClassName={"page-item"}
+                    breakLinkClassName={"page-link"}
+                    activeClassName={"active"}/>
                     </Col>
       
   </div>

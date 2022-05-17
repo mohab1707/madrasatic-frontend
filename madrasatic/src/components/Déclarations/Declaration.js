@@ -6,7 +6,7 @@ import './Declaration.css'
 import {Row, Col, Card, Form, Button, InputGroup, FormControl, DropdownButton, Dropdown,Table} from 'react-bootstrap';
 export const Declaration =()=>{
     const token = sessionStorage.getItem("key");
-    const[MyData,setMyData]=useState(null);
+    const[MyData,setMyData]=useState([]);
     useEffect(()=>{
       fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
           method: "GET",
@@ -16,22 +16,15 @@ export const Declaration =()=>{
             "Authorization":`Token ${token}`
           },
         }).then((response) => {
-            if (response.ok) {
-              console.log("donnees recup");
-            } else {
-              console.log("y'a une erreur");
-            }
             return response.json();
           })
           .then((data) => {
-            console.log(data.results);
             setMyData(data.results);
-            console.log(MyData);
           });
-    },[])
+    },[MyData])
     return(
     <div>
-        {MyData && <AfficherDeclaration declaration={MyData}/>}
+        <AfficherDeclaration/>
         {/* <Row>
                     <Col>
                         <Card>

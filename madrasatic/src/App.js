@@ -37,53 +37,44 @@ export default function App() {
       <Switch >
         < Route exact path="/">
           <NavBar />
-          <div className='identifier'>
-            <br />
-            <div>
-             <h1 className='mb-3' style={{margin:'10%',color:'#24344f'}}>Bienvenue sur MADRASA-TIC</h1>
-            </div>
+          <div className='shadow shadow-5'>
+            <br></br>
               <InscriptionOuConnexion />
               <Connexion />
           </div>
-          <div style={{marginTop:'27px'}}>
+          <div style={{marginTop:'150px'}}>
             <Footer></Footer>
           </div>
         </Route>
         < Route exact path="/inscription">
           <NavBar />
-          <div className='identifier'>
+          <div className='shadow shadow-5'>
             <br></br>
             <InscriptionOuConnexion />
             <Inscription />
           </div>
-          <div style={{marginTop:'17px'}}>
-            <Footer></Footer>
-          </div>
         </Route>
         < Route path="/forgetPassword">
           <NavBar />
-          <div className='identifier'>
+          <div className='shadow shadow-5'>
             <MotDePasseOublie />
           </div>
-          <div style={{marginTop:'0px'}}>
+          <div style={{marginTop:'150px'}}>
             <Footer></Footer>
           </div>
         </Route>
         < Route exact path="/Home">
           <Gestion_des_comptes></Gestion_des_comptes>
-          <div className='gestiondescomptes'>
-          
+          <MDBContainer fluid>
+            <MDBContainer style={{margin:'10%'}}>
                <TableUsers/>
-        
-            <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'50px', left: '0', bottom: '0', width: '100%'}}>
-              &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
-            </div>
-        </div>
+            </MDBContainer>
+        </MDBContainer>
         </Route>
         < Route path="/madrasatic/password-reset-confirm/:uidb64/:token">
           <NavBar />
           <br></br>
-          <div className='identifier'>
+          <div className='shadow shadow-5'>
             <RecupererMotDePasseOublie></RecupererMotDePasseOublie>
           </div>
         </Route>
@@ -111,79 +102,67 @@ export default function App() {
         </Route>
         < Route exact path="/Profil">
           <Bare />
-          <div className='profilclass'>
+          <div className='shadow1 shadow-5'>
           <br></br>
             <Profil />
-            <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'0px' }}>
-              &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
-            </div>
+          </div>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'50px' }}>
+            &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
           </div>
         </Route>
         < Route exact path="/ProfilAdmin">
           <Gestion_des_comptes />
-          <div className='profilclass'>
+          <div className='shadow1 shadow-5'>
           <br></br>
             <Profil />
-            <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'0px' }}>
-              &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
-            </div>
           </div>
         </Route>
         < Route exact path="/ProfilResponsable">
           <Gestion_des_declarations/>
-          <div className='profilclass'>
+          <div className='shadow1 shadow-5'>
           <br></br>
             <Profil />
-            <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'0px' }}>
-              &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
-            </div>
           </div>
         </Route>
         < Route exact path="/NewCatégorie">
           <Gestion_des_declarations/>
-          <div className='ajoutcategorieclass'>
+          <div className='shadow1 shadow-5'>
           <br></br>
             <AjoutCatégorie />
-            <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',position:'fixed', left: '0', bottom: '0', width: '100%'}}>
-              &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
-            </div>
           </div>
         </Route>
         < Route exact path="/Categories">
           <Gestion_des_declarations />
           <br></br>
-          <div className='categoriesclass'>
+          <div className='shadow1 shadow-5'>
             <Categories />
-            <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',position:'fixed', left: '0', bottom: '0', width: '100%'}}>
-              &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
-            </div>
           </div>
         </Route>
         < Route exact path="/ChangePassword">
           <Bare />
-          <div className='changerpassword'>
+          <div className='shadow1 shadow-5'>
             <ChangePassword />
-            <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',position:'fixed', left: '0', bottom: '0', width: '100%'}}>
-              &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
-            </div>
+          </div>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'50px' }}>
+            &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
           </div>
         </Route>
         < Route exact path="/ChangePasswordAdmin">
-          <div className='changerpassword'>
-            <Gestion_des_comptes />
+          <Gestion_des_comptes />
+          <div className='shadow1 shadow-5'>
             <ChangePassword />
-            <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)', left: '0', bottom: '0', width: '100%'}}>
-              &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
-            </div>
+          </div>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'50px' }}>
+            &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
           </div>
         </Route>
         < Route exact path="/NewDeclaration">
           <Bare />
-          <div className='ajoutdeclarationclass'>
+          <div className='shadow1 shadow-5'>
           <br></br>
             <AjoutDeclaration/>
           </div>
-          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'50px' , left: '0', bottom: '0', width: '100%'}}>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'50px' }}>
             &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
           </div>
         </Route>
@@ -219,9 +198,9 @@ export default function App() {
         </Route>
         < Route exact path="/MesDeclarationsEnregistrées">
           <Bare />
-          <div className='mesdeclarations'>
+          {/* <div className='shadow1 shadow-5'> */}
             <MesDeclarationsEnregistrées />
-          </div>
+          {/* </div> */}
         </Route>
         < Route exact path="/CompleterDeclaration/:idDeclaration">
           <Bare />

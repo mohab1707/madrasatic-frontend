@@ -218,26 +218,6 @@ export const ListeDeclaPourAttacher = () => {
         e.preventDefault();
             declarations.map(dec=>{
               async function getCategorie(){
-                const res = await fetch(`http://localhost:8000/madrasatic/responsable_declarations/${dec.id}/`, {
-                  method: "GET",
-                  headers: {
-                      "Content-Type": "application/json",
-                      "Accept": "application/json",
-                      "Authorization":`Token ${token}`
-                  },
-                  }).then((response) => {
-                      if (response.ok) {
-                      console.log("auteur recup");
-                      
-                      } else {
-                      console.log("y'a une erreur");
-                      }
-                      return response.json();
-                  }).then((data) => {
-                      console.log(data.auteur);
-                      setCategorie(data.catégorie);
-  
-                  })
                   fetch(`http://localhost:8000/madrasatic/responsable_declarations/${dec.id}/`, {
                   method: "PUT",
                   headers: {
@@ -245,7 +225,7 @@ export const ListeDeclaPourAttacher = () => {
                       "Accept": "application/json",
                       "Authorization":`Token ${token}`
                   },
-                  body:JSON.stringify({catégorie:categorie ,parent_declaration:idparent})
+                  body:JSON.stringify({parent_declaration:idparent})
                   }).then((response) => {
                       if (response.ok) {
                       console.log("parent modifié");

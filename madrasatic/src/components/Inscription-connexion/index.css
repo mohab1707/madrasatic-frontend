@@ -37,19 +37,19 @@ text-align: center;
 
 .Connexion {
 padding: 0%;
-max-width: 45%;
+max-width: 54%;
 margin-top: 4%;
 margin-left: 18%;
 }
 .inscription {
 padding: 0%;
-max-width: 45%;
+max-width: 54%;
 margin-top: 4%;
 margin-left: 18%;
 }
 .inputField input {
-padding: 1.8%;
-width: 50%;
+padding: 2%;
+width: 90%;
 border-radius: 17px;
 /* margin-top: 5%; */
 margin-bottom: 11%;
@@ -77,15 +77,12 @@ color: #24344f;
 }
 .insc button {
 background-color: #b78429;
+width: 25%;
 padding:2%;
 margin-left: 62%;
 border-radius: 17px;
 border-color: #24344f;
 color: white;
-}
-
-.insc button:hover {
-    background-color: orange;
 }
 
 .conx button{
@@ -98,10 +95,6 @@ margin-right: 155%;
 border-radius: 17px;
 }
 
-.conx button:hover {
-    background-color: orange;
-}
-
 /* .card {
 width: 30%;
 padding:2% ;
@@ -109,10 +102,9 @@ margin-top: 12%;
 margin-left: 6%;
 } */
 
-
 .card input{
 padding: 1%;
-width: 30%;
+width: 50%;
 border-radius: 17px;
 margin-top: 4%;
 margin-bottom: 11%;
@@ -135,7 +127,7 @@ color: gray;
 }
 .card button{
 background-color:#b78429;
-width: 8%;
+width: 16%;
 padding:1%;
 margin-left: 43%;
 border-radius: 17px;
@@ -160,16 +152,6 @@ padding: 2%;
 margin-top: 4%;
 margin-left: 7%;
 
-}
-
-.inscription h2 {
-    font-size: 25px;
-    margin-top: 100px;
-    padding: 2%;
-    margin-bottom: 30px;
-    background-color: #1f2833;
-    color: white;
-    text-align: center;
 }
 .Profil input {
 padding: 2%;

@@ -42,9 +42,10 @@ export const ChangePassword= () => {
             {
             reussi && !is_superuser ? <Redirect to="/HomePage"/>: null
             }
-            <h2>Changer mot de passe</h2>
-            <hr style={{border: '2px solid #b78429'}}/>
             <div className="inputField">
+                    <br></br>
+                    <label><b>Changer mot de passe:</b></label>
+                    <br></br><br></br>
                     <div className="icon">
                         <RiLockPasswordFill />
                     </div>
