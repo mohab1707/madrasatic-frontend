@@ -5,6 +5,7 @@ import { Categories } from "../Catégories/Catégories";
 import { useEffect, useState } from "react";
 import {BsThreeDotsVertical} from "react-icons/bs"
 import {
+  MDBContainer,
   MDBDropdown,
   MDBDropdownToggle,
   MDBDropdownMenu,
@@ -170,11 +171,26 @@ export const AfficherDeclaration= () => {
       }
     })
     return (
+      <MDBContainer>
         <div >
           <Col md={10} xl={12} style={{marginTop:'7%'}}>
-                        <Card className='Recent-Users'>
+                        <Card className='Recent-Users' style={{
+                          border: '2px solid #b78429',
+                          borderRadius: '8px',
+                          padding:'0',
+                          marginTop: '5%',
+                          backgroundColor: 'white'
+                          }}>
                             <Card.Header>
-                                <Card.Title as='h3'>Liste des déclarations</Card.Title>
+                                <Card.Title as='h2' style={{
+                                  fontSize: '25px',
+                                  marginTop: '30px',
+                                  padding: '2%',
+                                  marginBottom: '30px',
+                                  backgroundColor: '#1f2833',
+                                  color: 'white',
+                                  textAlign: 'center'
+                                  }}>Liste Des Déclarations</Card.Title>
                             </Card.Header>
                             {declaration.filter(decla=>decla.parent_declaration === null).filter(decl=>decl.signalée_par < 3).map(dec => (
                             <Card.Body className='px-0 py-2'  onClick={()=>{recupdata(dec.id)}}>
@@ -238,5 +254,7 @@ export const AfficherDeclaration= () => {
                     </Col>
       
   </div>
+      </MDBContainer>
+        
     );
 }

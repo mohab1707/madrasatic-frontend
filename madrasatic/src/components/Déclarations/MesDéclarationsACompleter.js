@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, Redirect } from "react-router-dom";
 import './Declaration.css'
 import {Col, Card,Table} from 'react-bootstrap';
+import { MDBContainer } from 'mdb-react-ui-kit';
 export const MesDéclarationCompleter =()=>{
     const token = sessionStorage.getItem("key");
     const[MyData,setMyData]=useState([]);
@@ -54,14 +55,28 @@ export const MesDéclarationCompleter =()=>{
       setCompleter(true);
     }
     return(
-    <div >
+    <MDBContainer >
         {/* <h2 style={{textAlign:'center'}}>Liste des déclarations</h2> */}
         {/* {MyData && <AfficherDeclaration declaration={MyData}/>} */}
         {completer ? <Redirect to={`/CompleterDeclaration/${idDeclaration}`}/> :null}
-        <Col md={10} xl={10} style={{marginTop:'5%'}}>
-                        <Card className='Recent-Users'>
+        <Col md={10} xl={12} style={{marginTop:'5%'}}>
+                        <Card className='Recent-Users' style={{
+                          border: '2px solid #b78429',
+                          borderRadius: '8px',
+                          padding:'0',
+                          marginTop: '5%',
+                          backgroundColor: 'white'
+                          }}>
                             <Card.Header>
-                                <Card.Title as='h3'>Liste des déclarations</Card.Title>
+                                <Card.Title as='h2' style={{
+                                  fontSize: '25px',
+                                  marginTop: '30px',
+                                  padding: '2%',
+                                  marginBottom: '30px',
+                                  backgroundColor: '#1f2833',
+                                  color: 'white',
+                                  textAlign: 'center'
+                                  }}>Mes Déclarations A Compléter</Card.Title>
                             </Card.Header>
                             {MyData.filter(declaration=>declaration.auteur === id).map(dec => (
                             <Card.Body className='px-0 py-2'  onClick={(e)=>complet(dec.id)}>
@@ -85,6 +100,6 @@ export const MesDéclarationCompleter =()=>{
                               ))} 
                         </Card>
                     </Col>
-  </div>
+  </MDBContainer>
     )
 }

@@ -1,6 +1,7 @@
 import { useState,useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {AiOutlineDelete} from "react-icons/ai"
+import { MDBContainer } from 'mdb-react-ui-kit';
 
 export const Categories = () => {
     const [catégories,setCatégories]=useState ([]);
@@ -48,12 +49,15 @@ export const Categories = () => {
             })
     })
   return (
-    <div className="blog-list">
+    <MDBContainer className='categories'>
+       <h2 id='title'>Liste des catégories</h2>
+       <hr style={{border: '2px solid #b78429'}}/>
+      <div className="blog-list" style={{width:'55%',marginLeft:'20%'}}>
       {catégories.map(cat => (
-        <div className="blog-preview" key={cat.id} >
+        <div className="blog-categorie" key={cat.id} >
             <div style={{
                 position: "absolute",
-                left:"50%",
+                left:"65%",
                 fontSize:"25px",
                 // right:"10%",
                 marginTop: "0%",
@@ -67,5 +71,7 @@ export const Categories = () => {
         </div>
       ))}
     </div>
+    </MDBContainer>
+    
   );
 }

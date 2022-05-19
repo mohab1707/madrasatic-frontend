@@ -363,7 +363,7 @@ export default function DeclarationEnvoyee() {
                 </MDBRow>
             </MDBCol>
         </MDBRow>
-        <hr style={{border: '2px solid #24344d'}}/>
+        <hr style={{border: '2px solid #b78429'}}/>
         <MDBContainer>
             <h5>Déscription :</h5>
             <p>{corps}</p>
@@ -383,12 +383,20 @@ export default function DeclarationEnvoyee() {
             </MDBCol>
         </MDBRow>
     </MDBContainer>
-    <div >
+    <MDBContainer className='form' >
             {Consulter ? <Redirect to={`/DeclarationEnvoyer/${id}`}/> : null}
           <Col md={10} xl={12} style={{marginTop:'5%'}}>
-                        <Card className='Recent-Users'>
+                        <Card className='Recent-Users' >
                             <Card.Header>
-                                <Card.Title as='h3'>Liste des déclarations</Card.Title>
+                                <Card.Title as='h2'  style={{
+                                  fontSize: '25px',
+                                  marginTop: '30px',
+                                  padding: '2%',
+                                  marginBottom: '30px',
+                                  backgroundColor: '#1f2833',
+                                  color: 'white',
+                                  textAlign: 'center'
+                                  }}>Liste des déclarations</Card.Title>
                                 <table>
                                     <tr>
                                         <td>
@@ -442,7 +450,7 @@ export default function DeclarationEnvoyee() {
                         </Card>
                     </Col>
       
-  </div>
+  </MDBContainer>
     </>
   )
 }

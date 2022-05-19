@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 import { MdSentimentSatisfied } from 'react-icons/md';
 import { Redirect } from "react-router-dom"
+import { MDBContainer } from 'mdb-react-ui-kit';
 import './Declaration.css'
 export const AjoutDeclaration =()=>{
     const [image, setImage] = useState("");
@@ -120,11 +121,12 @@ export const AjoutDeclaration =()=>{
     })
     })
     return(
-    <div className="create">
+      <MDBContainer className='form'>
+        <div className="create">
       {
             reussi? <Redirect to='/HomePage' /> : null
       }
-      <h2>Ajouter une déclaration</h2>
+      <h2>Ajouter Une Déclaration</h2>
       <hr style={{border: '2px solid #b78429'}}/>
       <form >
         <label>Objet de la déclaration:</label>
@@ -170,5 +172,7 @@ export const AjoutDeclaration =()=>{
         <button onClick={validateDeclaration}>Valider</button>
       </form>
     </div>
+      </MDBContainer>
+    
     )
 }

@@ -276,13 +276,27 @@ export const ListeDeclaPourAttacher = () => {
         }
     }
     return (
-        <div >
+        <MDBContainer >
             {check ? <Redirect to='/HomeResponsable' /> : null}
             <Col md={10} xl={12} style={{marginTop:'5%'}}>
-                    <Card className='Recent-Users'>
+                    <Card className='Recent-Users' style={{
+                          border: '2px solid #b78429',
+                          borderRadius: '8px',
+                          padding:'0',
+                          marginTop: '5%',
+                          backgroundColor: 'white'
+                          }}>
                         <Card.Header>
-                        <button onClick={attacher}>confirmer</button>
-                            <Card.Title as='h3'>Liste des déclarations</Card.Title>
+                        <button onClick={attacher} style={{width:'100px'}}>confirmer</button>
+                            <Card.Title as='h2' style={{
+                                  fontSize: '25px',
+                                  marginTop: '30px',
+                                  padding: '2%',
+                                  marginBottom: '30px',
+                                  backgroundColor: '#1f2833',
+                                  color: 'white',
+                                  textAlign: 'center'
+                                  }}>Liste Des Déclarations</Card.Title>
                             <table>
                                 <tr>
                                     <td>
@@ -338,7 +352,7 @@ export const ListeDeclaPourAttacher = () => {
                     </Card>
                 </Col>
   
-</div>
+</MDBContainer>
     
     );
 }

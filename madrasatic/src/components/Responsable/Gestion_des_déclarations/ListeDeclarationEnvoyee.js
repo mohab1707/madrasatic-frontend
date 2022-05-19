@@ -175,9 +175,23 @@ export const ListeDeclarationEnvoyee = ( {MyData}) => {
         <div >
             {Consulter ? <Redirect to={`/DeclarationEnvoyer/${id}`}/> : null}
           <Col md={10} xl={12} style={{marginTop:'5%'}}>
-                        <Card className='Recent-Users'>
+                        <Card className='Recent-Users' style={{
+                          border: '2px solid #b78429',
+                          borderRadius: '8px',
+                          padding:'0',
+                          marginTop: '5%',
+                          backgroundColor: 'white'
+                          }}>
                             <Card.Header>
-                                <Card.Title as='h3'>Liste des déclarations</Card.Title>
+                                <Card.Title as='h2' style={{
+                                  fontSize: '25px',
+                                  marginTop: '30px',
+                                  padding: '2%',
+                                  marginBottom: '30px',
+                                  backgroundColor: '#1f2833',
+                                  color: 'white',
+                                  textAlign: 'center'
+                                  }}>Liste Des Déclarations Envoyées</Card.Title>
                                 <table>
                                     <tr>
                                         <td>

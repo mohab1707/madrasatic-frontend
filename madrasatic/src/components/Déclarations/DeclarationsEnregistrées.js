@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, Redirect } from "react-router-dom";
 import {Row, Col, Card, Form, Button, InputGroup, FormControl, DropdownButton, Dropdown,Table} from 'react-bootstrap';
 import './Declaration.css'
+import { MDBContainer } from 'mdb-react-ui-kit';
 export const MesDeclarationsEnregistrées =()=>{
     const token = sessionStorage.getItem("key");
     const[MyData,setMyData]=useState([]);
@@ -34,14 +35,28 @@ export const MesDeclarationsEnregistrées =()=>{
       setCompleter(true);
     }
     return(
-    <div >
+    <MDBContainer >
         {/* <h2 style={{textAlign:'center'}}>Liste des déclarations Enregistrées </h2> */}
         {/* {MyData && <AfficherDeclaration declaration={MyData}/>} */}
         {completer ? <Redirect to={`/ModifierDeclarationEnregistrée/${idDeclaration}`}/> :null}
-        <Col md={10} xl={10} style={{marginTop:'5%'}}>
-                        <Card className='Recent-Users'>
+        <Col md={10} xl={12} style={{marginTop:'5%'}}>
+                        <Card className='Recent-Users' style={{
+                          border: '2px solid #b78429',
+                          borderRadius: '8px',
+                          padding:'0',
+                          marginTop: '5%',
+                          backgroundColor: 'white'
+                          }}>
                             <Card.Header>
-                                <Card.Title as='h3'>Liste des déclarations</Card.Title>
+                                <Card.Title as='h2' style={{
+                                  fontSize: '25px',
+                                  marginTop: '30px',
+                                  padding: '2%',
+                                  marginBottom: '30px',
+                                  backgroundColor: '#1f2833',
+                                  color: 'white',
+                                  textAlign: 'center'
+                                  }}>Mes Déclarations Enregistrées</Card.Title>
                             </Card.Header>
                             {MyData.map(dec => (
                             <Card.Body className='px-0 py-2'  onClick={(e)=>complet(dec.id)}>
@@ -65,6 +80,6 @@ export const MesDeclarationsEnregistrées =()=>{
                               ))} 
                         </Card>
                     </Col>
-  </div>
+  </MDBContainer>
     )
 }

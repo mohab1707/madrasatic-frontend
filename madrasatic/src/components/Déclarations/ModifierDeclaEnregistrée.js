@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 import { MdSentimentSatisfied } from 'react-icons/md';
 import { Redirect, useParams } from "react-router-dom"
+import { MDBContainer } from 'mdb-react-ui-kit';
 import './Declaration.css'
 export const ModifierDeclarationEnregistrée =()=>{
     const [image, setImage] = useState(null);
@@ -168,11 +169,13 @@ export const ModifierDeclarationEnregistrée =()=>{
     })
     })
     return(
-    <div className="create">
+      <MDBContainer className='form'>
+        <div className="create">
       {
             reussi? <Redirect to='/HomePage' /> : null
       }
-      <h2>Ajouter une déclaration</h2>
+      <h2>Modifier La Déclaration Enregistrée</h2>
+      <hr style={{border: '2px solid #b78429'}}/>
       <form >
         <label>Objet de la déclaration:</label>
         <input 
@@ -218,5 +221,7 @@ export const ModifierDeclarationEnregistrée =()=>{
         <button onClick={supprimerDeclaration}>Supprimer</button>
       </form>
     </div>
+      </MDBContainer>
+    
     )
 }

@@ -13,6 +13,41 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.profilclass {
+  background-image: linear-gradient(to right top, white 0%, #8da0b1 80%, #1f2833 100%);
+}
+
+.ajoutdeclarationclass {
+  background-image: linear-gradient(to right top, white 0%, #8da0b1 80%, #1f2833 100%);
+}
+
+.changerpassword {
+  background-image: linear-gradient(to right top, white 0%, #8da0b1 80%, #1f2833 100%);
+}
+
+.gestiondescomptes {
+  background-image: linear-gradient(to right top, white 0%, #8da0b1 80%, #1f2833 100%);
+}
+
+.ajoutcategorieclass {
+  background-image: linear-gradient(to right top, white 0%, #8da0b1 80%, #1f2833 100%);
+}
+
+.categoriesclass {
+  background-image: linear-gradient(to right top, white 0%, #8da0b1 80%, #1f2833 100%);
+}
+
+.mesdeclarations {
+  background-image: linear-gradient(to right top, white 0%, #8da0b1 80%, #1f2833 100%);
+}
+
+.listedeclarations {
+  background-image: linear-gradient(to right top, white 0%, #8da0b1 80%, #1f2833 100%);
+}
+
+
 @media screen and (min-width:900px){
 .shadow {
   background-color:  #e8e8e8;
