@@ -7,6 +7,7 @@ import {
     MDBCol,
     } from 'mdb-react-ui-kit';
 import { useParams ,Redirect} from 'react-router-dom';
+import ReactPaginate from "react-paginate";
 export const ListeDeclaPourAttacher = () => {
     const token = sessionStorage.getItem("key");
     const[MyData,setMyData]=useState([]);
@@ -17,6 +18,9 @@ export const ListeDeclaPourAttacher = () => {
     const [etat,setEtat]=useState();
     const [priorité,setPriorité]=useState("");
     const [envoyer,setEnvoyer]=useState(false);
+    const [nombrePages,setNombresPages]=useState();
+    const [nombre,setNombre]=useState("");
+    const [pageCourrente,setPageCourrente]=useState();
     useEffect(()=>{
       fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
           method: "GET",
@@ -26,174 +30,97 @@ export const ListeDeclaPourAttacher = () => {
             "Authorization":`Token ${token}`
           },
         }).then((response) => {
-            if (response.ok) {
-              console.log("donnees recup");
-            } else {
-              console.log("y'a une erreur");
+            if (response.ok){
+                    console.log("decla du service recuuup")
+            }else{
+                console.log("y'a une erreeeuuur")
             }
             return response.json();
           })
           .then((data) => {
-            console.log(data.results);
             setMyData(data.results);
-            console.log(MyData);
+            setNombre(data.count);
+            setNombresPages(Math.ceil(data.count /5));
           });
     },[])
     const afficher=(val)=>{
-        if (val === 'publiée') {
-            fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/?etat=publiée", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "Authorization":`Token ${token}`
-          },
-        }).then((response) => {
-            if (response.ok) {
-              console.log("donnees recup");
-            } else {
-              console.log("y'a une erreur");
-            }
-            return response.json();
-          })
-          .then((data) => {
-            console.log(data.results);
-            setMyData(data.results);
-            console.log(MyData);
-          });
-        }else if(val === 'non traitée'){
-            fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/?etat=non traitée", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "Authorization":`Token ${token}`
-          },
-        }).then((response) => {
-            if (response.ok) {
-              console.log("donnees recup");
-            } else {
-              console.log("y'a une erreur");
-            }
-            return response.json();
-          })
-          .then((data) => {
-            console.log(data.results);
-            setMyData(data.results);
-            console.log(MyData);
-          });
-        }
-        else if(val === 'tout'){
-            fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "Authorization":`Token ${token}`
-          },
-        }).then((response) => {
-            if (response.ok) {
-              console.log("donnees recup");
-            } else {
-              console.log("y'a une erreur");
-            }
-            return response.json();
-          })
-          .then((data) => {
-            console.log(data.results);
-            setMyData(data.results);
-            console.log(MyData);
-          });
-        }
-        else if(val === 'incompléte'){
-            fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/?etat=incompléte", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "Authorization":`Token ${token}`
-          },
-        }).then((response) => {
-            if (response.ok) {
-              console.log("donnees recup");
-            } else {
-              console.log("y'a une erreur");
-            }
-            return response.json();
-          })
-          .then((data) => {
-            console.log(data.results);
-            setMyData(data.results);
-            console.log(MyData);
-          });
-        }
-        else if(val === '1'){
-            fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/?priorité=1", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "Authorization":`Token ${token}`
-          },
-        }).then((response) => {
-            if (response.ok) {
-              console.log("donnees recup");
-            } else {
-              console.log("y'a une erreur");
-            }
-            return response.json();
-          })
-          .then((data) => {
-            console.log(data.results);
-            setMyData(data.results);
-            console.log(MyData);
-          });
-        }
-        else if(val === '2'){
-            fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/?priorité=2", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "Authorization":`Token ${token}`
-          },
-        }).then((response) => {
-            if (response.ok) {
-              console.log("donnees recup");
-            } else {
-              console.log("y'a une erreur");
-            }
-            return response.json();
-          })
-          .then((data) => {
-            console.log(data.results);
-            setMyData(data.results);
-            console.log(MyData);
-          });
-        }
-        else if(val === '3'){
-            fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/?priorité=3", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "Authorization":`Token ${token}`
-          },
-        }).then((response) => {
-            if (response.ok) {
-              console.log("donnees recup");
-            } else {
-              console.log("y'a une erreur");
-            }
-            return response.json();
-          })
-          .then((data) => {
-            console.log(data.results);
-            setMyData(data.results);
-            console.log(MyData);
-          });
-        }
+      if(val === 'tout'){
+        fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization":`Token ${token}`
+      },
+    }).then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setMyData(data.results);
+      });
+    }else if(val === '1' || val=== '2' || val ==='3'){
+        fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/?priorité=${val}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization":`Token ${token}`
+      },
+    }).then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setMyData(data.results);
+      });
+    }else{
+        fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/?etat=${val}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization":`Token ${token}`
+      },
+    }).then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setMyData(data.results);
+      });
     }
+    }
+    const ChangePage=((data)=>{
+      console.log(data.selected);
+      setPageCourrente(data.selected+1);
+      if(data.selected == 0){
+        fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization":`Token ${token}`
+          },
+        }).then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            setMyData(data.results);
+          });
+      }else{
+        fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/?page=${data.selected + 1}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization":`Token ${token}`
+          },
+        }).then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            setMyData(data.results);
+          });
+      }
+    })
     const putData = (dec)=>{
       setEnvoyer(true)
       fetch(`http://localhost:8000/madrasatic/responsable_declarations/${dec.id}/`, {
@@ -350,6 +277,24 @@ export const ListeDeclaPourAttacher = () => {
                           </Card.Body>
                           ))} 
                     </Card>
+                    <ReactPaginate 
+                                previousLabel={"<<"}
+                                nextLabel={">>"}
+                                breakLabel={"..."}
+                                pageCount={nombrePages}
+                                onPageChange={ChangePage}
+                                marginPagesDisplayed={2}
+                                pageRangeDisplayed={3}
+                                containerClassName={"pagination justify-content-center"}
+                                pageClassName={"page-item"}
+                                pageLinkClassName={"page-link"}
+                                previousClassName={"page-item"}
+                                previousLinkClassName={"page-link"}
+                                nextClassName={"page-item"}
+                                nextLinkClassName={"page-link"}
+                                breakClassName={"page-item"}
+                                breakLinkClassName={"page-link"}
+                                activeClassName={"active"}/>
                 </Col>
   
 </MDBContainer>

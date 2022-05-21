@@ -30,6 +30,11 @@ import { Footer } from './components/Inscription-connexion/Footer';
 import { AjoutCatégorie } from './components/Catégories/NouvelleCatégorie';
 import { Categories } from './components/Catégories/Catégories';
 import { ListeDeclaPourAttacher } from './components/Responsable/Gestion_des_déclarations/ListeDeclaPourAttacher';
+import {service_worker} from './components/Notifications/service-worker';
+import { HomeService } from './components/Service/HomeService';
+import { BareService } from './components/Service/BareService';
+import DetailDeclaration from './components/Service/DetailDeclaration';
+import { AjoutRapport } from './components/Rapports/AjoutRapport';
 export default function App() {
 
   return (
@@ -96,7 +101,6 @@ export default function App() {
         </Route>
         < Route exact path="/HomeResponsable">
           <Gestion_des_declarations />
-          <br />
           <div className='listedeclarations'>
             <TableDeclarationEnvoyee />
           </div>
@@ -156,7 +160,6 @@ export default function App() {
         </Route>
         < Route exact path="/Categories">
           <Gestion_des_declarations />
-          <br></br>
           <div className='categoriesclass'>
             <Categories />
           </div>
@@ -204,7 +207,7 @@ export default function App() {
         </Route>
         < Route exact path="/DeclarationEnvoyer/:id">
           <Gestion_des_declarations />
-          <br></br>
+          {/* <br></br> */}
           <div className='listedeclarations'>
             <DeclarationEnvoyee />
           </div>
@@ -262,8 +265,38 @@ export default function App() {
             &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
           </div>
         </Route>
+        < Route exact path="/service-worker.js">
+            <service_worker />
+        </Route>
+        < Route exact path="/HomeService">
+            <BareService />
+            <div className='listedeclarations'>
+              <HomeService />
+            </div>
+            <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'2%' , left: '0', bottom: '0', width: '100%'}}>
+              &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
+          </div>
+        </Route>
+        < Route exact path="/DeclarationDetail/:id">
+        <BareService />
+          <div className='listedeclarations'>
+            <DetailDeclaration />
+          </div>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'2%', left: '0', bottom: '0', width: '100%'}}>
+              &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
+          </div>
+        </Route>
+        < Route exact path="/AjoutRapport/:id">
+        <BareService />
+          <div className='ajoutdeclarationclass'>
+          <br></br>
+            <AjoutRapport/>
+          </div>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'2%' , left: '0', bottom: '0', width: '100%'}}>
+            &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
+          </div>
+        </Route>
       </Switch>
-     
     </ Router>
     
   );

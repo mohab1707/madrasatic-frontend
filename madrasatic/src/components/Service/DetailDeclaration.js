@@ -9,13 +9,12 @@ import './declaration.css'
 import { Redirect, useParams } from 'react-router-dom';
 import {Col, Card,Table} from 'react-bootstrap';
 import ReactPaginate from "react-paginate";
-export default function DeclarationEnvoyee() {
-    const [Consulter,setConsulter]=useState(false);
+export default function DetailDeclaration() {
+    const [rediger,setRediger]=useState(false);
     const token = sessionStorage.getItem("key");
     const [id2,setId]=useState();
     const [categories,setCategories]=useState([]);
     const [auteur,setAuteur]=useState("");
-    const [delet,setDelete]=useState(false);
     const {id}=useParams();
     const [lieu,setLieu]=useState("");
     const [objet,setObjet]=useState("");
@@ -23,9 +22,7 @@ export default function DeclarationEnvoyee() {
     const [priorité,setPriorité]=useState("");
     const [corps,setCorps]=useState("");
     const [image,setImage]=useState(null);
-    const [complement,setComplement]=useState(false);
     const [reussi,setReussi]=useState(false);
-    const [attacher,setAttacher]=useState(false);
     const [nombrePages,setNombresPages]=useState();
     const [nombre,setNombre]=useState("");
     const [pageCourrente,setPageCourrente]=useState();
@@ -39,11 +36,6 @@ export default function DeclarationEnvoyee() {
             "Authorization":`Token ${token}`
           },
         }).then((response) => {
-            if (response.ok) {
-              console.log("donnees recup");
-            } else {
-              console.log("y'a une erreur");
-            }
             return response.json();
           })
           .then((data) => {
@@ -52,56 +44,50 @@ export default function DeclarationEnvoyee() {
             setNombresPages(Math.ceil(data.count /5));
           });
     },[])
-    //
-    const detail=((id)=>{
-        setId(id);
-        setConsulter(true);
-        
-    })
     const afficher=(val)=>{
-      if(val === 'tout'){
-        fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "Authorization":`Token ${token}`
-      },
-    }).then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setMyData(data.results);
-      });
-    }else if(val === '1' || val=== '2' || val ==='3'){
-        fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/?priorité=${val}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "Authorization":`Token ${token}`
-      },
-    }).then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setMyData(data.results);
-      });
-    }else{
-        fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/?etat=${val}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "Authorization":`Token ${token}`
-      },
-    }).then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setMyData(data.results);
-      });
-    }
+        if(val === 'tout'){
+            fetch("http://127.0.0.1:8000/madrasatic/service_declarations/", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization":`Token ${token}`
+          },
+        }).then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            setMyData(data.results);
+          });
+        }else if(val === '1' || val=== '2' || val ==='3'){
+            fetch(`http://127.0.0.1:8000/madrasatic/service_declarations/?priorité=${val}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization":`Token ${token}`
+          },
+        }).then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            setMyData(data.results);
+          });
+        }else{
+            fetch(`http://127.0.0.1:8000/madrasatic/service_declarations/?etat=${val}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization":`Token ${token}`
+          },
+        }).then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            setMyData(data.results);
+          });
+        }
     }
     useEffect(()=>{
         console.log('iddd ++'+ id);
@@ -150,13 +136,7 @@ export default function DeclarationEnvoyee() {
                 setCategories(data.results);
             });
     },[]);
-    const supp =(()=>{
-        setDelete(true);
-    })
-    const demanderComplement=(()=>{
-        setComplement(true);
-    })
-    const enregistrerModification =((auteur)=>{
+    const EnCoursDeTraitement=(()=>{
         fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/${id}/`, {
             method: "PUT",
             headers: {
@@ -164,93 +144,54 @@ export default function DeclarationEnvoyee() {
                 "Accept": "application/json",
                 "Authorization":`Token ${token}`
             },
-            body: JSON.stringify({catégorie:catégorie,priorité:priorité}),
-            }).then((response) => {
-                if (response.ok) {
-                console.log("donnees envoyée");
+            body: JSON.stringify({auteur:auteur,etat:'en cours de traitement'}),
+            }).then(()=>{
                 setReussi(true);
-                } else {
-                console.log("y'a une erreur");
-                }
-                return response.json();
             })
-            .then((data) => {
-                console.log(data.results);
-            });
-    })
-    const validerDeclaration=(()=>{
-        fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/${id}/`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-                "Authorization":`Token ${token}`
-            },
-            body: JSON.stringify({catégorie:catégorie,etat:'non traitée'}),
-            }).then((response) => {
-                if (response.ok) {
-                console.log("donnees envoyée");
-                setReussi(true);
-                } else {
-                console.log("y'a une erreur");
-                }
-                return response.json();
-            })
-            .then((data) => {
-                console.log(data.results);
-            });
     })
     const ChangePage=((data)=>{
-      console.log(data.selected);
-      setPageCourrente(data.selected+1);
-      if(data.selected == 0){
-        fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "Authorization":`Token ${token}`
-          },
-        }).then((response) => {
-            return response.json();
-          })
-          .then((data) => {
-            setMyData(data.results);
-          });
-      }else{
-        fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/?page=${data.selected + 1}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "Authorization":`Token ${token}`
-          },
-        }).then((response) => {
-            return response.json();
-          })
-          .then((data) => {
-            setMyData(data.results);
-          });
-      }
-    })
+        console.log(data.selected);
+        setPageCourrente(data.selected+1);
+        if(data.selected == 0){
+          fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json",
+              "Authorization":`Token ${token}`
+            },
+          }).then((response) => {
+              return response.json();
+            })
+            .then((data) => {
+              setMyData(data.results);
+            });
+        }else{
+          fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/?page=${data.selected + 1}`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json",
+              "Authorization":`Token ${token}`
+            },
+          }).then((response) => {
+              return response.json();
+            })
+            .then((data) => {
+              setMyData(data.results);
+            });
+        }
+      })
   return (
     <>
     <MDBContainer className='content'>
-        {delet ? <Redirect to={`/RejeterDecla/${id}`}/> : null}
-        {complement ? <Redirect to={`/DeclarationIncomplete/${id}`}/> : null}
-        {reussi ? <Redirect to="/HomeResponsable"/> : null}
-        {attacher ? <Redirect to={`/AttacherDeclaration/${id}`}/> :null}
+        {reussi ? <Redirect to="/HomeService"/> : null}
+        {rediger ? <Redirect to={`/AjoutRapport/${id}`}/> : null}
         <MDBContainer style={{}}>
         <MDBRow className='buttons'>
-            <MDBCol md='3'></MDBCol>
+            <MDBCol md='9'></MDBCol>
             <MDBCol md='3'>
-               <button onClick={()=>{setAttacher(true)}}>Attacher Déclaration</button>
-            </MDBCol>
-            <MDBCol md='3'>
-               <button onClick={enregistrerModification}>Sauvegarder Modifications</button>
-            </MDBCol>
-            <MDBCol md='3'>
-            <button onClick={demanderComplement}>Demander Complément</button>
+            <button onClick={()=>{setRediger(true)}}>Rédiger rapport</button>
             </MDBCol>
         </MDBRow>
         <MDBRow className='infos'>
@@ -263,28 +204,12 @@ export default function DeclarationEnvoyee() {
                 <MDBRow>
                     <MDBCol><h5>Catégorie:</h5></MDBCol>
                     <MDBCol><p>{catégorie}</p></MDBCol>
-                    <MDBCol>
-                    <select onChange={e=>{setCatégorie(e.target.value)}}>
-                    <option >Catégorie</option>
-                    {categories.map(cat => (
-                        <option value={cat.id}>{cat.name}</option>
-                    ))}
-                    </select>
-                    </MDBCol>
                 </MDBRow>
             </MDBCol>
             <MDBCol md='2'>
                 <MDBRow>
                     <MDBCol><h5>Priorité:</h5></MDBCol>
                     <MDBCol><p>{priorité}</p></MDBCol>
-                    <MDBCol>
-                    <select onChange={e=>{setPriorité(e.target.value)}}>
-                        <option>prio</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                    </select>
-                    </MDBCol>
                 </MDBRow>
             </MDBCol>
         </MDBRow>
@@ -299,12 +224,9 @@ export default function DeclarationEnvoyee() {
         </MDBContainer>
         </MDBContainer>  
         <MDBRow className='buttons'>
-            <MDBCol md='10'></MDBCol>
-            <MDBCol md='1'>
-               <button onClick={validerDeclaration}>Valider</button>
-            </MDBCol>
-            <MDBCol md='1'>
-            <button onClick={supp}>Rejeter</button>
+            <MDBCol md='9'></MDBCol>
+            <MDBCol md='3'>
+               <button onClick={EnCoursDeTraitement}>En cours de traitement</button>
             </MDBCol>
         </MDBRow>
     </MDBContainer>
@@ -328,12 +250,10 @@ export default function DeclarationEnvoyee() {
                                             <p>Etat : </p>
                                         </td>
                                         <td>
-                                            <select onChange={(e)=>{afficher(e.target.value)}}>
+                                             <select onChange={(e)=>{afficher(e.target.value)}}>
                                                 <option value='tout'>Toutes</option>
-                                                <option value='publiée'>Etat: publiée</option>
-                                                <option value='incompléte'>Etat: incompléte</option>
-                                                {/* <option value='rejetée'>Etat: rejetée</option> */}
                                                 <option value='non traitée'>Etat: non traitée</option>
+                                                <option value='traitée'>Etat: traitée</option>
                                             </select>
                                         </td>
                                         <td>

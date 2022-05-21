@@ -1,17 +1,27 @@
-import {MDBContainer,MDBRow,MDBCol,MDBCheckbox} from 'mdb-react-ui-kit';
-import React, { useReducer, useState,useEffect }  from 'react';
-import DeclarationEnvoyee from './DeclarationEnvoyee';
-import './blogdeclaration.css';
-import { Link, Redirect } from 'react-router-dom';
-import {Col, Card,Table} from 'react-bootstrap';
-import ReactPaginate from "react-paginate";
-export const ListeDeclarationEnvoyee = () => {
-    const [Consulter,setConsulter]=useState(false);
-    const [nombrePages,setNombresPages]=useState();
+import { Link, Redirect } from "react-router-dom";
+import {Row, Col, Card, Form, Button, InputGroup, FormControl, DropdownButton, Dropdown,Table} from 'react-bootstrap';
+import { Categories } from "../Catégories/Catégories";
+import { useEffect, useState } from "react";
+import {BsThreeDotsVertical} from "react-icons/bs"
+import {
+  MDBDropdown,
+  MDBDropdownToggle,
+  MDBDropdownMenu,
+  MDBDropdownItem,
+  MDBDropdownLink,
+  MDBBtn
+  } from 'mdb-react-ui-kit';
+  import ReactPaginate from "react-paginate";
+  import './service.css'
+  import './tabledeclarations.css';
+export const HomeService= () => {
+    const [nomCategorie,setNomCategorie]=useState("");
     const [nombre,setNombre]=useState("");
-    const [pageCourrente,setPageCourrente]=useState();
+    const [nombrePages,setNombresPages]=useState("");
     const token = sessionStorage.getItem("key");
-    const[data,setMyData]=useState([]);
+    const [pageCourrente,setPageCourrente]=useState();
+    const[declaration,setMyData]=useState([]);
+    const [Consulter,setConsulter]=useState(false);
     const [id,setId]=useState();
     const detail=((id)=>{
         setId(id);
@@ -19,32 +29,31 @@ export const ListeDeclarationEnvoyee = () => {
         
     })
     useEffect(()=>{
-      fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "Authorization":`Token ${token}`
-          },
-        }).then((response) => {
-            if (response.ok){
-                    console.log("decla du service recuuup")
-            }else{
-                console.log("y'a une erreeeuuur")
-            }
-            return response.json();
-          })
-          .then((data) => {
-              console.log("response +"+data.results);
-            setMyData(data.results);
-            setNombre(data.count);
-            setNombresPages(Math.ceil(data.count /5));
-          });
-        
-},[]);
-    const afficher=(val)=>{
-      if(val === 'tout'){
-        fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
+          fetch("http://127.0.0.1:8000/madrasatic/service_declarations/", {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "Authorization":`Token ${token}`
+              },
+            }).then((response) => {
+                if (response.ok){
+                        console.log("decla du service recuuup")
+                }else{
+                    console.log("y'a une erreeeuuur")
+                }
+                return response.json();
+              })
+              .then((data) => {
+                  console.log("response +"+data.results);
+                setMyData(data.results);
+                setNombre(data.count);
+                setNombresPages(Math.ceil(data.count /5));
+              });
+            
+    },[]);
+    const Categories=(cat)=>{
+        fetch("http://127.0.0.1:8000/madrasatic/categories/"+cat+"/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -52,46 +61,23 @@ export const ListeDeclarationEnvoyee = () => {
         "Authorization":`Token ${token}`
       },
     }).then((response) => {
+        if (response.ok) {
+          console.log("donnees recup");
+        } else {
+          console.log("y'a une erreur");
+        }
         return response.json();
       })
       .then((data) => {
-        setMyData(data.results);
+        console.log(data.name);
+        setNomCategorie(data.name);
       });
-    }else if(val === '1' || val=== '2' || val ==='3'){
-        fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/?priorité=${val}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "Authorization":`Token ${token}`
-      },
-    }).then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setMyData(data.results);
-      });
-    }else{
-        fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/?etat=${val}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "Authorization":`Token ${token}`
-      },
-    }).then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setMyData(data.results);
-      });
-    }
     }
     const ChangePage=((data)=>{
       console.log(data.selected);
       setPageCourrente(data.selected+1);
       if(data.selected == 0){
-        fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
+        fetch("http://127.0.0.1:8000/madrasatic/service_declarations/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -105,7 +91,7 @@ export const ListeDeclarationEnvoyee = () => {
             setMyData(data.results);
           });
       }else{
-        fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/?page=${data.selected + 1}`, {
+        fetch(`http://127.0.0.1:8000/madrasatic/service_declarations/?page=${data.selected + 1}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -120,11 +106,56 @@ export const ListeDeclarationEnvoyee = () => {
           });
       }
     })
+    const afficher=(val)=>{
+        if(val === 'tout'){
+            fetch("http://127.0.0.1:8000/madrasatic/service_declarations/", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization":`Token ${token}`
+          },
+        }).then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            setMyData(data.results);
+          });
+        }else if(val === '1' || val=== '2' || val ==='3'){
+            fetch(`http://127.0.0.1:8000/madrasatic/service_declarations/?priorité=${val}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization":`Token ${token}`
+          },
+        }).then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            setMyData(data.results);
+          });
+        }else{
+            fetch(`http://127.0.0.1:8000/madrasatic/service_declarations/?etat=${val}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization":`Token ${token}`
+          },
+        }).then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            setMyData(data.results);
+          });
+        }
+    }
     return (
         <div >
-            {Consulter ? <Redirect to={`/DeclarationEnvoyer/${id}`}/> : null}
-          <Col md={10} xl={12} style={{marginTop:'5%'}}>
-                        <Card className='Recent-Users' style={{
+          {Consulter ? <Redirect to={`/DeclarationDetail/${id}`}/> : null}
+          <Col md={10} xl={12} style={{marginTop:'7%'}}>
+                        <Card className='Recent-Users'style={{
                           border: '2px solid #b78429',
                           borderRadius: '8px',
                           padding:'0',
@@ -140,7 +171,7 @@ export const ListeDeclarationEnvoyee = () => {
                                   backgroundColor: '#1f2833',
                                   color: 'white',
                                   textAlign: 'center'
-                                  }}>Liste Des Déclarations Envoyées</Card.Title>
+                                  }}>Liste des déclarations</Card.Title>
                                 <table>
                                     <tr>
                                         <td>
@@ -150,10 +181,8 @@ export const ListeDeclarationEnvoyee = () => {
                                         <td>
                                             <select onChange={(e)=>{afficher(e.target.value)}}>
                                                 <option value='tout'>Toutes</option>
-                                                <option value='publiée'>Etat: publiée</option>
-                                                <option value='incompléte'>Etat: incompléte</option>
-                                                {/* <option value='rejetée'>Etat: rejetée</option> */}
                                                 <option value='non traitée'>Etat: non traitée</option>
+                                                <option value='traitée'>Etat: traitée</option>
                                             </select>
                                         </td>
                                         <td>
@@ -170,13 +199,13 @@ export const ListeDeclarationEnvoyee = () => {
                                     </tr>
 
                                 </table>
-                                
                             </Card.Header>
-                            {data.filter(decla=>decla.parent_declaration === null).map(dec => (
-                            <Card.Body className='px-0 py-2'  onClick={()=>{detail(dec.id)}}>       
+                            {declaration.filter(decla=>decla.parent_declaration === null).filter(decl=>decl.signalée_par < 3).filter(decla => decla.etat != 'traitée').map(dec => (
+                            <Card.Body className='px-0 py-2'  onClick={()=>{detail(dec.id)}}>
                                 <Table responsive hover>
                                     <tbody>
                                     <tr className="unread">
+          
                                         <td><img  style={{width: '150px'}} src={dec.image} alt="activity-user"/></td>
                                         <td>
                                             <h6 className="mb-1">Objet :{dec.objet}</h6>
@@ -186,14 +215,13 @@ export const ListeDeclarationEnvoyee = () => {
                                             <h6 className="text-muted"><i className="fa fa-circle text-c-green f-10 m-r-15"/>Catégorie :{dec.catégorie}</h6>
                                             <h6 className="text-muted"><i className="fa fa-circle text-c-green f-10 m-r-15"/>Priorité :{dec.priorité}</h6>
                                         </td>
-                                        {/* <td><a href={DEMO.BLANK_LINK} className="label theme-bg2 text-white f-12">Reject</a><a href={DEMO.BLANK_LINK} className="label theme-bg text-white f-12">Approve</a></td> */}
                                     </tr>
                                   </tbody>
                                 </Table>
                               </Card.Body>
                               ))} 
                         </Card>
-                        <ReactPaginate 
+                            <ReactPaginate 
                                 previousLabel={"<<"}
                                 nextLabel={">>"}
                                 breakLabel={"..."}
@@ -215,5 +243,4 @@ export const ListeDeclarationEnvoyee = () => {
       
   </div>
     );
-
 }

@@ -8,6 +8,7 @@ export const Connexion = () => {
     const [motDePasse , setMotDePasse] = useState('');
     const [admin , setAdmin ] = useState(false);
     const [responsable , setResponsable ] = useState(false);
+    const [service,setService]=useState(false);
     const [utilisateur ,setUtilisateur] = useState(false);
     const [erreurEmail,setErreurEmail]=useState();
     const [erreurPassword,setErreurPassword]=useState();
@@ -41,19 +42,19 @@ export const Connexion = () => {
                     }
                     return response.json();
                 }).then(data => {
-                    console.log("rooooole + "+data.role);
-                    console.log(data.is_superuser);
-                    if(data.role=="('Utilisateur', 'User')"){
+                    if(data.role==="('Utilisateur', 'User')"){
                         setUtilisateur(true);
                     }
                     if (data.role=== 'Admin'){
                         setAdmin(true);
-                    }else{
-                        if(data.role=='Responsable'){
+                    }else if(data.role==='Responsable'){
                             setResponsable(true);
-                        }else{
+                    }else if( data.role ==='Service'){
+                            setService(true);
+                            const idService = data.id;
+                            sessionStorage.setItem("idService", idService);
+                    }else if(data.role==='Utilisateur'){
                         setUtilisateur(true);
-                        }
                     }
                     setIsPending(false);
                 })                
@@ -89,6 +90,9 @@ export const Connexion = () => {
             }
             {
             responsable? <Redirect to='/HomeResponsable' /> : null
+            }
+            {
+            service? <Redirect to='/HomeService' /> : null
             }
             <form>
                 <div className="inputField">

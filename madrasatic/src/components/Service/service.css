@@ -1,0 +1,14 @@
+.declaration {
+    padding: 10px 16px;
+    margin: 20px 0;
+    border-bottom: 1px solid #fafafa;
+  }
+
+.declaration button {
+    color: white;
+    background-color: #24344d;
+    border-radius: 8px;
+}
+Link {
+  text-decoration: none;
+}

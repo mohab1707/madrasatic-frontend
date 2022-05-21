@@ -24,38 +24,29 @@ export const AfficherDeclaration= () => {
     const [pageCourrente,setPageCourrente]=useState(1);
     const[declaration,setMyData]=useState([]);
     useEffect(()=>{
-      if (pageCourrente == 1){
-          fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-                "Authorization":`Token ${token}`
-              },
-            }).then((response) => {
-                return response.json();
-              })
-              .then((data) => {
-                setMyData(data.results);
-                setNombre(data.count);
-                setNombresPages(Math.ceil(data.count /5));
-              });
+      fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization":`Token ${token}`
+          },
+        }).then((response) => {
+            if (response.ok){
+                    console.log("decla du service recuuup")
             }else{
-              fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/?page=${pageCourrente}`, {
-                method: "GET",
-                headers: {
-                  "Content-Type": "application/json",
-                  "Accept": "application/json",
-                  "Authorization":`Token ${token}`
-                },
-              }).then((response) => {
-                  return response.json();
-                })
-                .then((data) => {
-                  setMyData(data.results);
-                });
+                console.log("y'a une erreeeuuur")
             }
-    },[declaration]);
+            return response.json();
+          })
+          .then((data) => {
+              console.log("response +"+data.results);
+            setMyData(data.results);
+            setNombre(data.count);
+            setNombresPages(Math.ceil(data.count /5));
+          });
+        
+},[]);
     const Categories=(cat)=>{
         fetch("http://127.0.0.1:8000/madrasatic/categories/"+cat+"/", {
       method: "GET",
@@ -140,7 +131,7 @@ export const AfficherDeclaration= () => {
     const ChangePage=((data)=>{
       console.log(data.selected);
       setPageCourrente(data.selected+1);
-      if(pageCourrente == 1){
+      if(data.selected == 0){
         fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
           method: "GET",
           headers: {
@@ -155,7 +146,7 @@ export const AfficherDeclaration= () => {
             setMyData(data.results);
           });
       }else{
-        fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/?page=${pageCourrente}`, {
+        fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/?page=${data.selected + 1}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

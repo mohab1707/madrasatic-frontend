@@ -19,15 +19,9 @@ export const Categories = () => {
         "Authorization":`Token ${token}`
       },
     }).then((response) => {
-        if (response.ok) {
-          console.log("donnees recup");
-        } else {
-          console.log("y'a une erreur");
-        }
         return response.json();
       })
       .then((data) => {
-        console.log(data.results);
         setCatégories(data.results);
       });
     },[catégories]);
@@ -40,13 +34,7 @@ export const Categories = () => {
               "Accept": "application/json",
               "Authorization":`Token ${token}`
             },
-          }).then((response) => {
-              if (response.ok) {
-                console.log("Categorie supprimer");
-              } else {
-                console.log("y'a une erreur");
-              }
-            })
+          })
     })
   return (
     <MDBContainer className='categories'>
