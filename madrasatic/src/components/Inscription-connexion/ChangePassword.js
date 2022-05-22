@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState ,useEffect} from "react";
 import {RiLockPasswordFill} from "react-icons/ri";
 import { Redirect } from "react-router-dom"
 import { useParams } from "react-router-dom";
@@ -11,8 +11,36 @@ export const ChangePassword= () => {
     const [erreurPassword2,setErreurPassword2]= useState('');
     const [erreurPassword,setErreurPassword]= useState('');
     const is_superuser=sessionStorage.getItem("is_superuser");
-    console.log("is superuser + "+is_superuser);
+    const [service,setService]=useState(null);
+    const [responsable,setResponsable]=useState(null);
+    const [admin, setAdmin] = useState(false);
+    const [Utilisateur, setUtilisateur] = useState(false);
     const token=sessionStorage.getItem("key");
+    useEffect(() => {
+        fetch("http://127.0.0.1:8000/madrasatic/user/", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization":`Token ${token}`
+          },
+        }).then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            if (data.role==='Admin')
+            {
+              setAdmin(true);
+            }else if(data.role==='Responsable'){
+                setResponsable(true);
+            }else if(data.role==='Service'){
+                setService(true);
+            }
+            else{
+              setUtilisateur(true);
+            }
+          });
+      }, []);
     const changePassword = (e) => {
         e.preventDefault();    
         fetch(`http://localhost:8000/madrasatic/password-change/`, {
@@ -37,10 +65,16 @@ export const ChangePassword= () => {
 
         <div className="inscription">
             {
-            reussi && is_superuser ? <Redirect to="/Home"/>: null
+            reussi && admin ? <Redirect to="/Home"/>: null
             }
             {
-            reussi && !is_superuser ? <Redirect to="/HomePage"/>: null
+            reussi && Utilisateur ? <Redirect to="/HomePage"/>: null
+            }
+            {
+            reussi && responsable ? <Redirect to="/HomeResponsable"/>: null
+            }
+            {
+            reussi && service ? <Redirect to="/HomeService"/>: null
             }
             <div className="inputField">
                     <br></br>

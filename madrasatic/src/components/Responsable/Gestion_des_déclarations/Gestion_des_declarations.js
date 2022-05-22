@@ -62,9 +62,10 @@ export const Gestion_des_declarations = () => {
             <MDBCollapse navbar show={showNavRight}>
                 <MDBNavbarNav right fullWidth={false} className='mb-2 mb-lg-0'>
                     <MDBNavbarItem>
-                    <MDBNavbarItem>
                         <MDBNavbarLink href='/NewCatégorie' style={{color:'#ffffff'}}>Nouvelle catégorie</MDBNavbarLink>
                     </MDBNavbarItem>
+                    <MDBNavbarItem>
+                        <MDBNavbarLink href='/Rapports' style={{color:'#ffffff'}}>Rapports</MDBNavbarLink>
                     </MDBNavbarItem>
                     <MDBNavbarItem>
                         <MDBDropdown>

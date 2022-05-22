@@ -2,17 +2,52 @@ import {MDBContainer,MDBRow,MDBCol,} from 'mdb-react-ui-kit';
 import React, { useReducer, useState,useEffect }  from 'react';
 import { MDBRadio } from 'mdb-react-ui-kit';
 import './user.css'
-const UserList = ( {MyData}) => {
+import ReactPaginate from "react-paginate";
+const UserList = () => {
     const [role,setRole]=useState(sessionStorage.getItem("role"));
     const [is_active,setIs_active]=useState(sessionStorage.getItem("is_active"));
-    function refreshPage() {
-        window.location.reload(false);
-      }
+    const [nombre,setNombre]=useState("");
+    const [nombrePages,setNombresPages]=useState("");
+    const token = sessionStorage.getItem("key");
+    const [pageCourrente,setPageCourrente]=useState(1);
+    const[MyData,setMyData]=useState([]);
+      useEffect(() => {
+        const pageCourrante=sessionStorage.getItem("pageCourrante");
+          if(pageCourrante == 1){
+        fetch("http://127.0.0.1:8000/madrasatic/manageusers/", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization":`Token ${token}`
+          },
+        }).then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            setMyData(data.results);
+            setNombre(data.count);
+            setNombresPages(Math.ceil(data.count /5));
+          });}else{
+            fetch(`http://127.0.0.1:8000/madrasatic/manageusers/?page=${pageCourrante}`, {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                  "Accept": "application/json",
+                  "Authorization":`Token ${token}`
+                },
+              }).then((response) => {
+                  return response.json();
+                })
+                .then((data) => {
+                  setMyData(data.results);
+                  setNombre(data.count);
+                    setNombresPages(Math.ceil(data.count /5));
+                });
+          }
+      }, [MyData]);
     const sauvegarde=(id,e)=>{
         e.preventDefault();
-        console.log('id+ '+id);
-        console.log(role[2])
-        const token = sessionStorage.getItem("key");
         if((role == "('Utilisateur', 'User')"))
         {
             setRole('Utilisateur')
@@ -22,21 +57,44 @@ const UserList = ( {MyData}) => {
             headers: { "Content-Type": "application/json",'Accept': 'application/json',"Authorization":`Token ${token}`}, 
             body: JSON.stringify({is_active:is_active, is_banned:false,role:role})
             }).then((response) => {
-                if(response.ok)
-                {
-                    console.log("donnees envoyee");
-                }else
-                {
-                    console.log("y'a une erreur");
-                }
                 return response.json();
-            }).then((data)=>{
-                console.log(data);
-            }).then(()=>{
-                refreshPage(); 
-                // setRole("role");
-            });    
-            }
+            })
+    }
+            const ChangePage=((data)=>{
+                console.log(data.selected);
+                setPageCourrente(data.selected+1);
+                const pageCourrante = data.selected+1;
+                sessionStorage.setItem("pageCourrante", pageCourrante);
+                if(data.selected == 0){
+                  fetch("http://127.0.0.1:8000/madrasatic/manageusers/", {
+                    method: "GET",
+                    headers: {
+                      "Content-Type": "application/json",
+                      "Accept": "application/json",
+                      "Authorization":`Token ${token}`
+                    },
+                  }).then((response) => {
+                      return response.json();
+                    })
+                    .then((data) => {
+                      setMyData(data.results);
+                    });
+                }else{
+                  fetch(`http://127.0.0.1:8000/madrasatic/manageusers/?page=${data.selected + 1}`, {
+                    method: "GET",
+                    headers: {
+                      "Content-Type": "application/json",
+                      "Accept": "application/json",
+                      "Authorization":`Token ${token}`
+                    },
+                  }).then((response) => {
+                      return response.json();
+                    })
+                    .then((data) => {
+                      setMyData(data.results);
+                    });
+                }
+              })
     return (
         <MDBContainer className='users'>
             {MyData.map(user =>(
@@ -72,7 +130,24 @@ const UserList = ( {MyData}) => {
                     </MDBCol>
                 </MDBRow>
             ) )}
-
+            <ReactPaginate 
+                    previousLabel={"<<"}
+                    nextLabel={">>"}
+                    breakLabel={"..."}
+                    pageCount={nombrePages}
+                    onPageChange={ChangePage}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={3}
+                    containerClassName={"pagination justify-content-center"}
+                    pageClassName={"page-item"}
+                    pageLinkClassName={"page-link"}
+                    previousClassName={"page-item"}
+                    previousLinkClassName={"page-link"}
+                    nextClassName={"page-item"}
+                    nextLinkClassName={"page-link"}
+                    breakClassName={"page-item"}
+                    breakLinkClassName={"page-link"}
+                    activeClassName={"active"}/>
         </MDBContainer>
 
     );

@@ -9,6 +9,8 @@ import { MDBTooltip } from "mdb-react-ui-kit";
 import { Link } from "react-router-dom";
 export const Profil = () => {
   const [nom, setNom] = useState("");
+  const [service,setService]=useState(null);
+  const [responsable,setResponsable]=useState(null);
   const [image, setImage] = useState(null);
   const [admin, setAdmin] = useState(false);
   const [Utilisateur, setUtilisateur] = useState(false);
@@ -44,10 +46,14 @@ export const Profil = () => {
         setNom(data.username);
         setTel(data.tel);
         console.log(data.role)
-        if (data.is_superuser)
+        if (data.role==='Admin')
         {
           setAdmin(true);
           sessionStorage.setItem("is_superuser",true);
+        }else if(data.role==='Responsable'){
+            setResponsable(true);
+        }else if(data.role==='Service'){
+            setService(true);
         }
         else{
           setUtilisateur(true);
@@ -94,6 +100,8 @@ export const Profil = () => {
     <div className="inscription">
       {reussi && Utilisateur ? <Redirect to="/HomePage" /> : null}
       {reussi && admin ? <Redirect to="/Home" /> : null}
+      {reussi && responsable ? <Redirect to="/HomeResponsable" /> : null}
+      {reussi && service ? <Redirect to="/HomeService" /> : null}
       <form>
         <div className="inputField">
           <div className="icon">
@@ -151,7 +159,11 @@ export const Profil = () => {
         </button>
       </div>
       <div className="forgottenpassword">
-          {is_superuser ? <Link to="/ChangePasswordAdmin">Changer le mot de passe?</Link> : <Link to="/ChangePassword">Changer le mot de passe?</Link>}
+          {admin? <Link to="/ChangePasswordAdmin">Changer le mot de passe?</Link> : null}
+          {Utilisateur? <Link to="/ChangePassword">Changer le mot de passe?</Link> : null}
+          {responsable? <Link to="/ChangePasswordResponsable">Changer le mot de passe?</Link> : null}
+          {service? <Link to="/ChangePasswordService">Changer le mot de passe?</Link> : null}
+          
       </div>
       <br></br>
     </div>

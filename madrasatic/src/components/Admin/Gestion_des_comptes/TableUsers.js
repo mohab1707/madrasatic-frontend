@@ -9,31 +9,6 @@ import {
 
 import './tableusers.css'
 export const TableUsers = () => {
-
-    const token = sessionStorage.getItem("key");
-    const[MyData,setMyData]=useState([]);
-    useEffect(() => {
-        fetch("http://127.0.0.1:8000/madrasatic/manageusers/", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "Authorization":`Token ${token}`
-          },
-        }).then((response) => {
-            if (response.ok) {
-              console.log("donnees recup");
-            } else {
-              console.log("y'a une erreur");
-            }
-            return response.json();
-          })
-          .then((data) => {
-            console.log(data.results);
-            setMyData(data.results);
-            // console.log("element 0 :"+MyData);
-          });
-      }, []);
     return (
 
         <MDBContainer className='utilisateurs'>
@@ -52,7 +27,7 @@ export const TableUsers = () => {
                 </MDBRow>
             </MDBContainer>
             <MDBContainer className='users'>
-                {MyData && <UserList MyData={MyData}></UserList>}
+                <UserList ></UserList>
             </MDBContainer>
         </MDBContainer>
     

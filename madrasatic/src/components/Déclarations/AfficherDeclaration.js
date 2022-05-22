@@ -40,7 +40,6 @@ export const AfficherDeclaration= () => {
             return response.json();
           })
           .then((data) => {
-              console.log("response +"+data.results);
             setMyData(data.results);
             setNombre(data.count);
             setNombresPages(Math.ceil(data.count /5));

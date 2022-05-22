@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import {MdEmail} from "react-icons/md"
 import { Redirect, useParams  } from "react-router-dom"
-export const DemanderComplement= () => {
-        const {id}=useParams();
+export const DemanderComplementRapport= () => {
+        const {idRapport}=useParams();
         const token = sessionStorage.getItem("key");
         const [idResponsable,setIdResponsable]=useState();
         const [raison,setRaison]=useState("");
@@ -17,11 +16,6 @@ export const DemanderComplement= () => {
                     "Authorization":`Token ${token}`
                 },
                 }).then((response) => {
-                    if (response.ok) {
-                    console.log("donnees recup");
-                    } else {
-                    console.log("y'a une erreur");
-                    }
                     return response.json();
                 })
                 .then((data) => {
@@ -30,25 +24,21 @@ export const DemanderComplement= () => {
         },[])
         const demandercomplement=((e)=>{
             e.preventDefault(); 
-            console.log("id decla"+id +" idresponsable +" + idResponsable);
-            fetch(`http://127.0.0.1:8000/madrasatic/declaration_complement_demand/`, {
+            fetch(`http://127.0.0.1:8000/madrasatic/report_complement_demand/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "application/json",
                     "Authorization":`Token ${token}`
                 },
-                body: JSON.stringify({responsable:idResponsable ,description:raison ,  declaration:id}), 
+                body: JSON.stringify({responsable:idResponsable , report:idRapport,description:raison }), 
                 }).then((response) => {
                     if (response.ok) {
                         setPageAcceuil(true);
-                    } else {
-                    console.log("y'a une erreur");
-                    }
+                    } 
                     return response.json();
                 }).then((data)=>{
-                    console.log(data);
-                    setErrorReason(data.reason);
+                    setErrorReason(data.description);
                 })
     })
     return(
@@ -58,7 +48,7 @@ export const DemanderComplement= () => {
                 pageAcceuil? <Redirect to ="/HomeResponsable"></Redirect> : null
             }
             <div className="email">
-                    <label><b>Déscription de ce qui manque pour la déclaration :</b></label>
+                    <label><b>Déscription de ce qui manque pour le rapport:</b></label>
                     <br></br>
                     <textarea
                         placeholder='Description'

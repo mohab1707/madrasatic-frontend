@@ -25,7 +25,23 @@ export const Connexion = () => {
             if(response.ok)
             {
                 console.log("reussi");
-                const token=sessionStorage.getItem("key");
+                          
+            }
+            else{
+                console.log("erreur");
+                setIsPending(false);
+            }
+             return response.json();   
+        }).then((data) => {
+            const key = data.key;
+            sessionStorage.setItem("key", key);
+            setErreurEmail(data.email);
+            setErreurPassword(data.password);
+            setErreur_non_field_errors(data.non_field_errors);
+            setIsPending(false);
+        }
+        ).then(()=>{
+            const token=sessionStorage.getItem("key");
                 console.log("tokeeen est :" + token);
                 fetch("http://127.0.0.1:8000/madrasatic/user/", {
                 method: "GET",
@@ -57,22 +73,8 @@ export const Connexion = () => {
                         setUtilisateur(true);
                     }
                     setIsPending(false);
-                })                
-            }
-            else{
-                console.log("erreur");
-                setIsPending(false);
-            }
-             return response.json();   
-        }).then((data) => {
-            const key = data.key;
-            sessionStorage.setItem("key", key);
-            setErreurEmail(data.email);
-            setErreurPassword(data.password);
-            setErreur_non_field_errors(data.non_field_errors);
-            setIsPending(false);
-        }
-        )
+                })      
+        })
         
       }
     return ( 

@@ -63,13 +63,14 @@ export const BareService = () => {
                     <MDBNavbarItem>
                         <MDBDropdown>
                             <MDBDropdownToggle tag='a' className='nav-link' style={{color:'#ffffff'}}>
-                                
                                  <i class="fas fa-user" style={{color:'#ffffff'}}></i>
-        
                             </MDBDropdownToggle>
                         <MDBDropdownMenu>
                             <MDBDropdownItem>
-                                <MDBDropdownLink href='/ProfilResponsable'>Mon Profil</MDBDropdownLink>
+                                <MDBDropdownLink href='/ProfilService'>Mon Profil</MDBDropdownLink>
+                            </MDBDropdownItem>
+                            <MDBDropdownItem>
+                                <MDBDropdownLink href='/RapportsEnregistrés'>Mes rapport enregistrés</MDBDropdownLink>
                             </MDBDropdownItem>
                             <MDBDropdownItem>
                                 <MDBBtn className='text-white' color='dark' onClick={deconnexion}>Se déconnecter</MDBBtn>

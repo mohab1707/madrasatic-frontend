@@ -140,7 +140,7 @@ export const ListeDeclarationEnvoyee = () => {
                                   backgroundColor: '#1f2833',
                                   color: 'white',
                                   textAlign: 'center'
-                                  }}>Liste Des Déclarations Envoyées</Card.Title>
+                                  }}>Liste des déclarations</Card.Title>
                                 <table>
                                     <tr>
                                         <td>
@@ -186,7 +186,7 @@ export const ListeDeclarationEnvoyee = () => {
                                             <h6 className="text-muted"><i className="fa fa-circle text-c-green f-10 m-r-15"/>Catégorie :{dec.catégorie}</h6>
                                             <h6 className="text-muted"><i className="fa fa-circle text-c-green f-10 m-r-15"/>Priorité :{dec.priorité}</h6>
                                         </td>
-                                        {/* <td><a href={DEMO.BLANK_LINK} className="label theme-bg2 text-white f-12">Reject</a><a href={DEMO.BLANK_LINK} className="label theme-bg text-white f-12">Approve</a></td> */}
+                                         
                                     </tr>
                                   </tbody>
                                 </Table>

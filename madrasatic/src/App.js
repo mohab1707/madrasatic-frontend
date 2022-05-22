@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { HomePage } from './components/HomePage';
 import { Gestion_des_comptes } from './components/Admin/Gestion_des_comptes/Gestion_des_comptes';
 import { NavBar } from './components/Inscription-connexion/NavBar';
 import { InscriptionOuConnexion } from './components/Inscription-connexion/Iscription-connexion';
@@ -13,7 +12,6 @@ import { EmailEnvoye } from './components/Inscription-connexion/EmailEnvoye';
 import { Bare } from './components/PageAcceuil/Bare';
 import { Profil } from './components/PageAcceuil/Profil';
 import { ChangePassword } from './components/Inscription-connexion/ChangePassword';
-import {MDBContainer} from 'mdb-react-ui-kit';
 import { TableUsers } from './components/Admin/Gestion_des_comptes/TableUsers';
 import { AjoutDeclaration } from './components/Déclarations/AjoutDeclarations';
 import { Declaration } from './components/Déclarations/Declaration';
@@ -35,6 +33,11 @@ import { HomeService } from './components/Service/HomeService';
 import { BareService } from './components/Service/BareService';
 import DetailDeclaration from './components/Service/DetailDeclaration';
 import { AjoutRapport } from './components/Rapports/AjoutRapport';
+import { MesRapportsEnregistrées } from './components/Rapports/RapportsEnregistrés';
+import { ModifierRapportEnregistrée } from './components/Rapports/ModifierRapportEnregistré';
+import { AfficherRapports } from './components/Responsable/gestion_rapports/AfficherRapports';
+import DetailRapport from './components/Responsable/gestion_rapports/DetailsRapport';
+import { DemanderComplementRapport } from './components/Responsable/gestion_rapports/DemanderComplementRapport';
 export default function App() {
 
   return (
@@ -148,6 +151,16 @@ export default function App() {
             &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
           </div>
         </Route>
+        < Route exact path="/ProfilService">
+          <BareService/>
+          <div className='shadow1 shadow-5'>
+          <br></br>
+            <Profil />
+          </div>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'2%' , left: '0', bottom: '0', width: '100%'}}>
+            &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
+          </div>
+        </Route>
         < Route exact path="/NewCatégorie">
           <Gestion_des_declarations/>
           <div className='ajoutcategorieclass'>
@@ -178,6 +191,24 @@ export default function App() {
         </Route>
         < Route exact path="/ChangePasswordAdmin">
           <Gestion_des_comptes />
+          <div className='shadow1 shadow-5'>
+            <ChangePassword />
+          </div>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'2%' , left: '0', bottom: '0', width: '100%'}}>
+            &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
+          </div>
+        </Route>
+        < Route exact path="/ChangePasswordResponsable">
+           <Gestion_des_declarations/>
+          <div className='shadow1 shadow-5'>
+            <ChangePassword />
+          </div>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'2%' , left: '0', bottom: '0', width: '100%'}}>
+            &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
+          </div>
+        </Route>
+        < Route exact path="/ChangePasswordService">
+          <BareService />
           <div className='shadow1 shadow-5'>
             <ChangePassword />
           </div>
@@ -294,6 +325,53 @@ export default function App() {
           </div>
           <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'2%' , left: '0', bottom: '0', width: '100%'}}>
             &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
+          </div>
+        </Route>
+        < Route exact path="/RapportsEnregistrés">
+          <BareService />
+          <div className='ajoutdeclarationclass'>
+          <br></br>
+            <MesRapportsEnregistrées/>
+          </div>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'2%' , left: '0', bottom: '0', width: '100%'}}>
+            &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
+          </div>
+        </Route>
+        < Route exact path="/ModifierRapportEnregistré/:idRapport">
+          <BareService />
+          <div className='ajoutdeclarationclass'>
+          <br></br>
+            <ModifierRapportEnregistrée/>
+          </div>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'2%' , left: '0', bottom: '0', width: '100%'}}>
+            &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
+          </div>
+        </Route>
+        < Route exact path="/Rapports">
+          <Gestion_des_declarations />
+          <div className='ajoutdeclarationclass'>
+            <AfficherRapports />
+            </div>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)', left: '0', bottom: '0', width: '100%'}}>
+              &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
+          </div>
+        </Route>
+        < Route exact path="/DetailRapport/:idRapport">
+          <Gestion_des_declarations />
+          <div className='ajoutdeclarationclass'>
+            <DetailRapport />
+            </div>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)', left: '0', bottom: '0', width: '100%'}}>
+              &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
+          </div>
+        </Route>
+        < Route exact path="/RapportIncomplet/:idRapport">
+          <Gestion_des_declarations />
+          <div className='ajoutdeclarationclass'>
+            <DemanderComplementRapport />
+            </div>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)', left: '0', bottom: '0', width: '100%'}}>
+              &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
           </div>
         </Route>
       </Switch>

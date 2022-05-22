@@ -16,6 +16,7 @@ import {
   import './tabledeclarations.css';
 export const HomeService= () => {
     const [nomCategorie,setNomCategorie]=useState("");
+    const [afficherCategorie,setAfficherCategorie]=useState('haja')
     const [nombre,setNombre]=useState("");
     const [nombrePages,setNombresPages]=useState("");
     const token = sessionStorage.getItem("key");
