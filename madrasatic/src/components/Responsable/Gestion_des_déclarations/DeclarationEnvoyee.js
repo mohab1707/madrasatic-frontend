@@ -273,7 +273,7 @@ export default function DeclarationEnvoyee() {
                     </MDBCol>
                 </MDBRow>
             </MDBCol>
-            <MDBCol md='2'>
+            <MDBCol md='3'>
                 <MDBRow>
                     <MDBCol><h5>Priorité:</h5></MDBCol>
                     <MDBCol><p>{priorité}</p></MDBCol>
