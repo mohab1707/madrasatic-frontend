@@ -52,7 +52,7 @@ export const Inscription = () => {
                     </div>
                     <input
                         type="text"
-                        requiered
+                        required
                         placeholder="Nom"
                         value = {nom}
                         onChange = {(e) => setNom(e.target.value)}
@@ -65,7 +65,7 @@ export const Inscription = () => {
                     </div>
                     <input
                         type="email"
-                        requiered
+                        required
                         placeholder="Adresse email"
                         value = {email}
                         onChange = {(e) => setEmail(e.target.value)}
@@ -79,7 +79,7 @@ export const Inscription = () => {
                     </div>
                     <input
                         type="password"
-                        requiered
+                        required
                         placeholder="Mot de passe"
                         value = {motDePasse}
                         onChange = {(e) => setMotDePasse(e.target.value)}
@@ -92,7 +92,7 @@ export const Inscription = () => {
                     </div>
                     <input
                         type="password"
-                        requiered
+                        required
                         placeholder="Confirmez votre mot de passe"
                         value = {motDePasseConfirmation}
                         onChange = {(e) => setmotDePasseConfirmation(e.target.value)}

@@ -9,11 +9,11 @@ const UserList = () => {
     const [nombre,setNombre]=useState("");
     const [nombrePages,setNombresPages]=useState("");
     const token = sessionStorage.getItem("key");
-    const [pageCourrente,setPageCourrente]=useState(1);
+    const [pageCourrente,setPageCourrente]=useState(0);
     const[MyData,setMyData]=useState([]);
       useEffect(() => {
-        const pageCourrante=sessionStorage.getItem("pageCourrante");
-          if(pageCourrante == 1){
+        // const pageCourrante=sessionStorage.getItem("pageCourrante");
+          if(pageCourrente == 0){
         fetch("http://127.0.0.1:8000/madrasatic/manageusers/", {
           method: "GET",
           headers: {
@@ -29,7 +29,7 @@ const UserList = () => {
             setNombre(data.count);
             setNombresPages(Math.ceil(data.count /5));
           });}else{
-            fetch(`http://127.0.0.1:8000/madrasatic/manageusers/?page=${pageCourrante}`, {
+            fetch(`http://127.0.0.1:8000/madrasatic/manageusers/?page=${pageCourrente +1}`, {
                 method: "GET",
                 headers: {
                   "Content-Type": "application/json",
@@ -52,6 +52,7 @@ const UserList = () => {
         {
             setRole('Utilisateur')
         };
+        console.log("is actiiive : "+is_active + " role : "+role)
          fetch(`http://127.0.0.1:8000/madrasatic/manageusers/${id}/`, {
             method: "PUT",
             headers: { "Content-Type": "application/json",'Accept': 'application/json',"Authorization":`Token ${token}`}, 
@@ -61,39 +62,39 @@ const UserList = () => {
             })
     }
             const ChangePage=((data)=>{
-                console.log(data.selected);
-                setPageCourrente(data.selected+1);
-                const pageCourrante = data.selected+1;
-                sessionStorage.setItem("pageCourrante", pageCourrante);
-                if(data.selected == 0){
-                  fetch("http://127.0.0.1:8000/madrasatic/manageusers/", {
-                    method: "GET",
-                    headers: {
-                      "Content-Type": "application/json",
-                      "Accept": "application/json",
-                      "Authorization":`Token ${token}`
-                    },
-                  }).then((response) => {
-                      return response.json();
-                    })
-                    .then((data) => {
-                      setMyData(data.results);
-                    });
-                }else{
-                  fetch(`http://127.0.0.1:8000/madrasatic/manageusers/?page=${data.selected + 1}`, {
-                    method: "GET",
-                    headers: {
-                      "Content-Type": "application/json",
-                      "Accept": "application/json",
-                      "Authorization":`Token ${token}`
-                    },
-                  }).then((response) => {
-                      return response.json();
-                    })
-                    .then((data) => {
-                      setMyData(data.results);
-                    });
-                }
+                // console.log(data.selected);
+                setPageCourrente(data.selected);
+                // const pageCourrante = data.selected+1;
+                // sessionStorage.setItem("pageCourrante", pageCourrante);
+                // if(data.selected == 0){
+                //   fetch("http://127.0.0.1:8000/madrasatic/manageusers/", {
+                //     method: "GET",
+                //     headers: {
+                //       "Content-Type": "application/json",
+                //       "Accept": "application/json",
+                //       "Authorization":`Token ${token}`
+                //     },
+                //   }).then((response) => {
+                //       return response.json();
+                //     })
+                //     .then((data) => {
+                //       setMyData(data.results);
+                //     });
+                // }else{
+                //   fetch(`http://127.0.0.1:8000/madrasatic/manageusers/?page=${data.selected + 1}`, {
+                //     method: "GET",
+                //     headers: {
+                //       "Content-Type": "application/json",
+                //       "Accept": "application/json",
+                //       "Authorization":`Token ${token}`
+                //     },
+                //   }).then((response) => {
+                //       return response.json();
+                //     })
+                //     .then((data) => {
+                //       setMyData(data.results);
+                //     });
+                // }
               })
     return (
         <MDBContainer className='users'>

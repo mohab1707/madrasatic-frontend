@@ -38,7 +38,7 @@ export const RecupererMotDePasseOublie= () => {
                     </div>
                     <input
                        type="password"
-                       requiered
+                       required
                        placeholder="Mot de passe"
                        value = {motDePasse}
                        onChange = {(e) => setMotDePasse(e.target.value)}
@@ -49,7 +49,7 @@ export const RecupererMotDePasseOublie= () => {
                     </div>
                     <input
                        type="password"
-                       requiered
+                       required
                        placeholder="Confirmation du mot de passe"
                        value = {motDePasseConfirmation}
                         onChange = {(e) => setmotDePasseConfirmation(e.target.value)}

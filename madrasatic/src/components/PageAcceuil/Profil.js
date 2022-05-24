@@ -109,7 +109,7 @@ export const Profil = () => {
           </div>
           <input
             type="text"
-            // requiered
+            // required
 
             placeholder="Nom"
             value={nom}
@@ -125,7 +125,7 @@ export const Profil = () => {
           </div>
           <input
             type="text"
-            // requiered
+            // required
             placeholder="Adresse"
             value={adresse}
             onChange={(e) => setAdresse(e.target.value)}

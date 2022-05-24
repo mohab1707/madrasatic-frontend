@@ -1,7 +1,6 @@
 import { useState ,useEffect} from "react";
 import {RiLockPasswordFill} from "react-icons/ri";
 import { Redirect } from "react-router-dom"
-import { useParams } from "react-router-dom";
 export const ChangePassword= () => {
     const [reussi , setReussi ] = useState(false);
     const [ancienMotDePasse , setAncienMotDePasse] = useState('');
@@ -10,7 +9,6 @@ export const ChangePassword= () => {
     const [erreurPassword1,setErreurPassword1]= useState('');
     const [erreurPassword2,setErreurPassword2]= useState('');
     const [erreurPassword,setErreurPassword]= useState('');
-    const is_superuser=sessionStorage.getItem("is_superuser");
     const [service,setService]=useState(null);
     const [responsable,setResponsable]=useState(null);
     const [admin, setAdmin] = useState(false);
@@ -85,7 +83,7 @@ export const ChangePassword= () => {
                     </div>
                     <input
                        type="password"
-                       requiered
+                       required
                        placeholder="Ancien mot de passe"
                        value = {ancienMotDePasse}
                        onChange = {(e) => setAncienMotDePasse(e.target.value)}
@@ -96,7 +94,7 @@ export const ChangePassword= () => {
                     </div>
                     <input
                        type="password"
-                       requiered
+                       required
                        placeholder="Nouveau mot de passe"
                        value = {motDePasse}
                         onChange = {(e) => setMotDePasse(e.target.value)}
@@ -107,7 +105,7 @@ export const ChangePassword= () => {
                     </div>
                     <input
                        type="password"
-                       requiered
+                       required
                        placeholder="Confirmer votre nouveau mot de passe"
                        value = {motDePasseConfirmation}
                         onChange = {(e) => setmotDePasseConfirmation(e.target.value)}

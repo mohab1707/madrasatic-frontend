@@ -4,6 +4,7 @@ import './index.css';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css'
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import * as sw from "./sw";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -16,3 +17,4 @@ ReactDOM.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+sw.register()

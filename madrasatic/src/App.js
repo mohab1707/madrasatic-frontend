@@ -70,7 +70,7 @@ export default function App() {
           <div className='shadow shadow-5'>
             <MotDePasseOublie />
           </div>
-          <div style={{marginTop:'3%'}}>
+          <div style={{marginTop:'150px'}}>
             <Footer></Footer>
           </div>
         </Route>
@@ -97,18 +97,14 @@ export default function App() {
         </Route>
         < Route exact path="/HomePage">
           <Bare />
-          <div className='listedeclarations'>
+          {/* <div className='shadow1 shadow-5'> */}
           <br></br>
             <Declaration />
-          </div> 
-          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'2%', left: '0', bottom: '0', width: '100%'}}>
-              &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
-          </div>
+          {/* </div> */}
         </Route>
         < Route exact path="/HomeResponsable">
           <Gestion_des_declarations />
           <div className='listedeclarations'>
-            <br />
             <TableDeclarationEnvoyee />
           </div>
           <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'2%' , left: '0', bottom: '0', width: '100%'}}>
@@ -131,7 +127,7 @@ export default function App() {
           <br></br>
             <Profil />
           </div>
-          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'4%' , left: '0', bottom: '0', width: '100%'}}>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'2%' , left: '0', bottom: '0', width: '100%'}}>
             &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
           </div>
         </Route>
@@ -141,7 +137,7 @@ export default function App() {
           <br></br>
             <Profil />
           </div>
-          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'4%' , left: '0', bottom: '0', width: '100%'}}>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'2%' , left: '0', bottom: '0', width: '100%'}}>
             &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
           </div>
         </Route>
@@ -151,7 +147,7 @@ export default function App() {
           <br></br>
             <Profil />
           </div>
-          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'4%' , left: '0', bottom: '0', width: '100%'}}>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'2%' , left: '0', bottom: '0', width: '100%'}}>
             &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
           </div>
         </Route>
@@ -161,7 +157,7 @@ export default function App() {
           <br></br>
             <Profil />
           </div>
-          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'4%' , left: '0', bottom: '0', width: '100%'}}>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'2%' , left: '0', bottom: '0', width: '100%'}}>
             &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
           </div>
         </Route>
@@ -189,7 +185,7 @@ export default function App() {
           <div className='shadow1 shadow-5'>
             <ChangePassword />
           </div>
-          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'5.5%' , left: '0', bottom: '0', width: '100%'}}>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'2%' , left: '0', bottom: '0', width: '100%'}}>
             &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
           </div>
         </Route>
@@ -198,7 +194,7 @@ export default function App() {
           <div className='shadow1 shadow-5'>
             <ChangePassword />
           </div>
-          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'5.5%' , left: '0', bottom: '0', width: '100%'}}>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'2%' , left: '0', bottom: '0', width: '100%'}}>
             &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
           </div>
         </Route>
@@ -207,7 +203,7 @@ export default function App() {
           <div className='shadow1 shadow-5'>
             <ChangePassword />
           </div>
-          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'5.5%' , left: '0', bottom: '0', width: '100%'}}>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'2%' , left: '0', bottom: '0', width: '100%'}}>
             &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
           </div>
         </Route>
@@ -216,7 +212,7 @@ export default function App() {
           <div className='shadow1 shadow-5'>
             <ChangePassword />
           </div>
-          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'5.5%' , left: '0', bottom: '0', width: '100%'}}>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'2%' , left: '0', bottom: '0', width: '100%'}}>
             &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
           </div>
         </Route>
@@ -277,7 +273,6 @@ export default function App() {
         < Route exact path="/MesDeclarationsEnregistrées">
           <Bare />
           <div className='mesdeclarations'> 
-          <br />
             <MesDeclarationsEnregistrées />
           </div>
           <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'2%', left: '0', bottom: '0', width: '100%'}}>
@@ -286,12 +281,9 @@ export default function App() {
         </Route>
         < Route exact path="/CompleterDeclaration/:idDeclaration">
           <Bare />
-          <div className='ajoutdeclarationclass'>
+          <div className='shadow1 shadow-5'>
           <br></br>
             <CompleterDeclaration />
-          </div>
-          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'2%' , left: '0', bottom: '0', width: '100%'}}>
-            &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
           </div>
         </Route>
         < Route exact path="/ModifierDeclarationEnregistrée/:idDeclaration">
@@ -358,10 +350,9 @@ export default function App() {
         < Route exact path="/Rapports">
           <Gestion_des_declarations />
           <div className='ajoutdeclarationclass'>
-            <br />
             <AfficherRapports />
             </div>
-          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'2%' , left: '0', bottom: '0', width: '100%'}}>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)', left: '0', bottom: '0', width: '100%'}}>
               &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
           </div>
         </Route>
@@ -370,16 +361,16 @@ export default function App() {
           <div className='ajoutdeclarationclass'>
             <DetailRapport />
             </div>
-          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'2%' , left: '0', bottom: '0', width: '100%'}}>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)', left: '0', bottom: '0', width: '100%'}}>
               &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
           </div>
         </Route>
         < Route exact path="/RapportIncomplet/:idRapport">
           <Gestion_des_declarations />
-          <div className='shadow1 shadow-5'>
+          <div className='ajoutdeclarationclass'>
             <DemanderComplementRapport />
             </div>
-          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',position:'fixed' , left: '0', bottom: '0', width: '100%'}}>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)', left: '0', bottom: '0', width: '100%'}}>
               &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
           </div>
         </Route>

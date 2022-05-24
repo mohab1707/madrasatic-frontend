@@ -36,9 +36,20 @@
       });
     
       beamsClient.start()
-        .then(() => beamsClient.addDeviceInterest('hello'))
+        .then(() => beamsClient.addDeviceInterest('debug-hello'))
         .then(() => console.log('Successfully registered and subscribed!'))
         .catch(console.error);
+      // const token=sessionStorage.getItem("key");
+      // console.log("le tooookeeeeennnnnn")
+      // const beamsTokenProvider = new PusherPushNotifications.TokenProvider({
+      //   url: "http://127.0.0.1:8000/madrasatic/beams_auth/",
+      //   queryParams: {
+      //     someQueryParam: "parameter-content", // URL query params your auth endpoint needs
+      //   },
+      //   headers: {
+      //     someHeader: `Token ${token}`, // Headers your auth endpoint needs
+      //   },
+      // });
     </script>
   </head>
   <body>

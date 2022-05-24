@@ -1,9 +1,7 @@
 import { Link } from "react-router-dom";
 import './Declaration.css'
-import {Row, Col, Card, Form, Button, InputGroup, FormControl, DropdownButton, Dropdown,Table} from 'react-bootstrap';
-import { Categories } from "../Catégories/Catégories";
+import { Col, Card,Table} from 'react-bootstrap';
 import { useEffect, useState } from "react";
-import {BsThreeDotsVertical} from "react-icons/bs"
 import {
   MDBContainer,
   MDBDropdown,
@@ -11,7 +9,6 @@ import {
   MDBDropdownMenu,
   MDBDropdownItem,
   MDBDropdownLink,
-  MDBBtn
   } from 'mdb-react-ui-kit';
   import ReactPaginate from "react-paginate";
 export const AfficherDeclaration= () => {
@@ -21,10 +18,11 @@ export const AfficherDeclaration= () => {
     const [nombre,setNombre]=useState("");
     const [nombrePages,setNombresPages]=useState("");
     const token = sessionStorage.getItem("key");
-    const [pageCourrente,setPageCourrente]=useState(1);
+    const [pageCourrente,setPageCourrente]=useState(0);
     const[declaration,setMyData]=useState([]);
     useEffect(()=>{
-      fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
+      if (pageCourrente==0){
+        fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -44,8 +42,29 @@ export const AfficherDeclaration= () => {
             setNombre(data.count);
             setNombresPages(Math.ceil(data.count /5));
           });
+      }else{
+        fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/?page=${pageCourrente + 1}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization":`Token ${token}`
+          },
+        }).then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            setMyData(data.results);
+            setNombre(data.count);
+            setNombresPages(Math.ceil(data.count /5));
+            if (declaration.length == 0){
+              setPageCourrente(0);
+            }
+          });
+      }
+      
         
-},[]);
+},[declaration]);
     const Categories=(cat)=>{
         fetch("http://127.0.0.1:8000/madrasatic/categories/"+cat+"/", {
       method: "GET",
@@ -128,37 +147,36 @@ export const AfficherDeclaration= () => {
         
     }
     const ChangePage=((data)=>{
-      console.log(data.selected);
-      setPageCourrente(data.selected+1);
-      if(data.selected == 0){
-        fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "Authorization":`Token ${token}`
-          },
-        }).then((response) => {
-            return response.json();
-          })
-          .then((data) => {
-            setMyData(data.results);
-          });
-      }else{
-        fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/?page=${data.selected + 1}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "Authorization":`Token ${token}`
-          },
-        }).then((response) => {
-            return response.json();
-          })
-          .then((data) => {
-            setMyData(data.results);
-          });
-      }
+      setPageCourrente(data.selected);
+      // if(data.selected == 0){
+      //   fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
+      //     method: "GET",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //       "Accept": "application/json",
+      //       "Authorization":`Token ${token}`
+      //     },
+      //   }).then((response) => {
+      //       return response.json();
+      //     })
+      //     .then((data) => {
+      //       setMyData(data.results);
+      //     });
+      // }else{
+      //   fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/?page=${data.selected + 1}`, {
+      //     method: "GET",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //       "Accept": "application/json",
+      //       "Authorization":`Token ${token}`
+      //     },
+      //   }).then((response) => {
+      //       return response.json();
+      //     })
+      //     .then((data) => {
+      //       setMyData(data.results);
+      //     });
+      // }
     })
     return (
       <MDBContainer>

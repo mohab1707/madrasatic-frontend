@@ -39,6 +39,14 @@ export const Connexion = () => {
             setErreurPassword(data.password);
             setErreur_non_field_errors(data.non_field_errors);
             setIsPending(false);
+            fetch("http://127.0.0.1:8000/madrasatic/beams_auth/", {
+                method: "GET",
+                headers: { "Content-Type": "application/json",'Accept': 'application/json',"Authorization":`Token ${data.key}`}, 
+                }).then((response) => {
+                    return response.json();
+                }).then((data)=>{
+                    console.log("beaaams tokeeen +"+data);
+                })
         }
         ).then(()=>{
             const token=sessionStorage.getItem("key");
@@ -103,7 +111,7 @@ export const Connexion = () => {
                     </div>
                     <input
                         type="email"
-                        requiered
+                        required
                         placeholder="Adresse email"
                         value = {email}
                         onChange = {(e) => setEmail(e.target.value)}
@@ -117,7 +125,7 @@ export const Connexion = () => {
                     </div>
                     <input
                         type="password"
-                        requiered
+                        required
                         placeholder="Mot de passe"
                         value = {motDePasse}
                         onChange = {(e) => setMotDePasse(e.target.value)}

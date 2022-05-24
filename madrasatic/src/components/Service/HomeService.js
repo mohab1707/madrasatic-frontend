@@ -14,7 +14,6 @@ import {
   import ReactPaginate from "react-paginate";
   import './service.css'
   import './tabledeclarations.css';
-import { MDBContainer } from "mdb-react-ui-kit";
 export const HomeService= () => {
     const [nomCategorie,setNomCategorie]=useState("");
     const [afficherCategorie,setAfficherCategorie]=useState('haja')
@@ -154,7 +153,7 @@ export const HomeService= () => {
         }
     }
     return (
-        <MDBContainer >
+        <div >
           {Consulter ? <Redirect to={`/DeclarationDetail/${id}`}/> : null}
           <Col md={10} xl={12} style={{marginTop:'7%'}}>
                         <Card className='Recent-Users'style={{
@@ -243,6 +242,6 @@ export const HomeService= () => {
                                 activeClassName={"active"}/>
                     </Col>
       
-  </MDBContainer>
+  </div>
     );
 }

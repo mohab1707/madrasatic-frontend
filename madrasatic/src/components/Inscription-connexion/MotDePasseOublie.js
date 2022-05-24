@@ -40,7 +40,7 @@ export const MotDePasseOublie= () => {
                     </div>
                     <input
                         type="email"
-                        requiered
+                        required
                         placeholder="Adresse email"
                         value = {email}
                         onChange = {(e) => setEmail(e.target.value)}
