@@ -59,7 +59,7 @@ text-indent: 13%;
 }
 .icon {
 position: absolute;
-left:19%;
+left:36%;
 margin-top: 0%;
 padding: 0.5% 0.6%;
 color: gray;
@@ -76,7 +76,7 @@ font-size: 100%;
 color: #24344f;
 }
 .insc button {
-background-color: #b78429;
+background-color: #24344f;
 width: 25%;
 padding:2%;
 margin-left: 62%;
@@ -85,8 +85,12 @@ border-color: #24344f;
 color: white;
 }
 
+.insc button:hover{
+    background-color: #3e567c;
+}
+
 .conx button{
-background-color: #b78429;
+background-color: #24344f;
 color: white;
 padding:8%;
 border-color: #24344f;
@@ -95,6 +99,9 @@ margin-right: 155%;
 border-radius: 17px;
 }
 
+.conx button:hover{
+    background-color: #3e567c;
+}
 /* .card {
 width: 30%;
 padding:2% ;
@@ -126,14 +133,18 @@ color: gray;
     margin-left: 10%;
 }
 .card button{
-background-color:#b78429;
-width: 16%;
+background-color:#24344f;
+width: 14%;
 padding:1%;
 margin-left: 43%;
 border-radius: 17px;
 border-color: #24344f;
 color: white;
 }
+.card button:hover {
+    background-color: #3e567c;
+}
+
 .mailEnvoye {
 width: 40%;
 padding:2% ;
@@ -180,15 +191,18 @@ padding: 1%;
 margin-top: 2%;
 }
 .modifier button {
-background-color: #b78429;
+background-color: #24344f;
 color: white;
 padding:14%;
-border-color: #b78429;
+border-color: #24344f;
 margin-left: 200%;
 margin-right: 155%;
 border-radius: 17px;
 }
 
+.modifier button:hover {
+    background-color: #3e567c;
+}
 
 @media screen and (max-width:1200px) and (min-width:900px){
 .auth {

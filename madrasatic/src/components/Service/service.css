@@ -1,14 +1,18 @@
 .declaration {
-    padding: 10px 16px;
-    margin: 20px 0;
-    border-bottom: 1px solid #fafafa;
-  }
+  padding: 10px 16px;
+  margin: 20px 0;
+  border-bottom: 1px solid #fafafa;
+}
 
 .declaration button {
-    color: white;
-    background-color: #24344d;
-    border-radius: 8px;
+  color: white;
+  background-color: #24344f;
+  border-radius: 8px;
 }
+.declaration button:hover {
+background-color: #3e567c;
+}
+
 Link {
-  text-decoration: none;
+text-decoration: none;
 }

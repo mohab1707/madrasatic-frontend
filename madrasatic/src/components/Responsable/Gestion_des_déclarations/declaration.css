@@ -18,9 +18,13 @@
   
   .buttons button {
       color: white;
-      background-color: #24344d;
+      background-color: #24344f;
       border-radius: 8px;
   }
+
+  .buttons button:hover {
+    background-color: #3e567c;
+}
   
   .infos {
       margin-top: 50px;

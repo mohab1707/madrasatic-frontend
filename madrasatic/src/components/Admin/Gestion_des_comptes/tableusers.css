@@ -1,27 +1,27 @@
 .head {
-    background-color: #8da0b1;
-    padding: 16px 16px;
-    margin: 20px 0;
-    color: #24344d;
+  background-color: #8da0b1;
+  padding: 16px 16px;
+  margin: 20px 0;
+  color: #24344f;
 }
 .users {
-    background-color: white;
-}
-
-.utilisateurs {
-  border: 2px solid #b78429;
-  border-radius: 8px;
-  padding: 0%;
-  margin-top: 5%;
   background-color: white;
 }
 
+.utilisateurs {
+border: 2px solid #b78429;
+border-radius: 8px;
+padding: 0%;
+margin-top: 5%;
+background-color: white;
+}
+
 .utilisateurs h2 {
-  font-size: 25px;
-  margin-top: 30px;
-  padding: 2%;
-  margin-bottom: 30px;
-  background-color: #1f2833;
-  color: white;
-  text-align: center;
+font-size: 25px;
+margin-top: 30px;
+padding: 2%;
+margin-bottom: 30px;
+background-color: #1f2833;
+color: white;
+text-align: center;
 }

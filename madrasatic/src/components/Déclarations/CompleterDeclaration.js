@@ -1,4 +1,5 @@
 // import 'bootstrap/dist/css/bootstrap.min.css';
+import { MDBContainer } from 'mdb-react-ui-kit';
 import { useEffect, useState } from 'react'
 import { MdSentimentSatisfied } from 'react-icons/md';
 import { Redirect, useParams } from "react-router-dom"
@@ -147,7 +148,8 @@ export const CompleterDeclaration =()=>{
     })
     })
     return(
-    <div className="create">
+      <MDBContainer className='form'>
+        <div className="create">
       {
             reussi? <Redirect to='/HomePage' /> : null
       }
@@ -196,5 +198,8 @@ export const CompleterDeclaration =()=>{
         <button onClick={validateDeclaration}>Valider</button>
       </form>
     </div>
+
+      </MDBContainer>
+   
     )
 }

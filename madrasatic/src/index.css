@@ -66,7 +66,7 @@ body {
   background-color: #60061e;
 }
 .shadow1 {
-  background-color:white;
+  background-color:#e8e8e8;
   max-width: 45%;
   margin-left: 10%;
   border-radius: 20px;
@@ -74,7 +74,7 @@ body {
   border: 2px solid #b78429;
 }
 .shadow2 {
-  background-color:white;
+  background-color:#e8e8e8;
   max-width: 65%;
   margin-left: 10%;
   border-radius: 20px;
@@ -83,21 +83,21 @@ body {
 }
 @media screen and (max-width:900px) and (min-width:600px){
   .shadow {
-    background-color: white;
+    background-color: #e8e8e8;
     max-width: 70%;
     margin-left: 10%;
     border-radius: 20px;
     margin-top: 0.2%;
   }
   .shadow1 {
-    background-color:white;
+    background-color:#e8e8e8;
     max-width: 45%;
     margin-left: 50%;
     border-radius: 20px;
     margin-top: 5%;
   }
   .shadow2 {
-    background-color:white;
+    background-color:#e8e8e8;
     max-width: 65%;
     margin-left: 10%;
     border-radius: 20px;
@@ -106,21 +106,21 @@ body {
 }
 @media screen and (max-width:600px){
   .shadow {
-    background-color: white;
+    background-color: #e8e8e8;
     max-width: 80%;
     margin-left: 8%;
     border-radius: 20px;
     margin-top: 2%;
   }
   .shadow1 {
-    background-color:white;
+    background-color:#e8e8e8;
     max-width: 45%;
     margin-left: 50%;
     border-radius: 20px;
     margin-top: 5%;
   }
   .shadow2 {
-    background-color:white;
+    background-color:#e8e8e8;
     max-width: 65%;
     margin-left: 10%;
     border-radius: 20px;
