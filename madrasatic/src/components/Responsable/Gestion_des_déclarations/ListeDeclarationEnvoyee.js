@@ -164,36 +164,6 @@ export const ListeDeclarationEnvoyee = () => {
                                   color: 'white',
                                   textAlign: 'center'
                                   }}>Liste des déclarations</Card.Title>
-                                  
-                                {/* <table>
-                                    <tr>
-                                        <td>
-                                            {/* <br></br> */}
-                                            {/* <p>Etat : </p>
-                                        </td>
-                                        <td>
-                                            <select onChange={(e)=>{afficher(e.target.value)}}>
-                                                <option value='tout'>Toutes</option>
-                                                <option value='publiée'>Etat: publiée</option>
-                                                <option value='incompléte'>Etat: incompléte</option>
-                                                {/* <option value='rejetée'>Etat: rejetée</option> */}
-                                                {/* <option value='non traitée'>Etat: non traitée</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <p>  Catégorie : </p>
-                                        </td>
-                                        <td>
-                                            <select onChange={(e)=>{afficher(e.target.value)}}>
-                                                <option value='tout'>Toutes</option>
-                                                <option value='1'>Urgence</option>
-                                                <option value='2'>Etat critique</option>
-                                                <option value='3'>Etat normal</option>
-                                            </select>
-                                        </td>
-                                    </tr>
-
-                                </table> */}
                                 <div class="row" style={{marginLeft:'25%'}}>
                 <div class="col-lg-20 mx-auto">
                     <div class="career-search mb-60">
@@ -235,8 +205,6 @@ export const ListeDeclarationEnvoyee = () => {
                                     <tr className="unread" class="candidates-list">
                                         <td class="title"><img  style={{width: '50px'}} src={dec.image} alt="Image du signalement"/></td>
                                         <td>
-                                            {/* <h6 className="mb-1">Objet :{dec.objet}</h6>
-                                            <p className="m-0">Etat :{dec.etat}</p> */}
                                             <div class="candidate-list-details">
                                               <div class="candidate-list-info">
                                                 <div class="candidate-list-title">

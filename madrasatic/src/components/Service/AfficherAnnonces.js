@@ -48,7 +48,7 @@ export const AfficherAnnonces=()=>{
               setAnnonces(data.results);
             });
         }else{
-          fetch(`http://127.0.0.1:8000/madrasatic/annonceslis/?page=${data.selected + 1}`, {
+          fetch(`http://127.0.0.1:8000/madrasatic/annonceslist/?page=${data.selected + 1}`, {
             method: "GET",
             headers: {
               "Content-Type": "application/json",

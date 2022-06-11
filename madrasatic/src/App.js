@@ -467,6 +467,17 @@ export default function App() {
             &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
           </div>
         </Route>
+        < Route exact path="/LesAnnonces">
+          <Bare />
+          <div className='ajoutdeclarationclass'>
+          <br></br>
+            <AfficherAnnonces />
+            <br /><br />
+          </div>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'0%' , left: '0', bottom: '0', width: '100%'}}>
+            &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
+          </div>
+        </Route>
       </Switch>
     </ Router>
     

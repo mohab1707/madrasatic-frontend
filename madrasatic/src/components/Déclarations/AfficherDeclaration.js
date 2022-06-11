@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import './Declaration.css'
 import { Col, Card,Table} from 'react-bootstrap';
 import { useEffect, useState } from "react";
+import {FaThumbsUp,FaThumbsDown,FaCogs} from 'react-icons/fa'
 import {
   MDBContainer,
   MDBDropdown,
@@ -24,6 +25,7 @@ export const AfficherDeclaration= () => {
     const [nombrePages,setNombresPages]=useState("");
     const token = sessionStorage.getItem("key");
     const [pageCourrente,setPageCourrente]=useState(0);
+    const [catégories,setCatégories]=useState ([]);
     const[declaration,setMyData]=useState([]);
     const [utilisateur,setUtilisateur]=useState("")
     useEffect(()=>{
@@ -40,6 +42,19 @@ export const AfficherDeclaration= () => {
         .then((data) => {
             setUtilisateur(data.id);
         });
+        fetch("http://127.0.0.1:8000/madrasatic/categories/", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization":`Token ${token}`
+          },
+        }).then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            setCatégories(data.results);
+          });
     },[])
     useEffect(()=>{
       if (pageCourrente==0){
@@ -81,27 +96,6 @@ export const AfficherDeclaration= () => {
       
         
 },[declaration]);
-    const Categories=(cat)=>{
-        fetch("http://127.0.0.1:8000/madrasatic/categories/"+cat+"/", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "Authorization":`Token ${token}`
-      },
-    }).then((response) => {
-        if (response.ok) {
-          console.log("donnees recup");
-        } else {
-          console.log("y'a une erreur");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data.name);
-        setNomCategorie(data.name);
-      });
-    }
     const confirmer=(id)=>{
               listeConfirmé.map(item=>{
                 console.log("la liste"+item);
@@ -117,6 +111,8 @@ export const AfficherDeclaration= () => {
               }).then((response)=>{
                 if(response.ok){
                   console.log("liste changer")
+                  setListeConfirmé([]);
+                  setListeSignaler([]);
                 }else{
                   console.log("erreur dans le fetch")
                 }
@@ -172,6 +168,8 @@ export const AfficherDeclaration= () => {
               }).then((response) => {
                 if(response.ok){
                   console.log("liste changer")
+                  setListeConfirmé([]);
+                  setListeSignaler([]);
                 }else{
                   console.log("erreur dans le fetch")
                 }
@@ -208,54 +206,57 @@ export const AfficherDeclaration= () => {
                             <Card.Body className='px-0 py-2'  onClick={()=>{recupdata(dec.id)}}>
                                 <Table responsive hover>
                                     <tbody>
-                                    <tr className="unread">
-          
-                                        <td><img  style={{width: '150px'}} src={dec.image} alt="activity-user"/></td>
-                                        <td>
-                                            <h6 className="mb-1">Objet :{dec.objet}</h6>
-                                            <p className="m-0">Etat :{dec.etat}</p>
+                                    <tr className="unread" class="candidates-list">
+                                        <td class="title"><img  style={{width :'300px',borderRadius:'8px'}} src={dec.image} alt="Image du signalement"/></td>
+                                        <td style={{width:'400px'}}>
+                                            <div class="candidate-list-details">
+                                              <div class="candidate-list-info">
+                                                <div class="candidate-list-title">
+                                                  <h5 class="mb-0">{dec.objet}</h5>
+                                                </div>
+                                                <div class="candidate-list-option">
+                                                  <ul class="list-unstyled">
+                                                    <li><FaCogs style={{marginRight:'2px',marginBottom:'3px'}}/> {dec.etat}</li>
+                                                    {
+                                                      dec.confirmée_par.some(item => item === utilisateur) ? <li><FaThumbsUp  style={{marginRight:'2px',marginBottom:'6px'}}/>1</li> : <li><FaThumbsUp  style={{marginRight:'2px',marginBottom:'6px'}}/>0</li>
+                                                    }
+                                                    {
+                                                      dec.signalée_par.some(item => item === utilisateur) ? <li><FaThumbsDown  style={{marginRight:'2px',marginTop:'4px'}}/>1</li> : <li><FaThumbsDown  style={{marginRight:'2px',marginTop:'4px'}}/>0</li>
+                                                    }
+                                                    
+                                                  </ul>
+                                                </div>
+                                              </div>
+                                            </div>
                                         </td>
-                                        <td>
-                                            <h6 className="text-muted"><i className="fa fa-circle text-c-green f-10 m-r-15"/>Catégorie :{dec.catégorie}</h6>
-                                            <h6 className="text-muted"><i className="fa fa-circle text-c-green f-10 m-r-15"/>Priorité :{dec.priorité}</h6>
+                                        <td style={{width :'300px'}}>
+                                           {
+                                            catégories.filter(cat => cat.id === dec.catégorie).map(
+                                              categ =>(
+                                                <h6 ><i className="fa fa-circle f-10 m-r-15"/>Catégorie :{categ.name}</h6>
+                                              )
+                                            )
+                                           }
+                                            
+                                            <h6><i className="fa fa-circle f-10 m-r-15"/>Priorité :{dec.priorité}</h6>
                                         </td>
-                                        <br></br><br></br>
-                                          <MDBDropdown>
+                                         <td style={{width :'100px'}}>
+                                         <MDBDropdown>
                                               <MDBDropdownToggle tag='a' className='nav-link'style={{left:"90%",
                                                       fontSize:"30px",
                                                       padding: "0% 0%",color:'black'}}>                                          
                                               </MDBDropdownToggle >
                                      
                                             <MDBDropdownMenu>
-                                              {peutConfirmer ? 
                                                   <MDBDropdownItem>
                                                       <MDBDropdownLink onClick={(e)=>{confirmer(dec.id,e)}}>Confirmer</MDBDropdownLink>
                                                   </MDBDropdownItem>
-                                                : <MDBDropdownItem>
-                                                <MDBDropdownLink onClick={(e)=>{confirmer(dec.id,e)}}>Ne plus confirmer</MDBDropdownLink>
-                                                </MDBDropdownItem>
-                                                }
-                                                {peutSignaler ? 
                                                 <MDBDropdownItem>
                                                     <MDBDropdownLink onClick={(e)=>{signaler(dec.id,e)}}>Signaler</MDBDropdownLink>
-                                                </MDBDropdownItem>
-                                                :<MDBDropdownItem>
-                                                <MDBDropdownLink onClick={(e)=>{signaler(dec.id,e)}}>Signaler</MDBDropdownLink>
-                                                  </MDBDropdownItem>
-                                                }
-                                                <MDBDropdownItem>
-                                                  <input 
-                                                      type="text" 
-                                                      required 
-                                                      placeholder='Objet'
-                                                      
-                                                    />
-                                                </MDBDropdownItem>
-                                              
+                                                </MDBDropdownItem>                                         
                                             </MDBDropdownMenu>
                                           </MDBDropdown>
-                                          
-                                       
+                                         </td>
                                     </tr>
                                   </tbody>
                                 </Table>

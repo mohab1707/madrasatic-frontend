@@ -4,7 +4,7 @@ import {
     MDBRow,
     MDBCol,
     } from 'mdb-react-ui-kit';
-
+import {FaThumbsUp,FaThumbsDown,FaCogs} from 'react-icons/fa'
 import './declaration.css'
 import { Redirect, useParams } from 'react-router-dom';
 import {Col, Card,Table} from 'react-bootstrap';
@@ -30,6 +30,7 @@ export default function DeclarationEnvoyee() {
     const [nombre,setNombre]=useState("");
     const [pageCourrente,setPageCourrente]=useState();
     const[MyData,setMyData]=useState([]);
+    const [catégories,setCatégories]=useState ([]);
     useEffect(()=>{
       fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
           method: "GET",
@@ -50,6 +51,19 @@ export default function DeclarationEnvoyee() {
             setMyData(data.results);
             setNombre(data.count);
             setNombresPages(Math.ceil(data.count /5));
+          });
+          fetch("http://127.0.0.1:8000/madrasatic/categories/", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization":`Token ${token}`
+          },
+        }).then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            setCatégories(data.results);
           });
     },[])
     //
@@ -366,24 +380,43 @@ export default function DeclarationEnvoyee() {
                     </div>
                             </Card.Header>
                             {MyData.filter(decla=>decla.parent_declaration == id).map(dec => (
-                            <Card.Body className='px-0 py-2'>       
-                                <Table responsive hover>
-                                    <tbody>
-                                    <tr className="unread">
-                                        <td><img  style={{width: '150px'}} src={dec.image} alt="activity-user"/></td>
-                                        <td>
-                                            <h6 className="mb-1">Objet :{dec.objet}</h6>
-                                            <p className="m-0">Etat :{dec.etat}</p>
-                                        </td>
-                                        <td>
-                                            <h6 className="text-muted"><i className="fa fa-circle text-c-green f-10 m-r-15"/>Catégorie :{dec.catégorie}</h6>
-                                            <h6 className="text-muted"><i className="fa fa-circle text-c-green f-10 m-r-15"/>Priorité :{dec.priorité}</h6>
-                                        </td>
-                                        {/* <td><a href={DEMO.BLANK_LINK} className="label theme-bg2 text-white f-12">Reject</a><a href={DEMO.BLANK_LINK} className="label theme-bg text-white f-12">Approve</a></td> */}
-                                    </tr>
-                                  </tbody>
-                                </Table>
-                              </Card.Body>
+                                                           <Card.Body className='px-0 py-2'  onClick={()=>{detail(dec.id)}}>       
+                                                           <Table responsive hover>
+                                                               <tbody>
+                                                               <tr className="unread" class="candidates-list">
+                                                                   <td class="title"><img  style={{width: '50px'}} src={dec.image} alt="Image du signalement"/></td>
+                                                                   <td>
+                                                                       <div class="candidate-list-details">
+                                                                         <div class="candidate-list-info">
+                                                                           <div class="candidate-list-title">
+                                                                             <h5 class="mb-0"><a href={`/DeclarationEnvoyer/${id}`} style={{color:'black'}}>{dec.objet}</a></h5>
+                                                                           </div>
+                                                                           <div class="candidate-list-option">
+                                                                             <ul class="list-unstyled">
+                                                                               <li><FaCogs style={{marginRight:'2px',marginBottom:'3px'}}/> {dec.etat}</li>
+                                                                               <li><FaThumbsUp  style={{marginRight:'2px',marginBottom:'6px'}}/>{dec.confirmée_par.length}</li>
+                                                                               <li><FaThumbsDown  style={{marginRight:'2px',marginTop:'4px'}}/> {dec.signalée_par.length}</li>
+                                                                             </ul>
+                                                                           </div>
+                                                                         </div>
+                                                                       </div>
+                                                                   </td>
+                                                                   <td>
+                                                                      {
+                                                                       catégories.filter(cat => cat.id === dec.catégorie).map(
+                                                                         categ =>(
+                                                                           <h6 ><i className="fa fa-circle f-10 m-r-15"/>Catégorie :{categ.name}</h6>
+                                                                         )
+                                                                       )
+                                                                      }
+                                                                       
+                                                                       <h6><i className="fa fa-circle f-10 m-r-15"/>Priorité :{dec.priorité}</h6>
+                                                                   </td>
+                                                                    
+                                                               </tr>
+                                                             </tbody>
+                                                           </Table>
+                                                         </Card.Body>
                               ))} 
                         </Card>
                         <ReactPaginate 

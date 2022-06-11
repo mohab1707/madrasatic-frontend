@@ -200,8 +200,6 @@ export const HomeService= () => {
                                     <tr className="unread" class="candidates-list">
                                         <td class="title" style={{width :'300px',borderRadius:'8px'}}><img  style={{width: '50px'}} src={dec.image} alt="Image du signalement"/></td>
                                         <td style={{width:'400px'}}>
-                                            {/* <h6 className="mb-1">Objet :{dec.objet}</h6>
-                                            <p className="m-0">Etat :{dec.etat}</p> */}
                                             <div class="candidate-list-details">
                                               <div class="candidate-list-info">
                                                 <div class="candidate-list-title">
