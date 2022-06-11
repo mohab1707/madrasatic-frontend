@@ -256,29 +256,27 @@ export default function DeclarationEnvoyee() {
         <MDBRow className='infos'>
             <MDBCol md='5'>
                 <h5>Objet : {objet}</h5>
-                <p>Lieu: {lieu}</p>
-            </MDBCol>
-
-            <MDBCol md='4'>
                 <MDBRow>
-                    <MDBCol><h5>Catégorie:</h5></MDBCol>
-                    <MDBCol><p>{catégorie}</p></MDBCol>
+                {
+                      categories.filter(cat => cat.id === catégorie).map(
+                        categ =>(
+                          <MDBCol style={{marginRight:'15%'}}><h6 ><i className="fa fa-circle f-10 m-r-15"/>Catégorie :{categ.name}</h6></MDBCol>
+                        )
+                      )
+                    }
+                    
                     <MDBCol>
-                    <select onChange={e=>{setCatégorie(e.target.value)}}>
+                    <select class="custom-select" onChange={e=>{setCatégorie(e.target.value)}}>
                     <option >Catégorie</option>
                     {categories.map(cat => (
                         <option value={cat.id}>{cat.name}</option>
                     ))}
                     </select>
                     </MDBCol>
-                </MDBRow>
-            </MDBCol>
-            <MDBCol md='3'>
-                <MDBRow>
-                    <MDBCol><h5>Priorité:</h5></MDBCol>
-                    <MDBCol><p>{priorité}</p></MDBCol>
+                    <MDBRow>
+                    <MDBCol style={{marginRight:'22%'}}><h6><i className="fa fa-circle f-10 m-r-15"/>Priorité :{priorité}</h6></MDBCol>
                     <MDBCol>
-                    <select onChange={e=>{setPriorité(e.target.value)}}>
+                    <select class="custom-select" onChange={e=>{setPriorité(e.target.value)}}>
                         <option>prio</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -286,9 +284,21 @@ export default function DeclarationEnvoyee() {
                     </select>
                     </MDBCol>
                 </MDBRow>
+                    </MDBRow>
+                    
+            </MDBCol>
+
+            <MDBCol md='4'>
+                
+                    
+                
+            </MDBCol>
+            <MDBCol md='3'>
+                
             </MDBCol>
         </MDBRow>
         <hr style={{border: '2px solid #b78429'}}/>
+        <p>Lieu: {lieu}</p>
         <MDBContainer>
             <h5>Déscription :</h5>
             <p>{corps}</p>
@@ -321,35 +331,39 @@ export default function DeclarationEnvoyee() {
                                   color: 'white',
                                   textAlign: 'center'
                                   }}>Liste des déclarations</Card.Title>
-                                <table>
-                                    <tr>
-                                        <td>
-                                            {/* <br></br> */}
-                                            <p>Etat : </p>
-                                        </td>
-                                        <td>
-                                            <select onChange={(e)=>{afficher(e.target.value)}}>
-                                                <option value='tout'>Toutes</option>
+                                
+                                <div class="row" style={{marginLeft:'25%'}}>
+                <div class="col-lg-20 mx-auto">
+                    <div class="career-search mb-60">
+
+                        <form action="#" class="career-form mb-60">
+                            <div class="row">
+                                <div class="col-md-8 col-lg-4 my-4">
+                                    <div class="select-container">
+                                        <select class="custom-select" onChange={(e)=>{afficher(e.target.value)}}>
+                                                <option value='tout'>Tous les états</option>
                                                 <option value='publiée'>Etat: publiée</option>
                                                 <option value='incompléte'>Etat: incompléte</option>
                                                 {/* <option value='rejetée'>Etat: rejetée</option> */}
                                                 <option value='non traitée'>Etat: non traitée</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <p>  Catégorie : </p>
-                                        </td>
-                                        <td>
-                                            <select onChange={(e)=>{afficher(e.target.value)}}>
-                                                <option value='tout'>Toutes</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-4 my-4">
+                                    <div class="select-container" onChange={(e)=>{afficher(e.target.value)}}>
+                                        <select class="custom-select">
+                                                <option value='tout'>Toutes les priorités</option>
                                                 <option value='1'>Urgence</option>
                                                 <option value='2'>Etat critique</option>
                                                 <option value='3'>Etat normal</option>
-                                            </select>
-                                        </td>
-                                    </tr>
-
-                                </table>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    </div>
+                    </div>
                             </Card.Header>
                             {MyData.filter(decla=>decla.parent_declaration == id).map(dec => (
                             <Card.Body className='px-0 py-2'>       

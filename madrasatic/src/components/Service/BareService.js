@@ -60,6 +60,12 @@ export const BareService = () => {
 
             <MDBCollapse navbar show={showNavRight}>
                 <MDBNavbarNav right fullWidth={false} className='mb-2 mb-lg-0'>
+                        <MDBNavbarItem>
+                            <MDBNavbarLink href='/NouvelleAnnonce' style={{color:'#ffffff'}}>Nouvelle annonce</MDBNavbarLink>
+                        </MDBNavbarItem>
+                        <MDBNavbarItem>
+                            <MDBNavbarLink href='/Annonces' style={{color:'#ffffff'}}>Annonces</MDBNavbarLink>
+                        </MDBNavbarItem>
                     <MDBNavbarItem>
                         <MDBDropdown>
                             <MDBDropdownToggle tag='a' className='nav-link' style={{color:'#ffffff'}}>
@@ -70,7 +76,10 @@ export const BareService = () => {
                                 <MDBDropdownLink href='/ProfilService'>Mon Profil</MDBDropdownLink>
                             </MDBDropdownItem>
                             <MDBDropdownItem>
-                                <MDBDropdownLink href='/RapportsEnregistrés'>Mes rapport enregistrés</MDBDropdownLink>
+                                <MDBDropdownLink href='/RapportsEnregistrés'>Mes rapports enregistrés</MDBDropdownLink>
+                            </MDBDropdownItem>
+                            <MDBDropdownItem>
+                                <MDBDropdownLink href='/AnnoncesEnregistrées'>Mes annonces enregistrées</MDBDropdownLink>
                             </MDBDropdownItem>
                             <MDBDropdownItem>
                                 <MDBBtn className='text-white' color='dark' onClick={deconnexion}>Se déconnecter</MDBBtn>

@@ -14,12 +14,33 @@ import {
 export const AfficherDeclaration= () => {
     const [nomCategorie,setNomCategorie]=useState("");
     const [confirmé,setConfirmé]=useState("");
+    const[listeConfirmé,setListeConfirmé]=useState([]);
+    const [peutConfirmer,setPeutConfirmer]=useState(true);
+    const [peutSignaler,setPeutSignaler]=useState(true);
+    const [listeSignaler,setListeSignaler]=useState([]);
+    const [changer,setChanger]=useState(false);
     const [signalé,setSignalé]=useState("");
     const [nombre,setNombre]=useState("");
     const [nombrePages,setNombresPages]=useState("");
     const token = sessionStorage.getItem("key");
     const [pageCourrente,setPageCourrente]=useState(0);
     const[declaration,setMyData]=useState([]);
+    const [utilisateur,setUtilisateur]=useState("")
+    useEffect(()=>{
+      fetch("http://127.0.0.1:8000/madrasatic/user/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization":`Token ${token}`
+        },
+      }).then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+            setUtilisateur(data.id);
+        });
+    },[])
     useEffect(()=>{
       if (pageCourrente==0){
         fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
@@ -30,11 +51,6 @@ export const AfficherDeclaration= () => {
             "Authorization":`Token ${token}`
           },
         }).then((response) => {
-            if (response.ok){
-                    console.log("decla du service recuuup")
-            }else{
-                console.log("y'a une erreeeuuur")
-            }
             return response.json();
           })
           .then((data) => {
@@ -87,24 +103,26 @@ export const AfficherDeclaration= () => {
       });
     }
     const confirmer=(id)=>{
-        console.log("elle est confirmé par :" + confirmé);
-        fetch(`http://localhost:8000/madrasatic/responsable_declarations/${id}/`, {
-          method: "PUT",
-          headers: {
-              "Content-Type": "application/json",
-              "Accept": "application/json",
-              "Authorization":`Token ${token}`
-          },
-          body:JSON.stringify({confirmée_par:confirmé+1})
-          }).then((response) => {
-              if (response.ok) {
-              console.log("confirmé modifier");
-              } else {
-              console.log("y'a une erreur");
-              }
-              return response.json();
-          })
-    }
+              listeConfirmé.map(item=>{
+                console.log("la liste"+item);
+              })
+              fetch(`http://localhost:8000/madrasatic/responsable_declarations/${id}/`, {
+              method: "PUT",
+              headers: {
+                  "Content-Type": "application/json",
+                  "Accept": "application/json",
+                  "Authorization":`Token ${token}`
+              },
+              body:JSON.stringify({confirmée_par:listeConfirmé})
+              }).then((response)=>{
+                if(response.ok){
+                  console.log("liste changer")
+                }else{
+                  console.log("erreur dans le fetch")
+                }
+                setPeutConfirmer(!peutConfirmer);
+              })
+            }
     const recupdata=((id)=>{
       fetch(`http://localhost:8000/madrasatic/responsable_declarations/${id}/`, {
         method: "GET",
@@ -121,13 +139,28 @@ export const AfficherDeclaration= () => {
             }
             return response.json();
         }).then((data)=>{
-          setSignalé(data.signalée_par);
-          setConfirmé(data.confirmée_par);
+            setListeConfirmé(data.confirmée_par);
+            setSignalé(data.signalée_par);
+            if (data.confirmée_par.some(item=> item === utilisateur)){
+              console.log("existe deja dans liste confirmé")
+            }else{
+              console.log("existe pas dans liste confirmé")
+                setListeConfirmé(previousState =>(
+                    [...previousState,utilisateur]
+                ));
+            }
+            if (data.signalée_par.some(item=> item === utilisateur)){
+              console.log("existe deja dans liste signalé")
+            }else{
+              console.log("existe pas dans liste signalé")
+                setListeSignaler(previousState =>(
+                    [...previousState,utilisateur]
+                ));
+            }
         })
     })
     const signaler=(id,e)=>{
         e.preventDefault();
-          console.log("elle est signalé par :",signalé)
             fetch(`http://localhost:8000/madrasatic/responsable_declarations/${id}/`, {
               method: "PUT",
               headers: {
@@ -135,48 +168,19 @@ export const AfficherDeclaration= () => {
                   "Accept": "application/json",
                   "Authorization":`Token ${token}`
               },
-              body:JSON.stringify({signalée_par:signalé+1})
+              body:JSON.stringify({signalée_par:listeSignaler})
               }).then((response) => {
-                  if (response.ok) {
-                  console.log("signalé par  modifié");
-                  } else {
-                  console.log("y'a une erreur");
-                  }
-                  return response.json();
+                if(response.ok){
+                  console.log("liste changer")
+                }else{
+                  console.log("erreur dans le fetch")
+                }
+                setPeutConfirmer(!peutConfirmer);
               })
         
     }
     const ChangePage=((data)=>{
       setPageCourrente(data.selected);
-      // if(data.selected == 0){
-      //   fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
-      //     method: "GET",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //       "Accept": "application/json",
-      //       "Authorization":`Token ${token}`
-      //     },
-      //   }).then((response) => {
-      //       return response.json();
-      //     })
-      //     .then((data) => {
-      //       setMyData(data.results);
-      //     });
-      // }else{
-      //   fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/?page=${data.selected + 1}`, {
-      //     method: "GET",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //       "Accept": "application/json",
-      //       "Authorization":`Token ${token}`
-      //     },
-      //   }).then((response) => {
-      //       return response.json();
-      //     })
-      //     .then((data) => {
-      //       setMyData(data.results);
-      //     });
-      // }
     })
     return (
       <MDBContainer>
@@ -200,7 +204,7 @@ export const AfficherDeclaration= () => {
                                   textAlign: 'center'
                                   }}>Liste Des Déclarations</Card.Title>
                             </Card.Header>
-                            {declaration.filter(decla=>decla.parent_declaration === null).filter(decl=>decl.signalée_par < 3).map(dec => (
+                            {declaration.filter(decla=>decla.parent_declaration === null).filter(decl=>decl.signalée_par.length < 3).map(dec => (
                             <Card.Body className='px-0 py-2'  onClick={()=>{recupdata(dec.id)}}>
                                 <Table responsive hover>
                                     <tbody>
@@ -217,23 +221,40 @@ export const AfficherDeclaration= () => {
                                         </td>
                                         <br></br><br></br>
                                           <MDBDropdown>
-                                       <MDBDropdownToggle tag='a' className='nav-link'style={{left:"90%",
-                                              fontSize:"30px",
-                                              padding: "0% 0%",color:'black'}}>                                          
-                                      </MDBDropdownToggle >
+                                              <MDBDropdownToggle tag='a' className='nav-link'style={{left:"90%",
+                                                      fontSize:"30px",
+                                                      padding: "0% 0%",color:'black'}}>                                          
+                                              </MDBDropdownToggle >
                                      
-                                  <MDBDropdownMenu>
-                                      <MDBDropdownItem>
-                                          <MDBDropdownLink onClick={(e)=>{confirmer(dec.id,e)}}>Confirmer</MDBDropdownLink>
-                                      </MDBDropdownItem>
-                                      <MDBDropdownItem>
-                                          <MDBDropdownLink onClick={(e)=>{signaler(dec.id,e)}}>Signaler</MDBDropdownLink>
-                                      </MDBDropdownItem>
-                                      
-                                    <MDBDropdownItem>
-                            </MDBDropdownItem>
-                        </MDBDropdownMenu>
-                        </MDBDropdown>
+                                            <MDBDropdownMenu>
+                                              {peutConfirmer ? 
+                                                  <MDBDropdownItem>
+                                                      <MDBDropdownLink onClick={(e)=>{confirmer(dec.id,e)}}>Confirmer</MDBDropdownLink>
+                                                  </MDBDropdownItem>
+                                                : <MDBDropdownItem>
+                                                <MDBDropdownLink onClick={(e)=>{confirmer(dec.id,e)}}>Ne plus confirmer</MDBDropdownLink>
+                                                </MDBDropdownItem>
+                                                }
+                                                {peutSignaler ? 
+                                                <MDBDropdownItem>
+                                                    <MDBDropdownLink onClick={(e)=>{signaler(dec.id,e)}}>Signaler</MDBDropdownLink>
+                                                </MDBDropdownItem>
+                                                :<MDBDropdownItem>
+                                                <MDBDropdownLink onClick={(e)=>{signaler(dec.id,e)}}>Signaler</MDBDropdownLink>
+                                                  </MDBDropdownItem>
+                                                }
+                                                <MDBDropdownItem>
+                                                  <input 
+                                                      type="text" 
+                                                      required 
+                                                      placeholder='Objet'
+                                                      
+                                                    />
+                                                </MDBDropdownItem>
+                                              
+                                            </MDBDropdownMenu>
+                                          </MDBDropdown>
+                                          
                                        
                                     </tr>
                                   </tbody>

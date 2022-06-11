@@ -38,6 +38,10 @@ import { ModifierRapportEnregistrée } from './components/Rapports/ModifierRappo
 import { AfficherRapports } from './components/Responsable/gestion_rapports/AfficherRapports';
 import DetailRapport from './components/Responsable/gestion_rapports/DetailsRapport';
 import { DemanderComplementRapport } from './components/Responsable/gestion_rapports/DemanderComplementRapport';
+import { NouvelleAnnonce } from './components/Service/NouvelleAnnonce';
+import { AfficherAnnonces } from './components/Service/AfficherAnnonces';
+import { AnnoncesEnregistrées } from './components/Service/AnnoncesEnregistrées';
+import { ModifierAnnonceEnregistrée } from './components/Service/ModifierAnnonceEnregistrée';
 export default function App() {
 
   return (
@@ -408,6 +412,59 @@ export default function App() {
             </div>
           <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',position:'fixed', left: '0', bottom: '0', width: '100%'}}>
               &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
+          </div>
+        </Route>
+        < Route exact path="/NouvelleAnnonce">
+        <BareService />
+          <div className='ajoutdeclarationclass'>
+          <br></br>
+            <NouvelleAnnonce/>
+            <br /><br />
+          </div>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'0%' , left: '0', bottom: '0', width: '100%'}}>
+            &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
+          </div>
+        </Route>
+        < Route exact path="/Annonces">
+          <BareService />
+          <div className='ajoutdeclarationclass'>
+          <br></br>
+            <AfficherAnnonces/>
+            <br /><br />
+          </div>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'0%' , left: '0', bottom: '0', width: '100%'}}>
+            &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
+          </div>
+        </Route>
+        < Route exact path="/ListesAnnonces">
+          <Gestion_des_declarations />
+          <div className='ajoutdeclarationclass'>
+            <AfficherAnnonces />
+          </div>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'0%' , left: '0', bottom: '0', width: '100%'}}>
+            &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
+          </div>
+        </Route>
+        < Route exact path="/AnnoncesEnregistrées">
+          <BareService />
+          <div className='ajoutdeclarationclass'>
+          <br></br>
+            <AnnoncesEnregistrées/>
+            <br /><br />
+          </div>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'0%' , left: '0', bottom: '0', width: '100%'}}>
+            &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
+          </div>
+        </Route>
+        < Route exact path="/ModifierAnnonceEnregistrée/:idAnnonce">
+          <BareService />
+          <div className='ajoutdeclarationclass'>
+          <br></br>
+            <ModifierAnnonceEnregistrée/>
+            <br /><br />
+          </div>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'0%' , left: '0', bottom: '0', width: '100%'}}>
+            &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
           </div>
         </Route>
       </Switch>

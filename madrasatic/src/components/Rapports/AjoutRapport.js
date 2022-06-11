@@ -29,15 +29,6 @@ export const AjoutRapport =()=>{
     },[]);
     const saveRapport=((e)=>{
         e.preventDefault();
-        fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/${id}/`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-                "Authorization":`Token ${token}`
-            },
-            body: JSON.stringify({etat:'traitée'}),
-            })
       fetch("http://localhost:8000/madrasatic/reports/", {
       method: "POST",
       headers: {

@@ -4,6 +4,8 @@ import {Row, Col, Card, Form, Button, InputGroup, FormControl, DropdownButton, D
 import './Declaration.css'
 import { MDBContainer } from 'mdb-react-ui-kit';
 import ReactPaginate from "react-paginate";
+import {BsCalendar2Date } from 'react-icons/bs'
+import {BiTime} from 'react-icons/bi'
 export const AfficherRapports =()=>{
     const token = sessionStorage.getItem("key");
     const[MyData,setMyData]=useState([]);
@@ -69,7 +71,7 @@ export const AfficherRapports =()=>{
     return(
     <MDBContainer >
         {completer ? <Redirect to={`/DetailRapport/${idRapport}`}/> :null}
-        <Col md={10} xl={12} style={{marginTop:'5%'}}>
+        {/* <Col md={10} xl={12} style={{marginTop:'5%'}}>
                         <Card className='Recent-Users' style={{
                           border: '2px solid #b78429',
                           borderRadius: '8px',
@@ -121,7 +123,58 @@ export const AfficherRapports =()=>{
                                 breakClassName={"page-item"}
                                 breakLinkClassName={"page-link"}
                                 activeClassName={"active"}/>
-                    </Col>
+                    </Col> */}
+                     <div class="container d-flex justify-content-center">
+
+<ul class="list-group mt-5 text-white">
+{MyData.map(rapport => (
+  <li class="list-group-item d-flex justify-content-between align-content-center" onClick={(e)=>complet(rapport.id)}>
+  
+    <div class="d-flex flex-row" onClick={(e)=>complet(rapport.id)}>
+      <img src="https://img.icons8.com/color/100/000000/folder-invoices.png" width="40" />
+      <div class="ml-2">
+        <h6 class="mb-0">{rapport.title}</h6>
+        <div class="about">
+          <span><BsCalendar2Date style={{width :'8%',marginBottom:'3px',marginRight:'2px'}}/>
+            {rapport.created_on.substring(
+                0,
+                rapport.created_on.indexOf("T")
+            )}
+            </span>
+          <span>
+            <BiTime style={{width :'10%',marginBottom:'3px'}}/>
+            {rapport.created_on.substring(
+                rapport.created_on.indexOf("T") + 1,
+                rapport.created_on.indexOf("T")+6
+            )}</span>
+        </div>
+      </div>
+    </div>
+
+  </li>
+  ))} 
+  
+</ul>
+
+</div>
+<ReactPaginate 
+                                previousLabel={"<<"}
+                                nextLabel={">>"}
+                                breakLabel={"..."}
+                                pageCount={nombrePages}
+                                onPageChange={ChangePage}
+                                marginPagesDisplayed={2}
+                                pageRangeDisplayed={3}
+                                containerClassName={"pagination justify-content-center"}
+                                pageClassName={"page-item"}
+                                pageLinkClassName={"page-link"}
+                                previousClassName={"page-item"}
+                                previousLinkClassName={"page-link"}
+                                nextClassName={"page-item"}
+                                nextLinkClassName={"page-link"}
+                                breakClassName={"page-item"}
+                                breakLinkClassName={"page-link"}
+                                activeClassName={"active"}/>
   </MDBContainer>
     )
 }

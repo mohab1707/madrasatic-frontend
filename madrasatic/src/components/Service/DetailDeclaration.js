@@ -195,25 +195,25 @@ export default function DetailDeclaration() {
             </MDBCol>
         </MDBRow>
         <MDBRow className='infos'>
-            <MDBCol md='5'>
+        <MDBCol md='5'>
                 <h5>Objet : {objet}</h5>
-                <p>Lieu: {lieu}</p>
-            </MDBCol>
-
-            <MDBCol md='4'>
                 <MDBRow>
-                    <MDBCol><h5>Catégorie:</h5></MDBCol>
-                    <MDBCol><p>{catégorie}</p></MDBCol>
+                {
+                      categories.filter(cat => cat.id === catégorie).map(
+                        categ =>(
+                          <MDBCol style={{marginRight:'15%'}}><h6 ><i className="fa fa-circle f-10 m-r-15"/>Catégorie :{categ.name}</h6></MDBCol>
+                        )
+                      )
+                    }
+                    <MDBRow>
+                    <MDBCol style={{marginRight:'22%'}}><h6><i className="fa fa-circle f-10 m-r-15"/>Priorité :{priorité}</h6></MDBCol>
                 </MDBRow>
-            </MDBCol>
-            <MDBCol md='2'>
-                <MDBRow>
-                    <MDBCol><h5>Priorité:</h5></MDBCol>
-                    <MDBCol><p>{priorité}</p></MDBCol>
-                </MDBRow>
+                    </MDBRow>
+                    
             </MDBCol>
         </MDBRow>
         <hr style={{border: '2px solid #b78429'}}/>
+        <p>Lieu: {lieu}</p>
         <MDBContainer>
             <h5>Déscription :</h5>
             <p>{corps}</p>

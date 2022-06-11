@@ -1,14 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Link, Redirect } from "react-router-dom";
-import {Row, Col, Card, Form, Button, InputGroup, FormControl, DropdownButton, Dropdown,Table} from 'react-bootstrap';
-import './Declaration.css'
+import {Redirect } from "react-router-dom";
+import './Decla.css'
 import { MDBContainer } from 'mdb-react-ui-kit';
 import {BsCalendar2Date } from 'react-icons/bs'
-import { RiAppleFill } from 'react-icons/ri';
 import {AiOutlineDelete} from 'react-icons/ai'
 import {BiTime} from 'react-icons/bi'
 import ReactPaginate from "react-paginate";
-export const MesRapportsEnregistrées =()=>{
+export const AnnoncesEnregistrées =()=>{
     const token = sessionStorage.getItem("key");
     const[MyData,setMyData]=useState([]);
     const [completer,setCompleter]=useState(false);
@@ -17,7 +15,7 @@ export const MesRapportsEnregistrées =()=>{
     const [nombre,setNombre]=useState("");
     const [pageCourrente,setPageCourrente]=useState();
     useEffect(()=>{
-      fetch("http://127.0.0.1:8000/madrasatic/draft_reports/", {
+      fetch("http://127.0.0.1:8000/madrasatic/savedannonces/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -71,7 +69,7 @@ export const MesRapportsEnregistrées =()=>{
       }
     })
     const supprimerRapport=((idRapp)=>{
-        fetch(`http://localhost:8000/madrasatic/draft_reports/${idRapp}/`, {
+        fetch(`http://localhost:8000/madrasatic/annoncedelete/${idRapp}/`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -82,7 +80,7 @@ export const MesRapportsEnregistrées =()=>{
     })
     return(
     <MDBContainer >
-        {completer ? <Redirect to={`/ModifierRapportEnregistré/${idRapport}`}/> :null}
+        {completer ? <Redirect to={`/ModifierAnnonceEnregistrée/${idRapport}`}/> :null}
                     <div class="container d-flex justify-content-center">
 
 <ul class="list-group mt-5 text-white">
@@ -90,21 +88,40 @@ export const MesRapportsEnregistrées =()=>{
   <li class="list-group-item d-flex justify-content-between align-content-center">
   
     <div class="d-flex flex-row" onClick={(e)=>complet(rapport.id)}>
-      <img src="https://img.icons8.com/color/100/000000/folder-invoices.png" width="40" />
+    <div class="event-img">
+        <img src={rapport.image} alt="image" style={{width: '60px',
+    height: '60px',
+    borderRadius: '8px',
+    marginTop:'7px'}}/>
+    </div>
       <div class="ml-2">
-        <h6 class="mb-0">{rapport.title}</h6>
+        <h6 class="mb-0" style={{fontWeight:'bold'}}>{rapport.objet}</h6>
         <div class="about">
           <span><BsCalendar2Date style={{width :'8%',marginBottom:'3px',marginRight:'2px'}}/>
-            {rapport.created_on.substring(
+            {rapport.pubDate.substring(
                 0,
-                rapport.created_on.indexOf("T")
+                rapport.pubDate.indexOf("T")
             )}
             </span>
           <span>
             <BiTime style={{width :'10%',marginBottom:'3px'}}/>
-            {rapport.created_on.substring(
-                rapport.created_on.indexOf("T") + 1,
-                rapport.created_on.indexOf("T")+6
+            {rapport.pubDate.substring(
+                rapport.pubDate.indexOf("T") + 1,
+                rapport.pubDate.indexOf("T")+6
+            )}</span>
+        </div>
+        <div class="about">
+          <span><BsCalendar2Date style={{width :'8%',marginBottom:'3px',marginRight:'2px'}}/>
+            {rapport.dateFin.substring(
+                0,
+                rapport.dateFin.indexOf("T")
+            )}
+            </span>
+          <span>
+            <BiTime style={{width :'10%',marginBottom:'3px'}}/>
+            {rapport.dateFin.substring(
+                rapport.dateFin.indexOf("T") + 1,
+                rapport.dateFin.indexOf("T")+6
             )}</span>
         </div>
       </div>
@@ -114,7 +131,7 @@ export const MesRapportsEnregistrées =()=>{
                 left:"90%",
                 fontSize:"25px",
                 // right:"10%",
-                marginTop: "0%",
+                marginTop: "4%",
                 padding: "0% 0%",
                 color: "red",
             }} onClick={e=>{supprimerRapport(rapport.id)}}>

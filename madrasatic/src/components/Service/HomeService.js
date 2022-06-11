@@ -15,6 +15,7 @@ import {
   import './service.css'
   import './tabledeclarations.css';
 import { MDBContainer } from "mdb-react-ui-kit";
+import {FaThumbsUp,FaThumbsDown,FaCogs} from 'react-icons/fa'
 export const HomeService= () => {
     const [nomCategorie,setNomCategorie]=useState("");
     const [afficherCategorie,setAfficherCategorie]=useState('haja')
@@ -24,6 +25,7 @@ export const HomeService= () => {
     const [pageCourrente,setPageCourrente]=useState();
     const[declaration,setMyData]=useState([]);
     const [Consulter,setConsulter]=useState(false);
+    const [catégories,setCatégories]=useState ([]);
     const [id,setId]=useState();
     const detail=((id)=>{
         setId(id);
@@ -39,42 +41,28 @@ export const HomeService= () => {
                 "Authorization":`Token ${token}`
               },
             }).then((response) => {
-                if (response.ok){
-                        console.log("decla du service recuuup")
-                }else{
-                    console.log("y'a une erreeeuuur")
-                }
                 return response.json();
               })
               .then((data) => {
-                  console.log("response +"+data.results);
                 setMyData(data.results);
                 setNombre(data.count);
                 setNombresPages(Math.ceil(data.count /5));
               });
+              fetch("http://127.0.0.1:8000/madrasatic/categories/", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization":`Token ${token}`
+          },
+        }).then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            setCatégories(data.results);
+          });
             
-    },[]);
-    const Categories=(cat)=>{
-        fetch("http://127.0.0.1:8000/madrasatic/categories/"+cat+"/", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "Authorization":`Token ${token}`
-      },
-    }).then((response) => {
-        if (response.ok) {
-          console.log("donnees recup");
-        } else {
-          console.log("y'a une erreur");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data.name);
-        setNomCategorie(data.name);
-      });
-    }
+    },[declaration]);
     const ChangePage=((data)=>{
       console.log(data.selected);
       setPageCourrente(data.selected+1);
@@ -174,49 +162,73 @@ export const HomeService= () => {
                                   color: 'white',
                                   textAlign: 'center'
                                   }}>Liste des déclarations</Card.Title>
-                                <table>
-                                    <tr>
-                                        <td>
-                                            {/* <br></br> */}
-                                            <p>Etat : </p>
-                                        </td>
-                                        <td>
-                                            <select onChange={(e)=>{afficher(e.target.value)}}>
-                                                <option value='tout'>Toutes</option>
+                                <div class="row" style={{marginLeft:'25%'}}>
+                <div class="col-lg-20 mx-auto">
+                    <div class="career-search mb-60">
+
+                        <form action="#" class="career-form mb-60">
+                            <div class="row">
+                                <div class="col-md-8 col-lg-4 my-4">
+                                    <div class="select-container">
+                                        <select class="custom-select" onChange={(e)=>{afficher(e.target.value)}}>
+                                                <option value='tout'>Tous les états</option>
+                                                <option value='en cours de traitement'>Etat: en cours de traitement</option>
                                                 <option value='non traitée'>Etat: non traitée</option>
-                                                <option value='traitée'>Etat: traitée</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <p>  Catégorie : </p>
-                                        </td>
-                                        <td>
-                                            <select onChange={(e)=>{afficher(e.target.value)}}>
-                                                <option value='tout'>Toutes</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-4 my-4">
+                                    <div class="select-container" onChange={(e)=>{afficher(e.target.value)}}>
+                                        <select class="custom-select">
+                                                <option value='tout'>Toutes les priorités</option>
                                                 <option value='1'>Urgence</option>
                                                 <option value='2'>Etat critique</option>
                                                 <option value='3'>Etat normal</option>
-                                            </select>
-                                        </td>
-                                    </tr>
-
-                                </table>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    </div>
+                    </div>
                             </Card.Header>
                             {declaration.filter(decla=>decla.parent_declaration === null).filter(decl=>decl.signalée_par < 3).filter(decla => decla.etat != 'traitée').map(dec => (
                             <Card.Body className='px-0 py-2'  onClick={()=>{detail(dec.id)}}>
                                 <Table responsive hover>
-                                    <tbody>
-                                    <tr className="unread">
-          
-                                        <td><img  style={{width: '150px'}} src={dec.image} alt="activity-user"/></td>
-                                        <td>
-                                            <h6 className="mb-1">Objet :{dec.objet}</h6>
-                                            <p className="m-0">Etat :{dec.etat}</p>
+                                <tbody>
+                                    <tr className="unread" class="candidates-list">
+                                        <td class="title" style={{width :'300px',borderRadius:'8px'}}><img  style={{width: '50px'}} src={dec.image} alt="Image du signalement"/></td>
+                                        <td style={{width:'400px'}}>
+                                            {/* <h6 className="mb-1">Objet :{dec.objet}</h6>
+                                            <p className="m-0">Etat :{dec.etat}</p> */}
+                                            <div class="candidate-list-details">
+                                              <div class="candidate-list-info">
+                                                <div class="candidate-list-title">
+                                                  <h5 class="mb-0"><a href={`/DeclarationEnvoyer/${id}`} style={{color:'black'}}>{dec.objet}</a></h5>
+                                                </div>
+                                                <div class="candidate-list-option">
+                                                  <ul class="list-unstyled">
+                                                    <li><FaCogs style={{marginRight:'2px',marginBottom:'3px'}}/> {dec.etat}</li>
+                                                    <li><FaThumbsUp  style={{marginRight:'2px',marginBottom:'6px'}}/>{dec.confirmée_par.length}</li>
+                                                    <li><FaThumbsDown  style={{marginRight:'2px',marginTop:'4px'}}/> {dec.signalée_par.length}</li>
+                                                  </ul>
+                                                </div>
+                                              </div>
+                                            </div>
                                         </td>
-                                        <td>
-                                            <h6 className="text-muted"><i className="fa fa-circle text-c-green f-10 m-r-15"/>Catégorie :{dec.catégorie}</h6>
-                                            <h6 className="text-muted"><i className="fa fa-circle text-c-green f-10 m-r-15"/>Priorité :{dec.priorité}</h6>
+                                        <td style={{width :'200px'}}>
+                                           {
+                                            catégories.filter(cat => cat.id === dec.catégorie).map(
+                                              categ =>(
+                                                <h6 ><i className="fa fa-circle f-10 m-r-15"/>Catégorie :{categ.name}</h6>
+                                              )
+                                            )
+                                           }
+                                            
+                                            <h6><i className="fa fa-circle f-10 m-r-15"/>Priorité :{dec.priorité}</h6>
                                         </td>
+                                         
                                     </tr>
                                   </tbody>
                                 </Table>
