@@ -60,6 +60,15 @@ export const ModifierRapportEnregistrée =()=>{
     })
     const validateRapport=((e)=>{
         e.preventDefault();
+        fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/${idDeclaration}/`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "Authorization":`Token ${token}`
+            },
+            body: JSON.stringify({etat:'traitée'}),
+            })
         fetch(`http://localhost:8000/madrasatic/draft_reports/${idRapport}/`, {
             method: "PUT",
             headers: {

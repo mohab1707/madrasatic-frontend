@@ -208,6 +208,7 @@ const UserList = () => {
                                                 <option value='Responsable'>Responsable</option>
                                                 <option value='Service'>Service</option>
                                                 <option value='Utilisateur'>Utilisateurs</option>
+                                                <option value='Président du club'>Président du club</option>
                                         </select>
                                     </div>
                                 </div>
@@ -250,6 +251,7 @@ const UserList = () => {
                             <option value='Admin'>Admin</option>
                             <option value='Responsable'>Responsable</option>
                             <option value='Service'>Service</option>
+                            <option value='Président du club'>Président du club</option>
                         </select>
                         {/* <Select ></Select> */}
 

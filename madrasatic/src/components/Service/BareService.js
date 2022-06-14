@@ -76,9 +76,6 @@ export const BareService = () => {
                                 <MDBDropdownLink href='/ProfilService'>Mon Profil</MDBDropdownLink>
                             </MDBDropdownItem>
                             <MDBDropdownItem>
-                                <MDBDropdownLink href='/RapportsEnregistrés'>Mes rapports enregistrés</MDBDropdownLink>
-                            </MDBDropdownItem>
-                            <MDBDropdownItem>
                                 <MDBDropdownLink href='/AnnoncesEnregistrées'>Mes annonces enregistrées</MDBDropdownLink>
                             </MDBDropdownItem>
                             <MDBDropdownItem>

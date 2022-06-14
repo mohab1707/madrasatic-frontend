@@ -1,4 +1,4 @@
-import React , { useState } from 'react'
+import React , { useState ,useEffect} from 'react'
 import {
     MDBNavbar,
     MDBNavbarBrand,
@@ -23,6 +23,22 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 export const Bare = () => {
     const [showNavRight, setShowNavRight] = useState(false);
     const [reussi , setReussi ] = useState(false);
+    const [user,setUser]=useState(false);
+    const [chefClub,setChefClub]=useState(false);
+    const token = sessionStorage.getItem("key");
+    useEffect(()=>{
+        fetch("http://127.0.0.1:8000/madrasatic/user/", {
+            method: "GET",
+            headers: { "Content-Type": "application/json","Authorization":`Token ${token}`},
+          }).then((response) => {
+              return response.json();
+          }).then(data=>{
+            console.log(data.role)
+            if(data.role === "Président du club"){
+                setChefClub(true);
+            }
+          })
+    },[])
     const deconnexion =(e) => {
         e.preventDefault();
         fetch("http://127.0.0.1:8000/madrasatic/logout/", {
@@ -71,6 +87,11 @@ export const Bare = () => {
                     <MDBNavbarItem>
                         <MDBNavbarLink href='/LesAnnonces' style={{color:'#ffffff'}}>Annonces</MDBNavbarLink>
                     </MDBNavbarItem>
+                    {
+                        chefClub ? <MDBNavbarItem>
+                        <MDBNavbarLink href='/NewAnnonce' style={{color:'#ffffff'}}>Nouvelle annonce</MDBNavbarLink>
+                        </MDBNavbarItem> : null
+                    }
                     <MDBNavbarItem>
                         <MDBDropdown>
                             <MDBDropdownToggle tag='a' className='nav-link'style={{color:'#ffffff'}}>

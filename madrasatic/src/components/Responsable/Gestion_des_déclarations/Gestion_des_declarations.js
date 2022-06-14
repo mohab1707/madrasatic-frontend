@@ -85,6 +85,9 @@ export const Gestion_des_declarations = () => {
                                 <MDBDropdownLink href='/Categories'>Catégories</MDBDropdownLink>
                             </MDBDropdownItem>
                             <MDBDropdownItem>
+                                <MDBDropdownLink href='/ChoixLocalisation'>Ajouter localisation</MDBDropdownLink>
+                            </MDBDropdownItem>
+                            <MDBDropdownItem>
                                 <MDBBtn className='text-white' color='dark' onClick={deconnexion}>Se déconnecter</MDBBtn>
                             </MDBDropdownItem>
                         </MDBDropdownMenu>

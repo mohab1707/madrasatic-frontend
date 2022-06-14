@@ -12,6 +12,13 @@ export const AjoutDeclaration =()=>{
     const [corps,setCorps]=useState("");
     const [priorité,setPriorité]=useState("1");
     const [categorie,setCategorie]=useState("santé");
+    const [blocs,setBlocs]=useState([]);
+    const [sites,setSites]=useState([]);
+    const [endroits,setEndroits]=useState([]);
+    const [lieux,setLieux]=useState([]);
+    const [bloc,setBloc]=useState();
+    const [site,setSite]=useState();
+    const [endroit,setEndroit]=useState(2);
     const [lieu,setLieu]=useState("");
     // const [etat,setEtat]=useState("");
     const [reussi , setReussi ] = useState(false);
@@ -29,7 +36,6 @@ export const AjoutDeclaration =()=>{
       })
       .then((data) => {
         setAuteur(data.id);
-        console.log("iddd :  "+data.id)
       });
 
       fetch("http://127.0.0.1:8000/madrasatic/categories/", {
@@ -40,17 +46,67 @@ export const AjoutDeclaration =()=>{
         "Authorization":`Token ${token}`
       },
     }).then((response) => {
-        if (response.ok) {
-          console.log("donnees recup");
-        } else {
-          console.log("y'a une erreur");
-        }
         return response.json();
       })
       .then((data) => {
         setCategories(data.results);
       });
     },[]);
+    useEffect(()=>{
+      fetch("http://127.0.0.1:8000/madrasatic/blocs/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization":`Token ${token}`
+        },
+      }).then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+            setBlocs(data.results);
+        });
+  
+        fetch("http://127.0.0.1:8000/madrasatic/sites/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization":`Token ${token}`
+        },
+      }).then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          setSites(data.results);
+        });
+        fetch("http://127.0.0.1:8000/madrasatic/endroits/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization":`Token ${token}`
+        },
+      }).then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          setEndroits(data.results);
+        });
+      fetch("http://127.0.0.1:8000/madrasatic/lieux/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization":`Token ${token}`
+        },
+      }).then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          setLieux(data.results);
+        });
+    },[])
     const saveDeclaration=((e)=>{
       const form_data = new FormData();
       form_data.append("auteur",auteur);
@@ -58,6 +114,9 @@ export const AjoutDeclaration =()=>{
       form_data.append("catégorie", categorie);
       form_data.append("objet",objet);
       form_data.append("corps", corps);
+      form_data.append("site",site);
+      form_data.append("bloc",bloc);
+      form_data.append("endroit",endroit);
       form_data.append("lieu", lieu);
       form_data.append("etat", "brouillon");
       form_data.append('image', image);
@@ -90,6 +149,9 @@ export const AjoutDeclaration =()=>{
       form_data.append("catégorie", categorie);
       form_data.append("objet",objet);
       form_data.append("corps", corps);
+      form_data.append("site",site);
+      form_data.append("bloc",bloc);
+      form_data.append("endroit",endroit);
       form_data.append("lieu", lieu);
       form_data.append("etat", "publiée");
       form_data.append('image', image);
@@ -114,7 +176,7 @@ export const AjoutDeclaration =()=>{
     }).then((data)=>{
       console.log(data);
     })
-    })
+    });
     return(
       <MDBContainer className='form'>
         <div className="create">
@@ -151,12 +213,40 @@ export const AjoutDeclaration =()=>{
           <option value="2">Etat critique</option>
           <option value="3">Etat normal</option>
         </select>
-        <label>Lieu:</label>
+        <label>Le site associé:</label>
+        <select onChange={e=>{setSite(e.target.value)}}>
+          <option >Les sites</option>
+          {sites.map(site => (
+            <option value={site.id}>{site.site}</option>
+            ))}
+        </select>
+        <label>Le bloc associé:</label>
+        <select onChange={e=>{setBloc(e.target.value)}}>
+          <option >Les blocs</option>
+          {blocs.filter(item => item.site == site).map(bloc => (
+            <option value={bloc.id}>{bloc.blocc}</option>
+            ))}
+        </select>
+        <label>L'endroit associé :</label>
+        <select onChange={e=>{setEndroit(e.target.value)}}>
+          <option >Les endroits</option>
+          {endroits.filter(item => item.blocc == bloc).map(endr => (
+            <option value={endr.id}>{endr.endroit}</option>
+            ))}
+        </select>
+        <label>Sa désignation :</label>
+          <select onChange={e=>{setLieu(e.target.value)}}>
+            <option >Les désignations</option>
+            {lieux.filter(item => item.endroit == endroit).map(lieu => (
+              <option value={lieu.id}>{lieu.identification}</option>
+              ))}
+          </select>
+        {/* <label>Lieux :</label>
         <textarea
-            placeholder='Lieu'
-            value={lieu}
+            placeholder='Lieux'
+            value={corps}
             onChange={e=>setLieu(e.target.value)}
-        ></textarea>
+        ></textarea> */}
         <label>Photo la décrivant:</label>
         <input
             type="file"

@@ -31,6 +31,21 @@ export const Categories = () => {
             setNombreDecla(Math.ceil(data.count /5));
             setMyData(data.results);
           });
+          fetch("http://127.0.0.1:8000/madrasatic/categories/", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization":`Token ${token}`
+          },
+        }).then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            setCatégories(data.results);
+            // setNombre(data.count);
+            // setNombresPages(Math.ceil(data.count /5));
+          });
       },[])
       useEffect(()=>{
         if(nombreDecla > 0){
@@ -52,42 +67,42 @@ export const Categories = () => {
             });
         }
       },[nombreDecla])
-    useEffect(()=>{
-      if(pageCourrente== 0){
-        fetch("http://127.0.0.1:8000/madrasatic/categories/", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "Authorization":`Token ${token}`
-          },
-        }).then((response) => {
-            return response.json();
-          })
-          .then((data) => {
-            setCatégories(data.results);
-            setNombre(data.count);
-            setNombresPages(Math.ceil(data.count /5));
-          });
-      }else{
-        fetch(`http://127.0.0.1:8000/madrasatic/categories/?page=${pageCourrente + 1}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "Authorization":`Token ${token}`
-          },
-        }).then((response) => {
-            return response.json();
-          })
-          .then((data) => {
-            setCatégories(data.results);
-            setNombre(data.count);
-            setNombresPages(Math.ceil(data.count /5));
-          });
-      }
+    // useEffect(()=>{
+    //   if(pageCourrente== 0){
+    //     fetch("http://127.0.0.1:8000/madrasatic/categories/", {
+    //       method: "GET",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //         "Accept": "application/json",
+    //         "Authorization":`Token ${token}`
+    //       },
+    //     }).then((response) => {
+    //         return response.json();
+    //       })
+    //       .then((data) => {
+    //         setCatégories(data.results);
+    //         setNombre(data.count);
+    //         setNombresPages(Math.ceil(data.count /5));
+    //       });
+    //   }else{
+    //     fetch(`http://127.0.0.1:8000/madrasatic/categories/?page=${pageCourrente + 1}`, {
+    //       method: "GET",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //         "Accept": "application/json",
+    //         "Authorization":`Token ${token}`
+    //       },
+    //     }).then((response) => {
+    //         return response.json();
+    //       })
+    //       .then((data) => {
+    //         setCatégories(data.results);
+    //         setNombre(data.count);
+    //         setNombresPages(Math.ceil(data.count /5));
+    //       });
+    //   }
       
-    },[catégories]);
+    // },[catégories]);
     const supprimerCatégorie=((id)=>{     
                if (data.some(item=> item.catégorie === id)){
                 console.log("existe deja ne doit pas etre supprimerrr dans : ");

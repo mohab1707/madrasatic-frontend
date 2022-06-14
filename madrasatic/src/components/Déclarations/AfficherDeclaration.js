@@ -13,16 +13,16 @@ import {
   } from 'mdb-react-ui-kit';
   import ReactPaginate from "react-paginate";
 export const AfficherDeclaration= () => {
-    const [nomCategorie,setNomCategorie]=useState("");
-    const [confirmé,setConfirmé]=useState("");
+    const [nomCategorie,setNomCategorie]=useState();
+    const [confirmé,setConfirmé]=useState();
     const[listeConfirmé,setListeConfirmé]=useState([]);
     const [peutConfirmer,setPeutConfirmer]=useState(true);
     const [peutSignaler,setPeutSignaler]=useState(true);
     const [listeSignaler,setListeSignaler]=useState([]);
     const [changer,setChanger]=useState(false);
-    const [signalé,setSignalé]=useState("");
-    const [nombre,setNombre]=useState("");
-    const [nombrePages,setNombresPages]=useState("");
+    const [signalé,setSignalé]=useState();
+    const [nombre,setNombre]=useState();
+    const [nombrePages,setNombresPages]=useState();
     const token = sessionStorage.getItem("key");
     const [pageCourrente,setPageCourrente]=useState(0);
     const [catégories,setCatégories]=useState ([]);
@@ -55,7 +55,22 @@ export const AfficherDeclaration= () => {
           .then((data) => {
             setCatégories(data.results);
           });
-    },[])
+          fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json",
+              "Authorization":`Token ${token}`
+            },
+          }).then((response) => {
+              return response.json();
+            })
+            .then((data) => {
+              setMyData(data.results);
+              setNombre(data.count);
+              setNombresPages(Math.ceil(data.count /5));
+            });
+    },[]);
     useEffect(()=>{
       if (pageCourrente==0){
         fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
@@ -91,15 +106,11 @@ export const AfficherDeclaration= () => {
             if (declaration.length == 0){
               setPageCourrente(0);
             }
+          
           });
-      }
-      
-        
+      }    
 },[declaration]);
     const confirmer=(id)=>{
-              listeConfirmé.map(item=>{
-                console.log("la liste"+item);
-              })
               fetch(`http://localhost:8000/madrasatic/responsable_declarations/${id}/`, {
               method: "PUT",
               headers: {
@@ -207,7 +218,7 @@ export const AfficherDeclaration= () => {
                                 <Table responsive hover>
                                     <tbody>
                                     <tr className="unread" class="candidates-list">
-                                        <td class="title"><img  style={{width :'300px',borderRadius:'8px'}} src={dec.image} alt="Image du signalement"/></td>
+                                        <td class="title"><img  style={{width :'200px',borderRadius:'8px'}} src={dec.image} alt="Image du signalement"/></td>
                                         <td style={{width:'400px'}}>
                                             <div class="candidate-list-details">
                                               <div class="candidate-list-info">
@@ -237,8 +248,15 @@ export const AfficherDeclaration= () => {
                                               )
                                             )
                                            }
-                                            
-                                            <h6><i className="fa fa-circle f-10 m-r-15"/>Priorité :{dec.priorité}</h6>
+                                            { 
+                                              dec.priorité == 1 ? <h6><i className="fa fa-circle f-10 m-r-15"/>Priorité : Urgente</h6> : null
+                                            }
+                                            { 
+                                              dec.priorité == 2 ? <h6><i className="fa fa-circle f-10 m-r-15"/>Priorité : etat critique</h6> : null
+                                            }
+                                            { 
+                                              dec.priorité == 3 ? <h6><i className="fa fa-circle f-10 m-r-15"/>Priorité : etat normal</h6> : null
+                                            }
                                         </td>
                                          <td style={{width :'100px'}}>
                                          <MDBDropdown>

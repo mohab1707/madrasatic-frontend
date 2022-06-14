@@ -25,6 +25,7 @@ export const Connexion = () => {
             if(response.ok)
             {
                 console.log("reussi");
+                
                           
             }
             else{
@@ -39,14 +40,6 @@ export const Connexion = () => {
             setErreurPassword(data.password);
             setErreur_non_field_errors(data.non_field_errors);
             setIsPending(false);
-            fetch("http://127.0.0.1:8000/madrasatic/beams_auth/", {
-                method: "GET",
-                headers: { "Content-Type": "application/json",'Accept': 'application/json',"Authorization":`Token ${data.key}`}, 
-                }).then((response) => {
-                    return response.json();
-                }).then((data)=>{
-                    console.log("beaaams tokeeen +"+data);
-                })
         }
         ).then(()=>{
             const token=sessionStorage.getItem("key");
@@ -66,6 +59,9 @@ export const Connexion = () => {
                     }
                     return response.json();
                 }).then(data => {
+                    console.log(data.role);
+                    const id = data.id;
+                    sessionStorage.setItem("id", id);
                     if(data.role==="('Utilisateur', 'User')"){
                         setUtilisateur(true);
                     }
@@ -77,7 +73,7 @@ export const Connexion = () => {
                             setService(true);
                             const idService = data.id;
                             sessionStorage.setItem("idService", idService);
-                    }else if(data.role==='Utilisateur'){
+                    }else if(data.role==='Utilisateur' || data.role === 'Président du club'){
                         setUtilisateur(true);
                     }
                     setIsPending(false);

@@ -7,6 +7,10 @@ export const DemanderComplementRapport= () => {
         const [raison,setRaison]=useState("");
         const [pageAcceuil,setPageAcceuil]=useState(false);
         const [erreurReason,setErrorReason]=useState("");
+        const [title,setTitle]=useState("");
+        const [desc,setDesc]=useState("");
+        const [service,setService]=useState("");
+        const [declaration,setDeclaration]=useState("");
         useEffect(()=>{
             fetch("http://127.0.0.1:8000/madrasatic/user/", {
                 method: "GET",
@@ -21,9 +25,34 @@ export const DemanderComplementRapport= () => {
                 .then((data) => {
                     setIdResponsable(data.id);
                 });
+                fetch("http://127.0.0.1:8000/madrasatic/reports/"+idRapport+"/", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "Authorization":`Token ${token}`
+                },
+                }).then((response) => {
+                    return response.json();
+                })
+                .then((data) => {
+                    setService(data.service)
+                    setTitle(data.title);
+                    setDesc(data.desc);
+                    setDeclaration(data.declaration);
+                });
         },[])
         const demandercomplement=((e)=>{
             e.preventDefault(); 
+            fetch(`http://127.0.0.1:8000/madrasatic/reports/${idRapport}/`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "Authorization":`Token ${token}`
+            },
+            body: JSON.stringify({title:title,desc:desc,service:service,declaration:declaration,status:'incomplet'}),
+            })
             fetch(`http://127.0.0.1:8000/madrasatic/report_complement_demand/`, {
                 method: "POST",
                 headers: {

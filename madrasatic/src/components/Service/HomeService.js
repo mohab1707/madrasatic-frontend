@@ -62,7 +62,7 @@ export const HomeService= () => {
             setCatégories(data.results);
           });
             
-    },[declaration]);
+    },[]);
     const ChangePage=((data)=>{
       console.log(data.selected);
       setPageCourrente(data.selected+1);
@@ -174,6 +174,7 @@ export const HomeService= () => {
                                                 <option value='tout'>Tous les états</option>
                                                 <option value='en cours de traitement'>Etat: en cours de traitement</option>
                                                 <option value='non traitée'>Etat: non traitée</option>
+                                                <option value='non traitée'>Etat: traitée</option>
                                         </select>
                                     </div>
                                 </div>
@@ -193,12 +194,12 @@ export const HomeService= () => {
                     </div>
                     </div>
                             </Card.Header>
-                            {declaration.filter(decla=>decla.parent_declaration === null).filter(decl=>decl.signalée_par < 3).filter(decla => decla.etat != 'traitée').map(dec => (
+                            {declaration.filter(decla=>decla.parent_declaration === null).filter(decl=>decl.signalée_par.length < 3).map(dec => (
                             <Card.Body className='px-0 py-2'  onClick={()=>{detail(dec.id)}}>
                                 <Table responsive hover>
                                 <tbody>
                                     <tr className="unread" class="candidates-list">
-                                        <td class="title" style={{width :'300px',borderRadius:'8px'}}><img  style={{width: '50px'}} src={dec.image} alt="Image du signalement"/></td>
+                                        <td class="title" style={{width :'300px',borderRadius:'8px'}}><img  style={{width: '200px',borderRadius:'8px'}} src={dec.image} alt="Image du signalement"/></td>
                                         <td style={{width:'400px'}}>
                                             <div class="candidate-list-details">
                                               <div class="candidate-list-info">
@@ -224,7 +225,15 @@ export const HomeService= () => {
                                             )
                                            }
                                             
-                                            <h6><i className="fa fa-circle f-10 m-r-15"/>Priorité :{dec.priorité}</h6>
+                                            { 
+                                              dec.priorité == 1 ? <h6><i className="fa fa-circle f-10 m-r-15"/>Priorité : Urgente</h6> : null
+                                            }
+                                            { 
+                                              dec.priorité == 2 ? <h6><i className="fa fa-circle f-10 m-r-15"/>Priorité : etat critique</h6> : null
+                                            }
+                                            { 
+                                              dec.priorité == 3 ? <h6><i className="fa fa-circle f-10 m-r-15"/>Priorité : etat normal</h6> : null
+                                            }
                                         </td>
                                          
                                     </tr>

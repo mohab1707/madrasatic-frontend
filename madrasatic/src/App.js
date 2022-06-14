@@ -42,12 +42,28 @@ import { NouvelleAnnonce } from './components/Service/NouvelleAnnonce';
 import { AfficherAnnonces } from './components/Service/AfficherAnnonces';
 import { AnnoncesEnregistrées } from './components/Service/AnnoncesEnregistrées';
 import { ModifierAnnonceEnregistrée } from './components/Service/ModifierAnnonceEnregistrée';
+import { ChoisirLocalisation } from './components/Responsable/Gestion_des_déclarations/ChoisirLocalisation';
+import { AjouterBloc } from './components/Responsable/Gestion_des_déclarations/Localisation/AjouterBloc';
+import { AjouterSite } from './components/Responsable/Gestion_des_déclarations/Localisation/AjouterSite';
+import { AjouterEndroit } from './components/Responsable/Gestion_des_déclarations/Localisation/AjouterEndroit';
+import { AjouterIdentification } from './components/Responsable/Gestion_des_déclarations/Localisation/AjouterIdentification';
 export default function App() {
 
   return (
     <Router>
       <Switch >
         < Route exact path="/">
+          <NavBar />
+          <div className='shadow shadow-5' style={{marginLeft:'27%'}}>
+            <br></br>
+              <InscriptionOuConnexion />
+              <Connexion />
+          </div>
+          <div style={{marginTop:'3%'}}>
+            <Footer></Footer>
+          </div>
+        </Route>
+        < Route exact path="/madrasatic/login">
           <NavBar />
           <div className='shadow shadow-5' style={{marginLeft:'27%'}}>
             <br></br>
@@ -472,6 +488,62 @@ export default function App() {
           <div className='ajoutdeclarationclass'>
           <br></br>
             <AfficherAnnonces />
+            <br /><br />
+          </div>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'0%' , left: '0', bottom: '0', width: '100%'}}>
+            &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
+          </div>
+        </Route>
+        < Route exact path="/ChoixLocalisation">
+          <Gestion_des_declarations />
+          <div >
+            <ChoisirLocalisation />
+          </div>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'0%' , left: '0', bottom: '0', width: '100%'}}>
+            &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
+          </div>
+        </Route>
+        < Route exact path="/AjouterBloc">
+          <Gestion_des_declarations />
+          <div className='ajoutdeclarationclass'>
+            <AjouterBloc />
+          </div>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'0%' , left: '0', bottom: '0', width: '100%'}}>
+            &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
+          </div>
+        </Route>
+        < Route exact path="/AjouterSite">
+          <Gestion_des_declarations />
+          <div className='ajoutdeclarationclass'>
+            <AjouterSite />
+          </div>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'0%' , left: '0', bottom: '0', width: '100%'}}>
+            &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
+          </div>
+        </Route>
+        < Route exact path="/AjouterEndroit">
+          <Gestion_des_declarations />
+          <div className='ajoutdeclarationclass'>
+            <AjouterEndroit />
+          </div>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'0%' , left: '0', bottom: '0', width: '100%'}}>
+            &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
+          </div>
+        </Route>
+        < Route exact path="/AjouterIdentification">
+          <Gestion_des_declarations />
+          <div className='ajoutdeclarationclass'>
+            <AjouterIdentification />
+          </div>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'0%' , left: '0', bottom: '0', width: '100%'}}>
+            &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
+          </div>
+        </Route>
+        < Route exact path="/NewAnnonce">
+          <Bare />
+          <div className='ajoutdeclarationclass'>
+          <br></br>
+            <NouvelleAnnonce />
             <br /><br />
           </div>
           <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'0%' , left: '0', bottom: '0', width: '100%'}}>

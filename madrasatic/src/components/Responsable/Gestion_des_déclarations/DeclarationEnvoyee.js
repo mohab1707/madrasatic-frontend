@@ -31,7 +31,38 @@ export default function DeclarationEnvoyee() {
     const [pageCourrente,setPageCourrente]=useState();
     const[MyData,setMyData]=useState([]);
     const [catégories,setCatégories]=useState ([]);
+    const [blocs,setBlocs]=useState([]);
+    const [sites,setSites]=useState([]);
+    const [endroits,setEndroits]=useState([]);
+    const [lieux,setLieux]=useState([]);
+    const [bloc,setBloc]=useState('');
+    const [site,setSite]=useState("");
+    const [endroit,setEndroit]=useState("");
+    const [nombreBlocs,setNombreBlocs]=useState();
+    const [nombreSites,setNombreSites]=useState();
+    const [nombreEndroits,setNombreEndroits]=useState();
+    const [nombreLieux,setNombreLieux]=useState();
+    const [declaPrio,setDeclaprio]=useState();
+    const [declaCateg,setDeclaCateg]=useState();
+    const [rapport,setRapport]=useState([]);
+    const [idRapport,setIdDRapport]=useState("");
+    const [nombreRapports,setNombreRapports]=useState("");
+    const [completerRapport,setCompleterRapport]=useState(false);
+    const [declarations,setDeclarations]=useState([]);
     useEffect(()=>{
+      fetch("http://127.0.0.1:8000/madrasatic/reports/", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json",
+              "Authorization":`Token ${token}`
+            },
+          }).then((response) => {
+              return response.json();
+            })
+            .then((data) => {
+              setRapport(data.results);
+            });
       fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
           method: "GET",
           headers: {
@@ -65,8 +96,60 @@ export default function DeclarationEnvoyee() {
           .then((data) => {
             setCatégories(data.results);
           });
+          fetch("http://127.0.0.1:8000/madrasatic/blocs/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization":`Token ${token}`
+        },
+      }).then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+            setBlocs(data.results);
+        });
+  
+        fetch("http://127.0.0.1:8000/madrasatic/sites/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization":`Token ${token}`
+        },
+      }).then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          setSites(data.results);
+        });
+        fetch("http://127.0.0.1:8000/madrasatic/endroits/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization":`Token ${token}`
+        },
+      }).then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          setEndroits(data.results);
+        });
+      fetch("http://127.0.0.1:8000/madrasatic/lieux/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization":`Token ${token}`
+        },
+      }).then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          setLieux(data.results);         
+        });
     },[])
-    //
     const detail=((id)=>{
         setId(id);
         setConsulter(true);
@@ -118,7 +201,6 @@ export default function DeclarationEnvoyee() {
     }
     }
     useEffect(()=>{
-        console.log('iddd ++'+ id);
         fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/${id}/`, {
           method: "GET",
           headers: {
@@ -136,13 +218,15 @@ export default function DeclarationEnvoyee() {
           })
           .then((data) => {
             setCatégorie(data.catégorie);
+            setSite(data.site);
+            setBloc(data.bloc);
+            setEndroit(data.endroit);
             setAuteur(data.auteur);
             setCorps(data.corps);
             setLieu(data.lieu);
             setImage(data.image);
             setObjet(data.objet);
             setPriorité(data.priorité);
-            console.log(data);
           });
           fetch("http://127.0.0.1:8000/madrasatic/categories/", {
             method: "GET",
@@ -178,7 +262,7 @@ export default function DeclarationEnvoyee() {
                 "Accept": "application/json",
                 "Authorization":`Token ${token}`
             },
-            body: JSON.stringify({catégorie:catégorie,priorité:priorité}),
+            body: JSON.stringify({catégorie:declaCateg,priorité:declaPrio}),
             }).then((response) => {
                 if (response.ok) {
                 console.log("donnees envoyée");
@@ -247,93 +331,191 @@ export default function DeclarationEnvoyee() {
           });
       }
     })
+    const CompleterRapport =((val)=>{
+      setCompleterRapport(true);
+      setIdDRapport(val);
+
+    })
+    const validerRapport=((val,titre,desc,service,declaration,e)=>{
+      e.preventDefault();
+        fetch(`http://127.0.0.1:8000/madrasatic/reports/${val}/`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "Authorization":`Token ${token}`
+            },
+            body: JSON.stringify({title:titre,desc:desc,service:service,declaration:declaration,status:'validé'}),
+            }).then(()=>{
+              setReussi(true);
+            })
+    })
+    const ajouterSupprimer=(decla)=>{
+      if (declarations.some(item=> item.id === decla.id)){
+          console.log("existe deja doit etre supprimerrr")
+          setDeclarations(item=>(
+              item.filter(val=>(val.id != decla.id))
+          ))
+      }else{
+          setDeclarations(previousState =>(
+              [...previousState,decla]
+          ));
+      }
+  }
+  const Dettacher =(()=>{
+    declarations.map(dec=>{
+      fetch(`http://localhost:8000/madrasatic/responsable_declarations/${dec.id}/`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization":`Token ${token}`
+        },
+        body:JSON.stringify({parent_declaration:null})
+        }).then((response) => {
+            if (response.ok) {
+            console.log("parent modifié");
+            setReussi(true);
+            } else {
+            console.log("y'a une erreur");
+            }
+            return response.json();
+        })
+    })
+  })
   return (
     <>
-    <MDBContainer className='content'>
+<div class="container">
         {delet ? <Redirect to={`/RejeterDecla/${id}`}/> : null}
         {complement ? <Redirect to={`/DeclarationIncomplete/${id}`}/> : null}
         {reussi ? <Redirect to="/HomeResponsable"/> : null}
         {attacher ? <Redirect to={`/AttacherDeclaration/${id}`}/> :null}
-        <MDBContainer style={{}}>
-        <MDBRow className='buttons'>
-            <MDBCol md='3'></MDBCol>
-            <MDBCol md='3'>
-               <button onClick={()=>{setAttacher(true)}}>Attacher Déclaration</button>
+        {completerRapport ? <Redirect to={`/RapportIncomplet/${idRapport}`}/> : null}
+<div class="mt-5" style={{backgroundColor:'white'}}>
+      <div class="d-style btn btn-brc-tp border-2 bgc-white btn-outline-blue btn-h-outline-blue btn-a-outline-blue w-100 my-2 py-3 shadow-sm">
+        <div class="row align-items-center">
+        <MDBRow style={{marginTop:'10px', marginBottom:'40px'}}>
+            <MDBCol>
+              <select class="custom-select" onChange={e=>{setDeclaCateg(e.target.value)}}>
+                      <option >Catégorie</option>
+                      {categories.map(cat => (
+                          <option value={cat.id}>{cat.name}</option>
+                      ))}
+              </select>
             </MDBCol>
-            <MDBCol md='3'>
-               <button onClick={enregistrerModification}>Sauvegarder Modifications</button>
+            <MDBCol>
+              <select class="custom-select" onChange={e=>{setDeclaprio(e.target.value)}}>
+                          <option>Priorité</option>
+                          <option value="1">Urgent</option>
+                          <option value="2">Etat critique</option>
+                          <option value="3">Etat normal</option>
+              </select>
             </MDBCol>
-            <MDBCol md='3'>
-            <button onClick={demanderComplement}>Demander Complément</button>
-            </MDBCol>
-        </MDBRow>
-        <MDBRow className='infos'>
-            <MDBCol md='5'>
-                <h5>Objet : {objet}</h5>
-                <MDBRow>
-                {
-                      categories.filter(cat => cat.id === catégorie).map(
-                        categ =>(
-                          <MDBCol style={{marginRight:'15%'}}><h6 ><i className="fa fa-circle f-10 m-r-15"/>Catégorie :{categ.name}</h6></MDBCol>
-                        )
-                      )
-                    }
-                    
-                    <MDBCol>
-                    <select class="custom-select" onChange={e=>{setCatégorie(e.target.value)}}>
-                    <option >Catégorie</option>
-                    {categories.map(cat => (
-                        <option value={cat.id}>{cat.name}</option>
-                    ))}
-                    </select>
-                    </MDBCol>
-                    <MDBRow>
-                    <MDBCol style={{marginRight:'22%'}}><h6><i className="fa fa-circle f-10 m-r-15"/>Priorité :{priorité}</h6></MDBCol>
-                    <MDBCol>
-                    <select class="custom-select" onChange={e=>{setPriorité(e.target.value)}}>
-                        <option>prio</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                    </select>
-                    </MDBCol>
-                </MDBRow>
-                    </MDBRow>
-                    
-            </MDBCol>
+          </MDBRow>
+          <div class="col-12 col-md-4">
+              {/* <img src={image} alt='Une image' style={{width: '300px',borderRadius:'8px'}}/> */}
+              <div class="card" style={{width: "300px",marginLeft:'20px'}}>
+                  <img src={image} alt='Une image' style={{borderRadius:'8px'}}/>
+                  <div class="card-body">
+                    <p class="card-text">{corps}</p>
+                  </div>
+                </div>
+            </div>
 
-            <MDBCol md='4'>
-                
-                    
-                
-            </MDBCol>
-            <MDBCol md='3'>
-                
-            </MDBCol>
-        </MDBRow>
-        <hr style={{border: '2px solid #b78429'}}/>
-        <p>Lieu: {lieu}</p>
-        <MDBContainer>
-            <h5>Déscription :</h5>
-            <p>{corps}</p>
-        </MDBContainer>
-        <MDBContainer>
-            <h5>Photo :</h5>
-            <img src={image} alt='Une image' style={{width: '70%'}}/>
-        </MDBContainer>
-        </MDBContainer>  
-        <MDBRow className='buttons'>
-            <MDBCol md='10'></MDBCol>
-            <MDBCol md='1'>
-               <button onClick={validerDeclaration}>Valider</button>
-            </MDBCol>
-            <MDBCol md='1'>
-            <button onClick={supp}>Rejeter</button>
-            </MDBCol>
-        </MDBRow>
-    </MDBContainer>
-    <MDBContainer className='form' >
-          <Col md={10} xl={12} style={{marginTop:'5%'}}>
+          <ul class="list-unstyled mb-0 col-12 col-md-4 text-dark-l1 text-90 text-left my-4 my-md-0">
+            <li>
+            <i className="fa fa-circle f-10 m-r-15"/>
+              <span class="text-110">{objet}</span>
+            </li>
+
+            <li class="mt-25">
+            {
+              categories.filter(cat => cat.id === catégorie).map(
+                categ =>(
+                  <span><i className="fa fa-circle f-10 m-r-15"/>Catégorie :{categ.name}</span>
+                )
+              )
+            }
+            </li>
+
+            <li class="mt-25">
+            { 
+                priorité == 1 ? <h6><i className="fa fa-circle f-10 m-r-15"/>Priorité : Urgente</h6> : null
+              }
+              { 
+                priorité == 2 ? <h6><i className="fa fa-circle f-10 m-r-15"/>Priorité : etat critique</h6> : null
+              }
+              { 
+                priorité == 3 ? <h6><i className="fa fa-circle f-10 m-r-15"/>Priorité : etat normal</h6> : null
+            }
+            </li>
+            <li>
+            {
+                sites.filter(item => item.id == site).map(item=>(
+                  <h6 ><i className="fa fa-circle f-10 m-r-15"/> Site :{item.site}</h6>
+                ))
+              }
+              {
+                blocs.filter(item => item.id == bloc).map(item=>(
+                  <h6 ><i className="fa fa-circle f-10 m-r-15"/> Bloc :{item.blocc}</h6>
+                ))
+              }
+              {
+                endroits.filter(item => item.id == endroit).map(item=>(
+                  <h6><i className="fa fa-circle f-10 m-r-15"/> Endroit :{item.endroit}</h6>
+                ))
+              }
+              {
+                lieux.filter(item => item.id == lieu).map(item=>(
+                  <h6 ><i className="fa fa-circle f-10 m-r-15"/> Lieu :{item.identification}</h6>
+                ))
+              }
+            </li>
+          </ul>
+
+          <div class="col-12 col-md-4 text-center">
+            <ul class ="list-unstyled">
+              <li>
+                <button onClick={()=>{setAttacher(true)}} class="btn btn-dark" style={{width:'280px',margin:'5px'}}>Attacher Déclaration</button>
+              </li>
+              <li>
+                <button onClick={enregistrerModification} class="btn btn-dark" style={{width:'280px',margin:'5px'}}>Sauvegarder Modifications</button>
+              </li>
+              <li>
+                <button onClick={demanderComplement} class="btn btn-dark" style={{width:'280px',margin:'5px'}}>Demander Complément</button>
+              </li>
+              <li>
+               <button onClick={validerDeclaration} class="btn btn-dark" style={{width:'280px',margin:'5px'}}>Valider</button>
+              </li>
+              <li>
+                <button onClick={supp} class="btn btn-dark" style={{width:'280px',margin:'5px'}}>Rejeter</button>
+              </li>
+            </ul>
+          </div>
+          <br></br> <br></br>          
+        </div>
+        <h5 style={{marginTop:'5%'}}>Rapport associé :</h5>
+          {
+            rapport.filter(item => item.declaration == id).map(item => (
+                <div class="card" style={{width: "450px",marginLeft:'30%'}}>
+                  <img class="card-img-top" src={image} alt="Image" style={{borderRadius:'8px'}}/>
+                  <div class="card-body">
+                    <h5 class="card-title">{item.title}</h5>
+                    <p class="card-text">{item.desc}</p>
+                    <MDBRow>
+                  <MDBCol>
+                    { item.status === "publié" ? <a href="#" class="btn btn-dark" style={{width:"200px",height:'60px'}} onClick={(e)=>{ validerRapport(item.id,item.title,item.desc,item.service,item.declaration,e)}}>Valider</a> : null}
+                  </MDBCol>
+                  <MDBCol >
+                    { item.status === "publié" ? <a href="" class="btn btn-dark" style={{width:"200"}} onClick={()=>CompleterRapport(item.id)}>demander complément</a> : null}
+                  </MDBCol>
+                  
+                </MDBRow>
+                  </div>
+              </div>
+            ))
+          }
+        <Col md={10} xl={12} style={{marginTop:'10%'}}>
                         <Card className='Recent-Users' >
                             <Card.Header>
                                 <Card.Title as='h2'  style={{
@@ -346,44 +528,17 @@ export default function DeclarationEnvoyee() {
                                   textAlign: 'center'
                                   }}>Liste des déclarations</Card.Title>
                                 
-                                <div class="row" style={{marginLeft:'25%'}}>
-                <div class="col-lg-20 mx-auto">
-                    <div class="career-search mb-60">
-
-                        <form action="#" class="career-form mb-60">
-                            <div class="row">
-                                <div class="col-md-8 col-lg-4 my-4">
-                                    <div class="select-container">
-                                        <select class="custom-select" onChange={(e)=>{afficher(e.target.value)}}>
-                                                <option value='tout'>Tous les états</option>
-                                                <option value='publiée'>Etat: publiée</option>
-                                                <option value='incompléte'>Etat: incompléte</option>
-                                                {/* <option value='rejetée'>Etat: rejetée</option> */}
-                                                <option value='non traitée'>Etat: non traitée</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-8 col-lg-4 my-4">
-                                    <div class="select-container" onChange={(e)=>{afficher(e.target.value)}}>
-                                        <select class="custom-select">
-                                                <option value='tout'>Toutes les priorités</option>
-                                                <option value='1'>Urgence</option>
-                                                <option value='2'>Etat critique</option>
-                                                <option value='3'>Etat normal</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    </div>
-                    </div>
+                                
                             </Card.Header>
+                            <a href="" class="btn btn-dark" style={{width:"300px",marginLeft:"70%",marginTop:"20px",marginBottom:"20px"}} onClick={()=>Dettacher()}>Dettacher</a>
                             {MyData.filter(decla=>decla.parent_declaration == id).map(dec => (
                                                            <Card.Body className='px-0 py-2'  onClick={()=>{detail(dec.id)}}>       
                                                            <Table responsive hover>
                                                                <tbody>
                                                                <tr className="unread" class="candidates-list">
+                                                                    <td>
+                                                                      <input class="form-check-input" type="checkbox" onChange={()=>{ajouterSupprimer(dec)}} />
+                                                                    </td>
                                                                    <td class="title"><img  style={{width: '50px'}} src={dec.image} alt="Image du signalement"/></td>
                                                                    <td>
                                                                        <div class="candidate-list-details">
@@ -438,8 +593,13 @@ export default function DeclarationEnvoyee() {
                                 breakLinkClassName={"page-link"}
                                 activeClassName={"active"}/>
                     </Col>
-      
-  </MDBContainer>
+      </div>
+
+
+
+      </div>
+</div>
+    
     </>
   )
 }

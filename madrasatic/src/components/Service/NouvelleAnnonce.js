@@ -14,6 +14,8 @@ export const NouvelleAnnonce =()=>{
     const [reussi , setReussi ] = useState(false);
     const token = sessionStorage.getItem("key");
     const [image, setImage] = useState("");
+    const [utilisateur,setUtilisateur]=useState(false);
+    const [service,setService]=useState(false);
     useEffect(()=>{
       fetch("http://127.0.0.1:8000/madrasatic/user/", {
       method: "GET",
@@ -27,6 +29,11 @@ export const NouvelleAnnonce =()=>{
       })
       .then((data) => {
         setAuteur(data.id);
+        if(data.role === "Utilisateur"){
+          setUtilisateur(true);
+        }else{
+          setService(true);
+        }
       });
     },[]);
     const saveAnnonce=((e)=>{
@@ -91,7 +98,10 @@ export const NouvelleAnnonce =()=>{
       <MDBContainer className='form'>
         <div className="create">
       {
-            reussi? <Redirect to='/HomeService' /> : null
+            reussi && service ? <Redirect to='/HomeService' /> : null
+      }
+      {
+            reussi && utilisateur ? <Redirect to='/HomePage' /> : null
       }
       <h2>Ajouter une annonce</h2>
       <hr style={{border: '2px solid #b78429'}}/>

@@ -9,12 +9,18 @@ import './declaration.css'
 import { Redirect, useParams } from 'react-router-dom';
 import {Col, Card,Table} from 'react-bootstrap';
 import ReactPaginate from "react-paginate";
+import {FaThumbsUp,FaThumbsDown,FaCogs} from 'react-icons/fa'
 export default function DetailDeclaration() {
+    const [modifier,setModifier]=useState(false);
     const [rediger,setRediger]=useState(false);
+    const [rapportEnregistrés,setRapportsEnregistrés]=useState([]);
+    const [nombreRapportsEnregistrés,setNombreRapportsEnregistrés]=useState('');
+    const [idRapport,setIdRapport]=useState("");
     const token = sessionStorage.getItem("key");
     const [id2,setId]=useState();
     const [categories,setCategories]=useState([]);
     const [auteur,setAuteur]=useState("");
+    const [etat,setEtat]=useState("");
     const {id}=useParams();
     const [lieu,setLieu]=useState("");
     const [objet,setObjet]=useState("");
@@ -27,6 +33,313 @@ export default function DetailDeclaration() {
     const [nombre,setNombre]=useState("");
     const [pageCourrente,setPageCourrente]=useState();
     const[MyData,setMyData]=useState([]);
+    const [blocs,setBlocs]=useState([]);
+    const [sites,setSites]=useState([]);
+    const [endroits,setEndroits]=useState([]);
+    const [lieux,setLieux]=useState([]);
+    const [bloc,setBloc]=useState('');
+    const [site,setSite]=useState("");
+    const [endroit,setEndroit]=useState("");
+    const [nombreBlocs,setNombreBlocs]=useState();
+    const [nombreSites,setNombreSites]=useState();
+    const [nombreEndroits,setNombreEndroits]=useState();
+    const [nombreLieux,setNombreLieux]=useState();
+    const [declaPrio,setDeclaprio]=useState();
+    const [declaCateg,setDeclaCateg]=useState();
+    const [rapport,setRapport]=useState([]);
+    const [Consulter,setConsulter]=useState(false);
+    const [nombreRapports,setNombreRapports]=useState("");
+    useEffect(()=>{
+      fetch("http://127.0.0.1:8000/madrasatic/draft_reports/", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization":`Token ${token}`
+          },
+        }).then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            setRapportsEnregistrés(data.results);
+            if(data.count !== 5){
+              setNombreRapportsEnregistrés(Math.ceil(data.count /5) );
+            }else{
+              setNombreRapportsEnregistrés(0);
+            }
+          });
+      fetch("http://127.0.0.1:8000/madrasatic/reports/", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json",
+              "Authorization":`Token ${token}`
+            },
+          }).then((response) => {
+              return response.json();
+            })
+            .then((data) => {
+              setRapport(data.results);
+              if(data.count !== 5){
+                setNombreRapports(Math.ceil(data.count /5) );
+              }else{
+                setNombreRapports(0);
+              }
+            });
+      fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization":`Token ${token}`
+          },
+        }).then((response) => {
+            if (response.ok) {
+              console.log("donnees recup");
+            } else {
+              console.log("y'a une erreur");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            setMyData(data.results);
+            setNombre(data.count);
+            setNombresPages(Math.ceil(data.count /5));
+          });
+          fetch("http://127.0.0.1:8000/madrasatic/categories/", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization":`Token ${token}`
+          },
+        }).then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            setCategories(data.results);
+          });
+          fetch("http://127.0.0.1:8000/madrasatic/blocs/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization":`Token ${token}`
+        },
+      }).then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+            setBlocs(data.results);
+            if(data.count !== 5){
+              setNombreBlocs(Math.ceil(data.count /5) );
+            }else{
+              setNombreBlocs(0);
+            }
+            
+        });
+  
+        fetch("http://127.0.0.1:8000/madrasatic/sites/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization":`Token ${token}`
+        },
+      }).then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          setSites(data.results);
+          if(data.count !== 5){
+            setNombreSites(Math.ceil(data.count /5));
+          }else{
+            setNombreSites(0);
+          }
+          
+        });
+        fetch("http://127.0.0.1:8000/madrasatic/endroits/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization":`Token ${token}`
+        },
+      }).then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          setEndroits(data.results);
+          console.log("nb endroits"+Math.ceil(data.count /5));
+          if(data.count !== 5){
+            setNombreEndroits(Math.ceil(data.count /5));
+          }else{
+            setNombreEndroits(0);
+          }
+          
+        });
+      fetch("http://127.0.0.1:8000/madrasatic/lieux/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization":`Token ${token}`
+        },
+      }).then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          setLieux(data.results);
+          if(data.count !== 5){
+            setNombreLieux(Math.ceil(data.count /5));
+          }else{
+            setNombreLieux(0);
+          }
+         
+        });
+    },[])
+    //
+    useEffect(()=>{
+      if(nombreRapports > 1){
+        fetch("http://127.0.0.1:8000/madrasatic/reports/?page="+nombreRapports - 1 +"/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization":`Token ${token}`
+        },
+      }).then((response) => {
+        if(response.ok){
+          console.log("marche")
+        }else{
+          console.log("erreuuuuur")
+        }
+          return response.json();
+        })
+        .then((data) => {
+          setNombreRapports(nombreRapports - 1);
+          setRapport(previousState =>(
+            [...previousState,data.results]
+        ));
+        });
+      }
+    },[nombreRapports]);
+    useEffect(()=>{
+      if(nombreRapportsEnregistrés > 1){
+        fetch("http://127.0.0.1:8000/madrasatic/draft_reports/?page="+nombreRapportsEnregistrés - 1 +"/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization":`Token ${token}`
+        },
+      }).then((response) => {
+        if(response.ok){
+          console.log("marche")
+        }else{
+          console.log("erreuuuuur")
+        }
+          return response.json();
+        })
+        .then((data) => {
+          setNombreRapportsEnregistrés(nombreRapportsEnregistrés - 1);
+          setRapportsEnregistrés(previousState =>(
+            [...previousState,data.results]
+        ));
+        });
+      }
+    },[nombreRapportsEnregistrés]);
+    useEffect(()=>{
+      if(nombreSites > 1){
+        console.log("nb sites"+nombreSites);
+        fetch("http://127.0.0.1:8000/madrasatic/sites/?page="+nombreSites - 1 +"/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization":`Token ${token}`
+        },
+      }).then((response) => {
+        if(response.ok){
+          console.log("marche")
+        }else{
+          console.log("erreuuuuur")
+        }
+          return response.json();
+        })
+        .then((data) => {
+          setNombreSites(nombreSites - 1);
+          setSites(previousState =>(
+            [...previousState,data.results]
+        ));
+        });
+      }
+    },[nombreSites]);
+    useEffect(()=>{
+      if(nombreBlocs > 1){
+        fetch("http://127.0.0.1:8000/madrasatic/blocs/?page="+nombreBlocs - 1 +"/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization":`Token ${token}`
+        },
+      }).then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          setBlocs(previousState =>(
+            [...previousState,data.results]
+        ));
+          setNombreBlocs(nombreBlocs - 1);
+        });
+      }
+    },[nombreBlocs]);
+    useEffect(()=>{
+      if(nombreEndroits > 1){
+        fetch("http://127.0.0.1:8000/madrasatic/endroits/?page="+nombreEndroits - 1 +"/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization":`Token ${token}`
+        },
+      }).then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          setEndroits(previousState =>(
+            [...previousState,data.results]
+        ));
+          setNombreEndroits(nombreEndroits - 1);
+        });
+      }
+    },[nombreEndroits]);
+    useEffect(()=>{
+      if(nombreLieux > 1){
+        fetch("http://127.0.0.1:8000/madrasatic/lieux/?page="+nombreLieux - 1+"/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization":`Token ${token}`
+        },
+      }).then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          setLieux(previousState =>(
+            [...previousState,data.results]
+        ));
+          setNombreLieux(nombreLieux - 1);
+        });
+      }
+    },[nombreLieux]);
+    const detail=((id)=>{
+        setId(id);
+        setConsulter(true);
+        
+    })
     useEffect(()=>{
       fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
           method: "GET",
@@ -110,11 +423,14 @@ export default function DetailDeclaration() {
             setCatégorie(data.catégorie);
             setAuteur(data.auteur);
             setCorps(data.corps);
+            setSite(data.site);
+            setBloc(data.bloc);
+            setEndroit(data.endroit);
             setLieu(data.lieu);
             setImage(data.image);
             setObjet(data.objet);
             setPriorité(data.priorité);
-            console.log(data);
+            setEtat(data.etat);
           });
           fetch("http://127.0.0.1:8000/madrasatic/categories/", {
             method: "GET",
@@ -182,56 +498,164 @@ export default function DetailDeclaration() {
             });
         }
       })
+      const modifierRapport=((val)=>{
+        setModifier(true);
+        setIdRapport(val)
+      })
+      const supprimerRapport=((val,e)=>{
+        e.preventDefault(); 
+          fetch(`http://localhost:8000/madrasatic/draft_reports/${val}/`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization":`Token ${token}`
+        },
+      }).then((response)=>{
+        if(response.ok)
+        {
+            setReussi(true);
+        }
+      })
+      })
+      const validerRapport=((val,e)=>{
+        e.preventDefault();
+        fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/${val}/`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "Authorization":`Token ${token}`
+            },
+            body: JSON.stringify({etat:'traitée'}),
+            }).then(()=>{
+              setReussi(true);
+            })
+      })
   return (
     <>
-    <MDBContainer className='content'>
+  <div class="container">
         {reussi ? <Redirect to="/HomeService"/> : null}
         {rediger ? <Redirect to={`/AjoutRapport/${id}`}/> : null}
-        <MDBContainer style={{}}>
-        <MDBRow className='buttons'>
-            <MDBCol md='9'></MDBCol>
-            <MDBCol md='3'>
-            <button onClick={()=>{setRediger(true)}}>Rédiger rapport</button>
-            </MDBCol>
-        </MDBRow>
-        <MDBRow className='infos'>
-        <MDBCol md='5'>
-                <h5>Objet : {objet}</h5>
+        {modifier ? <Redirect to={`/ModifierRapportEnregistré/${idRapport}`}/> :null}
+<div class="mt-5" style={{backgroundColor:'white'}}>
+      <div class="d-style btn btn-brc-tp border-2 bgc-white btn-outline-blue btn-h-outline-blue btn-a-outline-blue w-100 my-2 py-3 shadow-sm">
+        <div class="row align-items-center">
+          <div class="col-12 col-md-4">
+              {/* <img src={image} alt='Une image' style={{width: '300px',borderRadius:'8px'}}/> */}
+              <div class="card" style={{width: "300px",marginLeft:'20px'}}>
+                  <img src={image} alt='Une image' style={{borderRadius:'8px'}}/>
+                  <div class="card-body">
+                    <p class="card-text">{corps}</p>
+                  </div>
+                </div>
+            </div>
+
+          <ul class="list-unstyled mb-0 col-12 col-md-4 text-dark-l1 text-90 text-left my-4 my-md-0">
+            <li>
+            <i className="fa fa-circle f-10 m-r-15"/>
+              <span class="text-110">{objet}</span>
+            </li>
+
+            <li class="mt-25">
+            {
+              categories.filter(cat => cat.id === catégorie).map(
+                categ =>(
+                  <span><i className="fa fa-circle f-10 m-r-15"/>Catégorie :{categ.name}</span>
+                )
+              )
+            }
+            </li>
+
+            <li class="mt-25">
+            { 
+                priorité == 1 ? <h6><i className="fa fa-circle f-10 m-r-15"/>Priorité : Urgente</h6> : null
+              }
+              { 
+                priorité == 2 ? <h6><i className="fa fa-circle f-10 m-r-15"/>Priorité : etat critique</h6> : null
+              }
+              { 
+                priorité == 3 ? <h6><i className="fa fa-circle f-10 m-r-15"/>Priorité : etat normal</h6> : null
+            }
+            </li>
+            <li>
+              <h6><i className="fa fa-circle f-10 m-r-15"/>Etat : {etat}</h6>
+            </li>
+
+            <li>
+              {
+                sites.filter(item => item.id == site).map(item=>(
+                  <h6 ><i className="fa fa-circle f-10 m-r-15"/> Site :{item.site}</h6>
+                ))
+              }
+              {
+                blocs.filter(item => item.id == bloc).map(item=>(
+                  <h6 ><i className="fa fa-circle f-10 m-r-15"/> Bloc :{item.blocc}</h6>
+                ))
+              }
+              {
+                endroits.filter(item => item.id == endroit).map(item=>(
+                  <h6><i className="fa fa-circle f-10 m-r-15"/> Endroit :{item.endroit}</h6>
+                ))
+              }
+              {
+                lieux.filter(item => item.id == lieu).map(item=>(
+                  <h6 ><i className="fa fa-circle f-10 m-r-15"/> Lieu :{item.identification}</h6>
+                ))
+              }
+            </li>
+          </ul>
+
+          <div class="col-12 col-md-4 text-center">
+            <ul class ="list-unstyled">
+              <li>
+                <button onClick={()=>{setRediger(true)}} class="btn btn-dark" style={{width:'280px',margin:'5px'}}>Rédiger rapport</button>
+              </li>
+              <li>
+                <button onClick={EnCoursDeTraitement} class="btn btn-dark" style={{width:'280px',margin:'5px'}}>En cours de traitement</button>
+              </li>
+            </ul>
+          </div>
+          <br></br> <br></br>
+          
+          
+          
+        </div>
+        <h5 style={{marginTop:'5%'}}>Rapport associé :</h5>
+          {
+            rapport.filter(item => item.declaration == id).map(item => (
+                <div class="card" style={{width: "500px",marginLeft:'30%'}}>
+                  <img class="card-img-top" src={image} alt="Image" style={{borderRadius:'8px'}}/>
+                  <div class="card-body">
+                    <h5 class="card-title">{item.title}</h5>
+                    <p class="card-text">{item.desc}</p>
+                  </div>
+              </div>
+            ))
+          }
+          {
+            rapportEnregistrés.filter(item => item.declaration == id).map( item => (
+              <div class="card" style={{width: "500px",marginLeft:'30%'}}>
+              <img class="card-img-top" src={image} alt="Image" style={{borderRadius:'8px'}}/>
+              <div class="card-body">
+                <h5 class="card-title">{item.title}</h5>
+                <p class="card-text">{item.desc}</p>
                 <MDBRow>
-                {
-                      categories.filter(cat => cat.id === catégorie).map(
-                        categ =>(
-                          <MDBCol style={{marginRight:'15%'}}><h6 ><i className="fa fa-circle f-10 m-r-15"/>Catégorie :{categ.name}</h6></MDBCol>
-                        )
-                      )
-                    }
-                    <MDBRow>
-                    <MDBCol style={{marginRight:'22%'}}><h6><i className="fa fa-circle f-10 m-r-15"/>Priorité :{priorité}</h6></MDBCol>
+                  <MDBCol>
+                    <a href="#" class="btn btn-dark" style={{width:"130px"}} onClick={(e)=>{ validerRapport(item.id,e)}}>Valider</a>
+                  </MDBCol>
+                  <MDBCol >
+                    <a href="" class="btn btn-dark" style={{width:"130px"}} onClick={()=>modifierRapport(item.id)}>Modifier</a>
+                  </MDBCol>
+                  <MDBCol>
+                    <a href="#" class="btn btn-dark" style={{width:"130px"}} onClick={(e)=>supprimerRapport(item.id,e)}>Supprimer</a>
+                  </MDBCol>
                 </MDBRow>
-                    </MDBRow>
-                    
-            </MDBCol>
-        </MDBRow>
-        <hr style={{border: '2px solid #b78429'}}/>
-        <p>Lieu: {lieu}</p>
-        <MDBContainer>
-            <h5>Déscription :</h5>
-            <p>{corps}</p>
-        </MDBContainer>
-        <MDBContainer>
-            <h5>Photo :</h5>
-            <img src={image} alt='Une image' style={{width: '70%'}}/>
-        </MDBContainer>
-        </MDBContainer>  
-        <MDBRow className='buttons'>
-            <MDBCol md='9'></MDBCol>
-            <MDBCol md='3'>
-               <button onClick={EnCoursDeTraitement}>En cours de traitement</button>
-            </MDBCol>
-        </MDBRow>
-    </MDBContainer>
-    <MDBContainer className='form' >
-          <Col md={10} xl={12} style={{marginTop:'5%'}}>
+              </div>
+          </div>
+            ))
+          }
+        <Col md={10} xl={12} style={{marginTop:'10%'}}>
                         <Card className='Recent-Users' >
                             <Card.Header>
                                 <Card.Title as='h2'  style={{
@@ -243,53 +667,47 @@ export default function DetailDeclaration() {
                                   color: 'white',
                                   textAlign: 'center'
                                   }}>Liste des déclarations</Card.Title>
-                                <table>
-                                    <tr>
-                                        <td>
-                                            {/* <br></br> */}
-                                            <p>Etat : </p>
-                                        </td>
-                                        <td>
-                                             <select onChange={(e)=>{afficher(e.target.value)}}>
-                                                <option value='tout'>Toutes</option>
-                                                <option value='non traitée'>Etat: non traitée</option>
-                                                <option value='traitée'>Etat: traitée</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <p>  Catégorie : </p>
-                                        </td>
-                                        <td>
-                                            <select onChange={(e)=>{afficher(e.target.value)}}>
-                                                <option value='tout'>Toutes</option>
-                                                <option value='1'>Urgence</option>
-                                                <option value='2'>Etat critique</option>
-                                                <option value='3'>Etat normal</option>
-                                            </select>
-                                        </td>
-                                    </tr>
-
-                                </table>
+                                
+                                
                             </Card.Header>
                             {MyData.filter(decla=>decla.parent_declaration == id).map(dec => (
-                            <Card.Body className='px-0 py-2'>       
-                                <Table responsive hover>
-                                    <tbody>
-                                    <tr className="unread">
-                                        <td><img  style={{width: '150px'}} src={dec.image} alt="activity-user"/></td>
-                                        <td>
-                                            <h6 className="mb-1">Objet :{dec.objet}</h6>
-                                            <p className="m-0">Etat :{dec.etat}</p>
-                                        </td>
-                                        <td>
-                                            <h6 className="text-muted"><i className="fa fa-circle text-c-green f-10 m-r-15"/>Catégorie :{dec.catégorie}</h6>
-                                            <h6 className="text-muted"><i className="fa fa-circle text-c-green f-10 m-r-15"/>Priorité :{dec.priorité}</h6>
-                                        </td>
-                                        {/* <td><a href={DEMO.BLANK_LINK} className="label theme-bg2 text-white f-12">Reject</a><a href={DEMO.BLANK_LINK} className="label theme-bg text-white f-12">Approve</a></td> */}
-                                    </tr>
-                                  </tbody>
-                                </Table>
-                              </Card.Body>
+                                                           <Card.Body className='px-0 py-2'  onClick={()=>{detail(dec.id)}}>       
+                                                           <Table responsive hover>
+                                                               <tbody>
+                                                               <tr className="unread" class="candidates-list">
+                                                                   <td class="title"><img  style={{width: '50px'}} src={dec.image} alt="Image du signalement"/></td>
+                                                                   <td>
+                                                                       <div class="candidate-list-details">
+                                                                         <div class="candidate-list-info">
+                                                                           <div class="candidate-list-title">
+                                                                             <h5 class="mb-0"><a href={`/DeclarationEnvoyer/${id}`} style={{color:'black'}}>{dec.objet}</a></h5>
+                                                                           </div>
+                                                                           <div class="candidate-list-option">
+                                                                             <ul class="list-unstyled">
+                                                                               <li><FaCogs style={{marginRight:'2px',marginBottom:'3px'}}/> {dec.etat}</li>
+                                                                               <li><FaThumbsUp  style={{marginRight:'2px',marginBottom:'6px'}}/>{dec.confirmée_par.length}</li>
+                                                                               <li><FaThumbsDown  style={{marginRight:'2px',marginTop:'4px'}}/> {dec.signalée_par.length}</li>
+                                                                             </ul>
+                                                                           </div>
+                                                                         </div>
+                                                                       </div>
+                                                                   </td>
+                                                                   <td>
+                                                                      {
+                                                                       categories.filter(cat => cat.id === dec.catégorie).map(
+                                                                         categ =>(
+                                                                           <h6 ><i className="fa fa-circle f-10 m-r-15"/>Catégorie :{categ.name}</h6>
+                                                                         )
+                                                                       )
+                                                                      }
+                                                                       
+                                                                       <h6><i className="fa fa-circle f-10 m-r-15"/>Priorité :{dec.priorité}</h6>
+                                                                   </td>
+                                                                    
+                                                               </tr>
+                                                             </tbody>
+                                                           </Table>
+                                                         </Card.Body>
                               ))} 
                         </Card>
                         <ReactPaginate 
@@ -311,8 +729,12 @@ export default function DetailDeclaration() {
                                 breakLinkClassName={"page-link"}
                                 activeClassName={"active"}/>
                     </Col>
-      
-  </MDBContainer>
+      </div>
+
+
+
+      </div>
+</div>
     </>
   )
 }
