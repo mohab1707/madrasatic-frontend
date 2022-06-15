@@ -24,7 +24,7 @@ export const AjouterIdentification =()=>{
           return response.json();
         })
         .then((data) => {
-            setBlocs(data.results);
+            setBlocs(data);
         });
   
         fetch("http://127.0.0.1:8000/madrasatic/sites/", {
@@ -43,7 +43,7 @@ export const AjouterIdentification =()=>{
           return response.json();
         })
         .then((data) => {
-          setSites(data.results);
+          setSites(data);
         });
         fetch("http://127.0.0.1:8000/madrasatic/endroits/", {
         method: "GET",
@@ -61,7 +61,7 @@ export const AjouterIdentification =()=>{
           return response.json();
         })
         .then((data) => {
-          setEndroits(data.results);
+          setEndroits(data);
         });
       },[]);
     const saveBloc=((e)=>{

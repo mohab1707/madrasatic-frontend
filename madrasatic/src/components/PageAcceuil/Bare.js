@@ -26,6 +26,7 @@ export const Bare = () => {
     const [user,setUser]=useState(false);
     const [chefClub,setChefClub]=useState(false);
     const token = sessionStorage.getItem("key");
+    const [isNotifated, setIsNotifated] = useState(false);
     useEffect(()=>{
         fetch("http://127.0.0.1:8000/madrasatic/user/", {
             method: "GET",
@@ -37,7 +38,26 @@ export const Bare = () => {
             if(data.role === "Président du club"){
                 setChefClub(true);
             }
-          })
+          });
+
+        //   const pusher = new Pusher("718db103e05e52a72795", {
+        //     cluster: "eu",
+        //     authEndpoint: "http://127.0.0.1:8000/madrasatic/pusher/auth",
+        //   });
+        //   var channel = pusher.subscribe("Declaration");
+        //   channel.bind("Modification", function ({ message }) {
+        //     setIsNotifated(true);
+        //     return toast({
+        //       type: "info",
+        //       icon: "info",
+        //       title: message.title,
+        //       description: message.body,
+        //       time: 5000,
+        //       onDismiss: () => {
+        //         setIsNotifated(false);
+        //       },
+        //     });
+        //   });
     },[])
     const deconnexion =(e) => {
         e.preventDefault();

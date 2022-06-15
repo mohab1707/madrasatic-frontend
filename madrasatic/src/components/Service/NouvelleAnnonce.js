@@ -120,7 +120,8 @@ export const NouvelleAnnonce =()=>{
             value={corps}
             onChange={e=>setCorps(e.target.value)}
         ></textarea>
-        <label>Date début :</label>
+        {/* <DatePicker></DatePicker> */}
+        {/* <label>Date début :</label>
             <Datetime 
                 value={dateDebut}
                 onChange={date=>setDateDebut(date)}
@@ -129,7 +130,7 @@ export const NouvelleAnnonce =()=>{
             <Datetime placeholder='Date fin'
                 value={dateValue}
                 onChange={date=>setDate(date)}
-            > </ Datetime>
+            > </ Datetime> */}
         <label>Image :</label>
         <input
             type="file"

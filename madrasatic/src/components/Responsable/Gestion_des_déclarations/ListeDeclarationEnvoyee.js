@@ -55,7 +55,7 @@ export const ListeDeclarationEnvoyee = () => {
             return response.json();
           })
           .then((data) => {
-            setCatégories(data.results);
+            setCatégories(data);
           });
         
 },[]);

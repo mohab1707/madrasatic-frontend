@@ -61,7 +61,7 @@ export default function DeclarationEnvoyee() {
               return response.json();
             })
             .then((data) => {
-              setRapport(data.results);
+              setRapport(data);
             });
       fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
           method: "GET",
@@ -94,7 +94,7 @@ export default function DeclarationEnvoyee() {
             return response.json();
           })
           .then((data) => {
-            setCatégories(data.results);
+            setCatégories(data);
           });
           fetch("http://127.0.0.1:8000/madrasatic/blocs/", {
         method: "GET",
@@ -107,7 +107,7 @@ export default function DeclarationEnvoyee() {
           return response.json();
         })
         .then((data) => {
-            setBlocs(data.results);
+            setBlocs(data);
         });
   
         fetch("http://127.0.0.1:8000/madrasatic/sites/", {
@@ -121,7 +121,7 @@ export default function DeclarationEnvoyee() {
           return response.json();
         })
         .then((data) => {
-          setSites(data.results);
+          setSites(data);
         });
         fetch("http://127.0.0.1:8000/madrasatic/endroits/", {
         method: "GET",
@@ -134,7 +134,7 @@ export default function DeclarationEnvoyee() {
           return response.json();
         })
         .then((data) => {
-          setEndroits(data.results);
+          setEndroits(data);
         });
       fetch("http://127.0.0.1:8000/madrasatic/lieux/", {
         method: "GET",
@@ -147,7 +147,7 @@ export default function DeclarationEnvoyee() {
           return response.json();
         })
         .then((data) => {
-          setLieux(data.results);         
+          setLieux(data);         
         });
     },[])
     const detail=((id)=>{
@@ -228,25 +228,6 @@ export default function DeclarationEnvoyee() {
             setObjet(data.objet);
             setPriorité(data.priorité);
           });
-          fetch("http://127.0.0.1:8000/madrasatic/categories/", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-                "Authorization":`Token ${token}`
-            },
-            }).then((response) => {
-                if (response.ok) {
-                console.log("donnees recup");
-                } else {
-                console.log("y'a une erreur");
-                }
-                return response.json();
-            })
-            .then((data) => {
-                console.log(data.results);
-                setCategories(data.results);
-            });
     },[]);
     const supp =(()=>{
         setDelete(true);

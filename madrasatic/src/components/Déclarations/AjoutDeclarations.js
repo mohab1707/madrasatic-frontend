@@ -49,7 +49,7 @@ export const AjoutDeclaration =()=>{
         return response.json();
       })
       .then((data) => {
-        setCategories(data.results);
+        setCategories(data);
       });
     },[]);
     useEffect(()=>{
@@ -64,7 +64,7 @@ export const AjoutDeclaration =()=>{
           return response.json();
         })
         .then((data) => {
-            setBlocs(data.results);
+            setBlocs(data);
         });
   
         fetch("http://127.0.0.1:8000/madrasatic/sites/", {
@@ -78,7 +78,7 @@ export const AjoutDeclaration =()=>{
           return response.json();
         })
         .then((data) => {
-          setSites(data.results);
+          setSites(data);
         });
         fetch("http://127.0.0.1:8000/madrasatic/endroits/", {
         method: "GET",
@@ -91,7 +91,7 @@ export const AjoutDeclaration =()=>{
           return response.json();
         })
         .then((data) => {
-          setEndroits(data.results);
+          setEndroits(data);
         });
       fetch("http://127.0.0.1:8000/madrasatic/lieux/", {
         method: "GET",
@@ -104,7 +104,7 @@ export const AjoutDeclaration =()=>{
           return response.json();
         })
         .then((data) => {
-          setLieux(data.results);
+          setLieux(data);
         });
     },[])
     const saveDeclaration=((e)=>{

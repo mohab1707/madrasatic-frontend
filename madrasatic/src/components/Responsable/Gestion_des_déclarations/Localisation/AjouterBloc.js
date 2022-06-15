@@ -25,7 +25,7 @@ export const AjouterBloc =()=>{
           return response.json();
         })
         .then((data) => {
-          setSites(data.results);
+          setSites(data);
         });
     },[]);
     const saveBloc=((e)=>{

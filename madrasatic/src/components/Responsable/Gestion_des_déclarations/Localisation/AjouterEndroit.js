@@ -27,7 +27,7 @@ export const AjouterEndroit =()=>{
           return response.json();
         })
         .then((data) => {
-          setSites(data.results);
+          setSites(data);
         });
       fetch("http://127.0.0.1:8000/madrasatic/blocs/", {
         method: "GET",
@@ -40,7 +40,7 @@ export const AjouterEndroit =()=>{
           return response.json();
         })
         .then((data) => {
-            setBlocs(data.results);
+            setBlocs(data);
         });
     },[]);
     const saveBloc=((e)=>{

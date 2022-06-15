@@ -37,9 +37,15 @@ export const AfficherDeclaration= () => {
           "Authorization":`Token ${token}`
         },
       }).then((response) => {
+        if(response.ok){
+          console.log("reussi")
+        }else{
+          console.log("problem")
+        }
           return response.json();
         })
         .then((data) => {
+            console.log("idd :"+data.id)
             setUtilisateur(data.id);
         });
         fetch("http://127.0.0.1:8000/madrasatic/categories/", {
@@ -53,7 +59,8 @@ export const AfficherDeclaration= () => {
             return response.json();
           })
           .then((data) => {
-            setCatégories(data.results);
+            console.log("data :");
+            setCatégories(data);
           });
           fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
             method: "GET",
