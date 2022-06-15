@@ -496,8 +496,10 @@ export default function App() {
         </Route>
         < Route exact path="/ChoixLocalisation">
           <Gestion_des_declarations />
-          <div >
+          <div className='ajoutdeclarationclass'>
+            <br /><br />
             <ChoisirLocalisation />
+            <br /><br />
           </div>
           <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'0%' , left: '0', bottom: '0', width: '100%'}}>
             &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
@@ -506,7 +508,9 @@ export default function App() {
         < Route exact path="/AjouterBloc">
           <Gestion_des_declarations />
           <div className='ajoutdeclarationclass'>
+            <br /><br />
             <AjouterBloc />
+            <br /><br />
           </div>
           <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'0%' , left: '0', bottom: '0', width: '100%'}}>
             &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
@@ -515,7 +519,9 @@ export default function App() {
         < Route exact path="/AjouterSite">
           <Gestion_des_declarations />
           <div className='ajoutdeclarationclass'>
+            <br /><br />
             <AjouterSite />
+            <br /><br />
           </div>
           <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'0%' , left: '0', bottom: '0', width: '100%'}}>
             &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
@@ -524,7 +530,9 @@ export default function App() {
         < Route exact path="/AjouterEndroit">
           <Gestion_des_declarations />
           <div className='ajoutdeclarationclass'>
+            <br /><br />
             <AjouterEndroit />
+            <br /><br />
           </div>
           <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'0%' , left: '0', bottom: '0', width: '100%'}}>
             &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
@@ -533,7 +541,9 @@ export default function App() {
         < Route exact path="/AjouterIdentification">
           <Gestion_des_declarations />
           <div className='ajoutdeclarationclass'>
+            <br /><br />
             <AjouterIdentification />
+            <br /><br />
           </div>
           <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'0%' , left: '0', bottom: '0', width: '100%'}}>
             &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}

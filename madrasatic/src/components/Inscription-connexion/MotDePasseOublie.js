@@ -25,7 +25,7 @@ export const MotDePasseOublie= () => {
       }
     return(
 
-        <div className="card" style={{backgroundColor:'#e8e8e8'}}>
+        <div className="card" style={{backgroundColor:'#e8e8e8',borderRadius:'17px'}}>
             {
             reussi? <>
                     <p>Un email de confirmaion vous a été envoyé</p>

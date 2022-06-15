@@ -20,6 +20,7 @@ import { Redirect } from "react-router-dom"
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+
 export const Bare = () => {
     const [showNavRight, setShowNavRight] = useState(false);
     const [reussi , setReussi ] = useState(false);

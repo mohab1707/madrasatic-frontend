@@ -72,7 +72,7 @@ export const DemanderComplementRapport= () => {
     })
     return(
 
-        <div className="card">
+        <div className="card" style={{backgroundColor:'#e8e8e8',borderRadius:'17px'}}>
             {
                 pageAcceuil? <Redirect to ="/HomeResponsable"></Redirect> : null
             }

@@ -2,9 +2,9 @@ import React , { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 export const ChoisirLocalisation = () => {
   return (
-    <div className='ajoutdeclarationclass'>
+    <div >
         <br></br><br></br><br></br><br></br>
-        <div className="card" style={{ width :'600px',marginLeft:'30%',borderRadius:'8px',borderColor:'#f3f6f4'}}>
+        <div className="card" style={{ width :'600px',marginLeft:'30%',borderRadius:'8px',border:'2px solid #b78429'}}>
             <div className="email" style={{}}>
                     <label style={{color:'black'}}><b>Que vouliez vous ajouter ?</b></label>
                     <table style={{marginLeft:'10%'}}>

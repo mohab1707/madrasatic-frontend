@@ -52,7 +52,7 @@ export const DemanderComplement= () => {
     })
     return(
 
-        <div className="card" style={{backgroundColor:'#e8e8e8'}}>
+        <div className="card" style={{backgroundColor:'#e8e8e8',borderRadius:'17px'}}>
             {
                 pageAcceuil? <Redirect to ="/HomeResponsable"></Redirect> : null
             }
