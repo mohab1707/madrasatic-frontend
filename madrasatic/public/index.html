@@ -31,14 +31,14 @@
     <title>MADRASA-TIC</title>
     <script src="https://js.pusher.com/beams/1.0/push-notifications-cdn.js"></script>
     <script>
-      const beamsClient = new PusherPushNotifications.Client({
-        instanceId: '07664670-9ac3-47fb-b92f-1f54942f1d20',
-      });
+      // const beamsClient = new PusherPushNotifications.Client({
+      //   instanceId: '07664670-9ac3-47fb-b92f-1f54942f1d20',
+      // });
     
-      beamsClient.start()
-        .then(() => beamsClient.addDeviceInterest('debug-hello'))
-        .then(() => console.log('Successfully registered and subscribed!'))
-        .catch(console.error);
+      // beamsClient.start()
+      //   .then(() => beamsClient.addDeviceInterest('debug-hello'))
+      //   .then(() => console.log('Successfully registered and subscribed!'))
+      //   .catch(console.error);
       // const token=sessionStorage.getItem("key");
       // console.log("le tooookeeeeennnnnn")
       // const beamsTokenProvider = new PusherPushNotifications.TokenProvider({
@@ -65,5 +65,11 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="https://cdn.jsdelivr.net/npm/react-apexcharts"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.js"></script
+    <script src="https://js.pusher.com/6.0/pusher.min.js"></script>
+      <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
   </body>
 </html>

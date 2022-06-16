@@ -17,10 +17,10 @@ import {
     MDBBtn
     } from 'mdb-react-ui-kit';
 import { Redirect } from "react-router-dom"
-
+import Pusher from 'pusher-js';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-
+import { SemanticToastContainer, toast } from "react-semantic-toasts";
+import 'react-semantic-toasts/styles/react-semantic-alert.css';
 export const Bare = () => {
     const [showNavRight, setShowNavRight] = useState(false);
     const [reussi , setReussi ] = useState(false);
@@ -41,25 +41,25 @@ export const Bare = () => {
             }
           });
 
-        //   const pusher = new Pusher("718db103e05e52a72795", {
-        //     cluster: "eu",
-        //     authEndpoint: "http://127.0.0.1:8000/madrasatic/pusher/auth",
-        //   });
-        //   var channel = pusher.subscribe("Declaration");
-        //   channel.bind("Modification", function ({ message }) {
-        //     setIsNotifated(true);
-        //     return toast({
-        //       type: "info",
-        //       icon: "info",
-        //       title: message.title,
-        //       description: message.body,
-        //       time: 5000,
-        //       onDismiss: () => {
-        //         setIsNotifated(false);
-        //       },
-        //     });
-        //   });
-    },[])
+          const pusher = new Pusher("718db103e05e52a72795", {
+            cluster: "eu",
+            authEndpoint: "http://127.0.0.1:8000/madrasatic/pusher/auth",
+          });
+          var channel = pusher.subscribe("Declaration");
+          channel.bind("Demande complement", function ({ message }) {
+            setIsNotifated(true);
+            return toast({
+              type: "info",
+              icon: "info",
+              title: message.title,
+              description: message.body,
+              time: 5000,
+              onDismiss: () => {
+                setIsNotifated(false);
+              },
+            });
+          });
+    },[isNotifated])
     const deconnexion =(e) => {
         e.preventDefault();
         fetch("http://127.0.0.1:8000/madrasatic/logout/", {
@@ -81,6 +81,7 @@ export const Bare = () => {
         {
             reussi? <Redirect to='/' /> : null
         }
+        <SemanticToastContainer className="container_toastr" />
         <MDBNavbar expand='lg' light fixed='top' style={{backgroundColor:'#24344f'}}>
             <MDBContainer fluid>
             <MDBNavbarBrand href='/HomePage'style={{color:'#ffffff'}}>MADRASA-TIC</MDBNavbarBrand>
