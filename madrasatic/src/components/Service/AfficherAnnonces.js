@@ -31,7 +31,6 @@ export const AfficherAnnonces=()=>{
       });
     },[]);
     const ChangePage=((data)=>{
-        console.log(data.selected);
         setPageCourrente(data.selected+1);
         if(data.selected == 0){
           fetch("http://127.0.0.1:8000/madrasatic/annonceslist/", {
@@ -93,80 +92,80 @@ export const AfficherAnnonces=()=>{
                                                 <tr class="inner-box">
                                                 <th scope="row">
                                                     <div class="event-date">
-                                                        <span>{ann.pubDate.substring(
-                                                            ann.pubDate.indexOf("-") +4, 
-                                                            ann.pubDate.lastIndexOf("T")
+                                                        <span>{ann.datedebut.substring(
+                                                            ann.datedebut.indexOf("-") +4, 
+                                                            ann.datedebut.lastIndexOf("-") +3
                                                         )}</span>
                                                         {
-                                                           ann.pubDate.substring(
-                                                            ann.pubDate.indexOf("-") +1, 
-                                                            ann.pubDate.lastIndexOf("-")
+                                                           ann.datedebut.substring(
+                                                            ann.datedebut.indexOf("-") +1, 
+                                                            ann.datedebut.lastIndexOf("-")
                                                         ) === '01' ?  <p>Janvier</p> : null
                                                         }
                                                         {
-                                                           ann.pubDate.substring(
-                                                            ann.pubDate.indexOf("-") +1, 
-                                                            ann.pubDate.lastIndexOf("-")
+                                                           ann.datedebut.substring(
+                                                            ann.datedebut.indexOf("-") +1, 
+                                                            ann.datedebut.lastIndexOf("-")
                                                         ) === '02' ?  <p>Fevrier</p> : null
                                                         }
                                                         {
-                                                           ann.pubDate.substring(
-                                                            ann.pubDate.indexOf("-") +1, 
-                                                            ann.pubDate.lastIndexOf("-")
+                                                           ann.datedebut.substring(
+                                                            ann.datedebut.indexOf("-") +1, 
+                                                            ann.datedebut.lastIndexOf("-")
                                                         ) === '03' ?  <p>Mars</p> : null
                                                         }
                                                         {
-                                                           ann.pubDate.substring(
-                                                            ann.pubDate.indexOf("-") +1, 
-                                                            ann.pubDate.lastIndexOf("-")
+                                                           ann.datedebut.substring(
+                                                            ann.datedebut.indexOf("-") +1, 
+                                                            ann.datedebut.lastIndexOf("-")
                                                         ) === '04' ?  <p>Avril</p> : null
                                                         }
                                                         {
-                                                           ann.pubDate.substring(
-                                                            ann.pubDate.indexOf("-") +1, 
-                                                            ann.pubDate.lastIndexOf("-")
+                                                           ann.datedebut.substring(
+                                                            ann.datedebut.indexOf("-") +1, 
+                                                            ann.datedebut.lastIndexOf("-")
                                                         ) === '05' ?  <p>Mai</p> : null
                                                         }
                                                         {
-                                                           ann.pubDate.substring(
-                                                            ann.pubDate.indexOf("-") +1, 
-                                                            ann.pubDate.lastIndexOf("-")
+                                                           ann.datedebut.substring(
+                                                            ann.datedebut.indexOf("-") +1, 
+                                                            ann.datedebut.lastIndexOf("-")
                                                         ) === '06' ?  <p>Juin</p> : null
                                                         }
                                                         {
-                                                           ann.pubDate.substring(
-                                                            ann.pubDate.indexOf("-") +1, 
-                                                            ann.pubDate.lastIndexOf("-")
+                                                           ann.datedebut.substring(
+                                                            ann.datedebut.indexOf("-") +1, 
+                                                            ann.datedebut.lastIndexOf("-")
                                                         ) === '07' ?  <p>Juillet</p> : null
                                                         }
                                                         {
-                                                           ann.pubDate.substring(
-                                                            ann.pubDate.indexOf("-") +1, 
-                                                            ann.pubDate.lastIndexOf("-")
+                                                           ann.datedebut.substring(
+                                                            ann.datedebut.indexOf("-") +1, 
+                                                            ann.datedebut.lastIndexOf("-")
                                                         ) === '08' ?  <p>Août</p> : null
                                                         }
                                                         {
-                                                           ann.pubDate.substring(
-                                                            ann.pubDate.indexOf("-") +1, 
-                                                            ann.pubDate.lastIndexOf("-")
+                                                           ann.datedebut.substring(
+                                                            ann.datedebut.indexOf("-") +1, 
+                                                            ann.datedebut.lastIndexOf("-")
                                                         ) === '09' ?  <p>Semptembre</p> : null
                                                         }
                                                         {
-                                                           ann.pubDate.substring(
-                                                            ann.pubDate.indexOf("-") +1, 
-                                                            ann.pubDate.lastIndexOf("-")
+                                                           ann.datedebut.substring(
+                                                            ann.datedebut.indexOf("-") +1, 
+                                                            ann.datedebut.lastIndexOf("-")
                                                         ) === '10' ?  <p>Octobre</p> : null
                                                         }
                                                         {
-                                                           ann.pubDate.substring(
-                                                            ann.pubDate.indexOf("-") +1, 
-                                                            ann.pubDate.lastIndexOf("-")
+                                                           ann.datedebut.substring(
+                                                            ann.datedebut.indexOf("-") +1, 
+                                                            ann.datedebut.lastIndexOf("-")
                                                         ) === '11' ?  <p>Novembre</p> : null
                                                         }
                                                         {
-                                                           ann.pubDate.substring(
-                                                            ann.pubDate.indexOf("-") +1, 
-                                                            ann.pubDate.lastIndexOf("-")
+                                                           ann.datedebut.substring(
+                                                            ann.datedebut.indexOf("-") +1, 
+                                                            ann.datedebut.lastIndexOf("-")
                                                         ) === '12' ?  <p>Décembre</p> : null
                                                         }
                             
@@ -185,29 +184,15 @@ export const AfficherAnnonces=()=>{
                                                                 <span>
                                                                     <BsCalendar2DateFill style={{width :'7%'}}/>
                                                                     {'                     '}
-                                                                    {ann.pubDate.substring(
-                                                                        0,
-                                                                        ann.pubDate.indexOf("T")
-                                                                    )}
-                                                                    {'                     '}
-                                                                    {ann.pubDate.substring(
-                                                                        ann.pubDate.indexOf("T") + 1,
-                                                                        ann.pubDate.indexOf("Z")
-                                                                    )}
+                                                                    {ann.datedebut}
+                                                                    
                                                                 </span>
                                                             </div>
                                                             <div class="time">
                                                                 <span>
                                                                     <BsCalendar2DateFill style={{width :'7%'}}/>
-                                                                    {ann.dateFin.substring(
-                                                                        0,
-                                                                        ann.dateFin.indexOf("T")
-                                                                    )}
-                                                                    {'  '}
-                                                                    {ann.dateFin.substring(
-                                                                        ann.dateFin.indexOf("T") + 1,
-                                                                        ann.dateFin.indexOf("Z")
-                                                                    )}
+                                                                    {ann.dateFin}
+                                                                    
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -218,11 +203,6 @@ export const AfficherAnnonces=()=>{
                                                         <span style={{fontWeight: 'bold'}}>{ann.corps}</span>
                                                     </div>
                                                 </td>
-                                                {/* <td>
-                                                    <div class="primary-btn">
-                                                        <a class="btn btn-primary" href="#">Read More</a>
-                                                    </div>
-                                                </td> */}
                                             </tr>
                                             ))
                                         }

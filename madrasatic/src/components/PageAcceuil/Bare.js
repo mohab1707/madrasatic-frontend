@@ -81,11 +81,10 @@ export const Bare = () => {
         {
             reussi? <Redirect to='/' /> : null
         }
-        <SemanticToastContainer className="container_toastr" />
+        <SemanticToastContainer class="container_toastr" />
         <MDBNavbar expand='lg' light fixed='top' style={{backgroundColor:'#24344f'}}>
             <MDBContainer fluid>
             <MDBNavbarBrand href='/HomePage'style={{color:'#ffffff'}}>MADRASA-TIC</MDBNavbarBrand>
-
             <MDBNavbarToggler
             type='button'
             data-target='#navbarRightAlignExample'
@@ -136,7 +135,7 @@ export const Bare = () => {
                             </MDBDropdownItem>
                             <MDBDropdownItem>
                                 {/* <MDBDropdownLink href='/deconnexion'>Se déconnecter</MDBDropdownLink> */}
-                                <MDBBtn className='text-white' color='dark' onClick={deconnexion}>Se déconnecter</MDBBtn>
+                                <MDBBtn className='text-white' color='dark' onClick={deconnexion} style={{marginLeft:'25px'}}>Se déconnecter</MDBBtn>
                             </MDBDropdownItem>
                         </MDBDropdownMenu>
                         </MDBDropdown>

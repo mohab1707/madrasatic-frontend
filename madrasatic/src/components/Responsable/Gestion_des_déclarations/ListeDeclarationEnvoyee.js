@@ -105,7 +105,6 @@ export const ListeDeclarationEnvoyee = () => {
     }
     }
     const ChangePage=((data)=>{
-      console.log(data.selected);
       setPageCourrente(data.selected+1);
       if(data.selected == 0){
         fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {

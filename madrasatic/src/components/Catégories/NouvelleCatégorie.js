@@ -19,15 +19,9 @@ export const AjoutCatégorie =()=>{
         "Authorization":`Token ${token}`
       },
     }).then((response) => {
-        if (response.ok) {
-          console.log("donnees recup");
-        } else {
-          console.log("y'a une erreur");
-        }
         return response.json();
       })
       .then((data) => {
-        console.log(data.results);
         setServices(data.results);
       });
     },[]);

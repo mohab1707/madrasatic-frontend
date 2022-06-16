@@ -13,7 +13,14 @@ export const ModifierDeclarationEnregistrée =()=>{
     const [priorité,setPriorité]=useState("1");
     const [categorie,setCategorie]=useState("santé");
     const [lieu,setLieu]=useState("");
-    const{ idDeclaration}=useParams()
+    const{ idDeclaration}=useParams();
+    const [blocs,setBlocs]=useState([]);
+    const [sites,setSites]=useState([]);
+    const [endroits,setEndroits]=useState([]);
+    const [lieux,setLieux]=useState([]);
+    const [bloc,setBloc]=useState();
+    const [site,setSite]=useState();
+    const [endroit,setEndroit]=useState();
     const [reussi , setReussi ] = useState(false);
     const token = sessionStorage.getItem("key");
     useEffect(()=>{
@@ -25,11 +32,6 @@ export const ModifierDeclarationEnregistrée =()=>{
         "Authorization":`Token ${token}`
       },
     }).then((response) => {
-        if (response.ok) {
-          console.log("donnees recup");
-        } else {
-          console.log("y'a une erreur");
-        }
         return response.json();
       })
       .then((data) => {
@@ -44,16 +46,10 @@ export const ModifierDeclarationEnregistrée =()=>{
         "Authorization":`Token ${token}`
       },
     }).then((response) => {
-        if (response.ok) {
-          console.log("donnees recup");
-        } else {
-          console.log("y'a une erreur");
-        }
         return response.json();
       })
       .then((data) => {
-        console.log(data.results);
-        setCategories(data.results);
+        setCategories(data);
       });
       console.log("id Declaration + "+idDeclaration)
       fetch(`http://localhost:8000/madrasatic/declarationdelete/${idDeclaration}/`, {
@@ -62,24 +58,69 @@ export const ModifierDeclarationEnregistrée =()=>{
         "Authorization":`Token ${token}`
       },
     }).then((response)=>{
-      if(response.ok)
-      {
-          console.log("ça marche!!");
-        //   setReussi(true);
-          
-      }else
-      {
-          console.log("y'a une erreur");
-      }
       return response.json();
     }).then((data)=>{
-      console.log("donnéee de la decla sont "+data.auteur);
       setObjet(data.objet);
       setCategorie(data.catégorie);
       setCorps(data.corps);
-      setLieu(data.lieu)
-      setImage(data.image)
-    })
+      setLieu(data.lieu);
+      setBloc(data.bloc);
+      setSite(data.site);
+      setEndroit(data.endroit);
+    });
+    fetch("http://127.0.0.1:8000/madrasatic/blocs/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization":`Token ${token}`
+        },
+      }).then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+            setBlocs(data);
+        });
+  
+        fetch("http://127.0.0.1:8000/madrasatic/sites/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization":`Token ${token}`
+        },
+      }).then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          setSites(data);
+        });
+        fetch("http://127.0.0.1:8000/madrasatic/endroits/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization":`Token ${token}`
+        },
+      }).then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          setEndroits(data);
+        });
+      fetch("http://127.0.0.1:8000/madrasatic/lieux/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization":`Token ${token}`
+        },
+      }).then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          setLieux(data);
+        });
     },[]);
     const saveDeclaration=((e)=>{ 
       const form_data = new FormData();
@@ -89,11 +130,17 @@ export const ModifierDeclarationEnregistrée =()=>{
       form_data.append("objet",objet);
       form_data.append("corps", corps);
       form_data.append("lieu", lieu);
+      form_data.append("corps", corps);
+      form_data.append("site",site);
+      form_data.append("bloc",bloc);
+      form_data.append("endroit",endroit);
       form_data.append("etat", "brouillon");
-      form_data.append('image', image);
+      if(image !== null){
+        form_data.append('image', image);
+      }
       e.preventDefault(); 
-      fetch(`http://localhost:8000/madrasatic/responsable_declarations/${idDeclaration}/`, {
-      method: "POST",
+      fetch(`http://localhost:8000/madrasatic/declarationedit/${idDeclaration}/`, {
+      method: "PATCH",
       headers: {
         "Authorization":`Token ${token}`
       },
@@ -122,7 +169,13 @@ export const ModifierDeclarationEnregistrée =()=>{
       form_data.append("corps", corps);
       form_data.append("lieu", lieu);
       form_data.append("etat", "publiée");
-      form_data.append('image', image);
+      form_data.append("corps", corps);
+      form_data.append("site",site);
+      form_data.append("bloc",bloc);
+      form_data.append("endroit",endroit);
+      if(image !== null){
+        form_data.append('image', image);
+      }
       e.preventDefault(); 
       fetch(`http://localhost:8000/madrasatic/responsable_declarations/${idDeclaration}/`, {
       method: "PATCH",
@@ -155,17 +208,9 @@ export const ModifierDeclarationEnregistrée =()=>{
     }).then((response)=>{
       if(response.ok)
       {
-          console.log("ça marche!!");
           setReussi(true);
-          
-      }else
-      {
-          console.log("y'a une erreur");
       }
       return response.json();
-    }).then((data)=>{
-      console.log("response "+data);
-      
     })
     })
     return(
@@ -174,7 +219,7 @@ export const ModifierDeclarationEnregistrée =()=>{
       {
             reussi? <Redirect to='/HomePage' /> : null
       }
-      <h2>Modifier La Déclaration Enregistrée</h2>
+      <h2>Modifier la déclaration enregistrée</h2>
       <hr style={{border: '2px solid #b78429'}}/>
       <form >
         <label>Objet de la déclaration:</label>
@@ -191,34 +236,60 @@ export const ModifierDeclarationEnregistrée =()=>{
             value={corps}
             onChange={e=>setCorps(e.target.value)}
         ></textarea>
-        <label>Catégorie de la déclaration: <b>{categorie} </b></label>
+        <label>Catégorie de la déclaration: </label>
         <select onChange={e=>{setCategorie(e.target.value)}}>
           <option >Catégorie</option>
           {categories.map(cat => (
             <option value={cat.id}>{cat.name}</option>
       ))}
         </select>
-        <label>Priorité: <b>{priorité}</b></label>
+        <label>Priorité:</label>
         <select onChange={e=>{setPriorité(e.target.value)}}>
           <option value="1">Urgence</option>
           <option value="2">Etat critique</option>
           <option value="3">Etat normal</option>
         </select>
-        <label>Lieu:</label>
-        <textarea
-            placeholder='Lieu'
-            value={lieu}
-            onChange={e=>setLieu(e.target.value)}
-        ></textarea>
+        <label>Le site associé:</label>
+        <select onChange={e=>{setSite(e.target.value)}}>
+          <option >Les sites</option>
+          {sites.map(site => (
+            <option value={site.id}>{site.site}</option>
+            ))}
+        </select>
+        <label>Le bloc associé:</label>
+        <select onChange={e=>{setBloc(e.target.value)}}>
+          <option >Les blocs</option>
+          {blocs.filter(item => item.site == site).map(bloc => (
+            <option value={bloc.id}>{bloc.blocc}</option>
+            ))}
+        </select>
+        <label>L'endroit associé :</label>
+        <select onChange={e=>{setEndroit(e.target.value)}}>
+          <option >Les endroits</option>
+          {endroits.filter(item => item.blocc == bloc).map(endr => (
+            <option value={endr.id}>{endr.endroit}</option>
+            ))}
+        </select>
+        <label>Sa désignation :</label>
+          <select onChange={e=>{setLieu(e.target.value)}}>
+            <option >Les désignations</option>
+            {lieux.filter(item => item.endroit == endroit).map(lieu => (
+              <option value={lieu.id}>{lieu.identification}</option>
+              ))}
+        </select>
         <label>Photo la décrivant:</label>
         <input
             type="file"
             accept="image/jpeg,image/png,image/gif"
             onChange={(e) => setImage(e.target.files[0])}
           />
-        <button onClick={saveDeclaration}>Enregistrer</button>
-        <button onClick={validateDeclaration}>Valider</button>
-        <button onClick={supprimerDeclaration}>Supprimer</button>
+        <table>
+            <tr>
+            <td ><button onClick={saveDeclaration} class="btn btn-dark" style={{margin:'90px',width:'140px'}}>Enregistrer</button></td>
+            <td ><button onClick={validateDeclaration} class="btn btn-dark" style={{margin:'90px',width:'140px'}}>Valider</button></td>
+            <td><button onClick={supprimerDeclaration} class="btn btn-dark" style={{margin:'90px',width:'140px'}}>Supprimer</button></td>
+            </tr>
+        </table>
       </form>
     </div>
       </MDBContainer>

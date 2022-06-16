@@ -51,8 +51,6 @@ export const AjoutDeclaration =()=>{
       .then((data) => {
         setCategories(data);
       });
-    },[]);
-    useEffect(()=>{
       fetch("http://127.0.0.1:8000/madrasatic/blocs/", {
         method: "GET",
         headers: {
@@ -106,7 +104,7 @@ export const AjoutDeclaration =()=>{
         .then((data) => {
           setLieux(data);
         });
-    },[])
+    },[]);
     const saveDeclaration=((e)=>{
       const form_data = new FormData();
       form_data.append("auteur",auteur);

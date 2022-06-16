@@ -2,9 +2,8 @@
 import { useEffect, useState } from 'react'
 import { Redirect } from "react-router-dom"
 import { MDBContainer } from 'mdb-react-ui-kit';
-import Datetime from 'react-datetime';
-import "react-datetime/css/react-datetime.css";
-// import './Declaration.css'
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 export const NouvelleAnnonce =()=>{
     const [objet,setObjet]=useState("");
     const [dateDebut, setDateDebut]=useState(null);
@@ -29,7 +28,7 @@ export const NouvelleAnnonce =()=>{
       })
       .then((data) => {
         setAuteur(data.id);
-        if(data.role === "Utilisateur"){
+        if(data.role === "Président du club"){
           setUtilisateur(true);
         }else{
           setService(true);
@@ -41,8 +40,8 @@ export const NouvelleAnnonce =()=>{
       form_data.append("auteur",auteur);
       form_data.append("objet",objet);
       form_data.append("corps", corps);
-      form_data.append("pubDate",dateDebut.toJSON());
-      form_data.append("dateFin",dateValue.toJSON());
+      form_data.append("datedebut",dateDebut.toLocaleDateString('fr-CA'));
+      form_data.append("dateFin",dateValue.toLocaleDateString('fr-CA'));
       form_data.append("etat", "brouillon");
       form_data.append('image', image);
       e.preventDefault(); 
@@ -70,9 +69,14 @@ export const NouvelleAnnonce =()=>{
       form_data.append("auteur",auteur);
       form_data.append("objet",objet);
       form_data.append("corps", corps);
-      form_data.append("pubDate",dateDebut.toJSON());
-      form_data.append("dateFin",dateValue.toJSON());
-      form_data.append("etat", "publiée");
+      form_data.append("datedebut",dateDebut.toLocaleDateString('fr-CA'));
+      form_data.append("dateFin",dateValue.toLocaleDateString('fr-CA'));
+      if( utilisateur === true){
+        form_data.append("etat", "publiée");
+      }else if( service === true){
+        form_data.append("etat", "validé");
+      }
+      
       form_data.append('image', image);
       e.preventDefault(); 
       fetch("http://localhost:8000/madrasatic/annoncecreate/", {
@@ -120,17 +124,18 @@ export const NouvelleAnnonce =()=>{
             value={corps}
             onChange={e=>setCorps(e.target.value)}
         ></textarea>
-        {/* <DatePicker></DatePicker> */}
-        {/* <label>Date début :</label>
-            <Datetime 
-                value={dateDebut}
-                onChange={date=>setDateDebut(date)}
-                />
+        <label>Date début :</label>
+          <DatePicker
+              selected={dateDebut}
+              onChange={date=>setDateDebut(date)}
+              dateFormat = "yyyy-MM-dd"
+          />
         <label>Date fin :</label>
-            <Datetime placeholder='Date fin'
-                value={dateValue}
-                onChange={date=>setDate(date)}
-            > </ Datetime> */}
+            <DatePicker
+            selected={dateValue}
+            onChange={date=>setDate(date)}
+            dateFormat = "yyyy-MM-dd"
+          />
         <label>Image :</label>
         <input
             type="file"

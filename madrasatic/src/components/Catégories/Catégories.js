@@ -8,11 +8,8 @@ export const Categories = () => {
     const [nbD,setNbD]=useState();
     const [reussi , setReussi ] = useState(false);
     const token = sessionStorage.getItem("key");
-    const [nombrePages,setNombresPages]=useState();
     const [nombreDecla,setNombreDecla]=useState(0);
     const[data,setMyData]=useState([]);
-    const [nombre,setNombre]=useState("");
-    const [pageCourrente,setPageCourrente]=useState(0);
     function refreshPage() {
         window.location.reload(false);
       }
@@ -42,9 +39,7 @@ export const Categories = () => {
             return response.json();
           })
           .then((data) => {
-            setCatégories(data.results);
-            // setNombre(data.count);
-            // setNombresPages(Math.ceil(data.count /5));
+            setCatégories(data);
           });
       },[])
       useEffect(()=>{
@@ -67,42 +62,6 @@ export const Categories = () => {
             });
         }
       },[nombreDecla])
-    // useEffect(()=>{
-    //   if(pageCourrente== 0){
-    //     fetch("http://127.0.0.1:8000/madrasatic/categories/", {
-    //       method: "GET",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         "Accept": "application/json",
-    //         "Authorization":`Token ${token}`
-    //       },
-    //     }).then((response) => {
-    //         return response.json();
-    //       })
-    //       .then((data) => {
-    //         setCatégories(data.results);
-    //         setNombre(data.count);
-    //         setNombresPages(Math.ceil(data.count /5));
-    //       });
-    //   }else{
-    //     fetch(`http://127.0.0.1:8000/madrasatic/categories/?page=${pageCourrente + 1}`, {
-    //       method: "GET",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         "Accept": "application/json",
-    //         "Authorization":`Token ${token}`
-    //       },
-    //     }).then((response) => {
-    //         return response.json();
-    //       })
-    //       .then((data) => {
-    //         setCatégories(data.results);
-    //         setNombre(data.count);
-    //         setNombresPages(Math.ceil(data.count /5));
-    //       });
-    //   }
-      
-    // },[catégories]);
     const supprimerCatégorie=((id)=>{     
                if (data.some(item=> item.catégorie === id)){
                 console.log("existe deja ne doit pas etre supprimerrr dans : ");
@@ -115,17 +74,9 @@ export const Categories = () => {
                   "Authorization":`Token ${token}`
                 },
               }).then((response) => {
-                  if(response.ok){
-                    console.log("categ supp")
-                  }else{
-                    console.log("erreuuur")
-                  }
                   return response.json();
                 })
               }
-    })
-    const ChangePage=((data)=>{
-      setPageCourrente(data.selected);
     })
   return (
     <MDBContainer className='categories'>
@@ -150,24 +101,6 @@ export const Categories = () => {
         </div>
       ))}
     </div>
-    <ReactPaginate 
-                                previousLabel={"<<"}
-                                nextLabel={">>"}
-                                breakLabel={"..."}
-                                pageCount={nombrePages}
-                                onPageChange={ChangePage}
-                                marginPagesDisplayed={2}
-                                pageRangeDisplayed={3}
-                                containerClassName={"pagination justify-content-center"}
-                                pageClassName={"page-item"}
-                                pageLinkClassName={"page-link"}
-                                previousClassName={"page-item"}
-                                previousLinkClassName={"page-link"}
-                                nextClassName={"page-item"}
-                                nextLinkClassName={"page-link"}
-                                breakClassName={"page-item"}
-                                breakLinkClassName={"page-link"}
-                                activeClassName={"active"}/>
     </MDBContainer>
     
   );

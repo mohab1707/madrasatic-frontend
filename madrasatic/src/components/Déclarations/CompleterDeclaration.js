@@ -26,11 +26,6 @@ export const CompleterDeclaration =()=>{
         "Authorization":`Token ${token}`
       },
     }).then((response) => {
-        if (response.ok) {
-          console.log("donnees recup");
-        } else {
-          console.log("y'a une erreur");
-        }
         return response.json();
       })
       .then((data) => {
@@ -45,45 +40,25 @@ export const CompleterDeclaration =()=>{
         "Authorization":`Token ${token}`
       },
     }).then((response) => {
-        if (response.ok) {
-          console.log("donnees recup");
-        } else {
-          console.log("y'a une erreur");
-        }
         return response.json();
       })
       .then((data) => {
-        console.log(data.results);
-        setCategories(data.results);
+        setCategories(data);
       });
-      console.log("id Declaration + "+idDeclaration)
       fetch(`http://localhost:8000/madrasatic/responsable_declarations/${idDeclaration}/`, {
       method: "GET",
       headers: {
         "Authorization":`Token ${token}`
       },
     }).then((response)=>{
-      if(response.ok)
-      {
-          console.log("ça marche!!");
-        //   setReussi(true);
-          
-      }else
-      {
-          console.log("y'a une erreur");
-      }
       return response.json();
     }).then((data)=>{
-      console.log("donnéee de la decla sont "+data.auteur);
       setObjet(data.objet);
       setCategorie(data.catégorie);
       setCorps(data.corps);
-      setLieu(data.lieu)
-      setImage(data.image)
     })
     },[]);
     const saveDeclaration=((e)=>{
-
       const form_data = new FormData();
       form_data.append("auteur",auteur);
       form_data.append("priorité", priorité);
@@ -92,10 +67,12 @@ export const CompleterDeclaration =()=>{
       form_data.append("corps", corps);
       form_data.append("lieu", lieu);
       form_data.append("etat", "brouillon");
-      form_data.append('image', image);
+      if(image !== null){
+        form_data.append('image', image);
+      }
       e.preventDefault(); 
       fetch(`http://localhost:8000/madrasatic/responsable_declarations/${idDeclaration}/`, {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Authorization":`Token ${token}`
       },
@@ -124,10 +101,12 @@ export const CompleterDeclaration =()=>{
       form_data.append("corps", corps);
       form_data.append("lieu", lieu);
       form_data.append("etat", "publiée");
-      form_data.append('image', image);
+      if(image !== null){
+        form_data.append('image', image);
+      }
       e.preventDefault(); 
       fetch(`http://localhost:8000/madrasatic/responsable_declarations/${idDeclaration}/`, {
-      method: "PATCH",
+      method: "PUT",
       headers: {
         "Authorization":`Token ${token}`
       },
@@ -153,7 +132,7 @@ export const CompleterDeclaration =()=>{
       {
             reussi? <Redirect to='/HomePage' /> : null
       }
-      <h2>Ajouter une déclaration</h2>
+      <h2>Complèter la déclaration </h2>
       <form >
         <label>Objet de la déclaration:</label>
         <input 
@@ -169,25 +148,19 @@ export const CompleterDeclaration =()=>{
             value={corps}
             onChange={e=>setCorps(e.target.value)}
         ></textarea>
-        <label>Catégorie de la déclaration: <b>{categorie} </b></label>
+        <label>Catégorie de la déclaration: </label>
         <select onChange={e=>{setCategorie(e.target.value)}}>
           <option >Catégorie</option>
           {categories.map(cat => (
             <option value={cat.id}>{cat.name}</option>
       ))}
         </select>
-        <label>Priorité: <b>{priorité}</b></label>
+        <label>Priorité:</label>
         <select onChange={e=>{setPriorité(e.target.value)}}>
           <option value="1">Urgence</option>
           <option value="2">Etat critique</option>
           <option value="3">Etat normal</option>
         </select>
-        <label>Lieu:</label>
-        <textarea
-            placeholder='Lieu'
-            value={lieu}
-            onChange={e=>setLieu(e.target.value)}
-        ></textarea>
         <label>Photo la décrivant:</label>
         <input
             type="file"

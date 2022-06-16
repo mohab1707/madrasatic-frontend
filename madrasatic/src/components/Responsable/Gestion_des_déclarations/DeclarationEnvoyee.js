@@ -379,7 +379,7 @@ export default function DeclarationEnvoyee() {
             <MDBCol>
               <select class="custom-select" onChange={e=>{setDeclaCateg(e.target.value)}}>
                       <option >Catégorie</option>
-                      {categories.map(cat => (
+                      {catégories.map(cat => (
                           <option value={cat.id}>{cat.name}</option>
                       ))}
               </select>
@@ -411,7 +411,7 @@ export default function DeclarationEnvoyee() {
 
             <li class="mt-25">
             {
-              categories.filter(cat => cat.id === catégorie).map(
+              catégories.filter(cat => cat.id === catégorie).map(
                 categ =>(
                   <span><i className="fa fa-circle f-10 m-r-15"/>Catégorie :{categ.name}</span>
                 )
@@ -475,10 +475,13 @@ export default function DeclarationEnvoyee() {
           </div>
           <br></br> <br></br>          
         </div>
-        <h5 style={{marginTop:'5%'}}>Rapport associé :</h5>
+        
           {
             rapport.filter(item => item.declaration == id).map(item => (
-                <div class="card" style={{width: "450px",marginLeft:'30%'}}>
+              <>
+                <h5 style={{marginTop:'5%'}}>Rapport associé :</h5>
+              
+                <div class="card" style={{width: "450px",marginLeft:'0%'}}>
                   <img class="card-img-top" src={image} alt="Image" style={{borderRadius:'8px'}}/>
                   <div class="card-body">
                     <h5 class="card-title">{item.title}</h5>
@@ -494,6 +497,7 @@ export default function DeclarationEnvoyee() {
                 </MDBRow>
                   </div>
               </div>
+              </>
             ))
           }
         <Col md={10} xl={12} style={{marginTop:'10%'}}>
