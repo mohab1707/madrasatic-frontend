@@ -61,12 +61,7 @@ export default function DetailDeclaration() {
             return response.json();
           })
           .then((data) => {
-            setRapportsEnregistrés(data.results);
-            if(data.count !== 5){
-              setNombreRapportsEnregistrés(Math.ceil(data.count /5) );
-            }else{
-              setNombreRapportsEnregistrés(0);
-            }
+            setRapportsEnregistrés(data);
           });
       fetch("http://127.0.0.1:8000/madrasatic/reports/", {
             method: "GET",
@@ -79,12 +74,7 @@ export default function DetailDeclaration() {
               return response.json();
             })
             .then((data) => {
-              setRapport(data.results);
-              if(data.count !== 5){
-                setNombreRapports(Math.ceil(data.count /5) );
-              }else{
-                setNombreRapports(0);
-              }
+              setRapport(data);
             });
       fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
           method: "GET",
@@ -94,11 +84,6 @@ export default function DetailDeclaration() {
             "Authorization":`Token ${token}`
           },
         }).then((response) => {
-            if (response.ok) {
-              console.log("donnees recup");
-            } else {
-              console.log("y'a une erreur");
-            }
             return response.json();
           })
           .then((data) => {
@@ -117,7 +102,7 @@ export default function DetailDeclaration() {
             return response.json();
           })
           .then((data) => {
-            setCategories(data.results);
+            setCategories(data);
           });
           fetch("http://127.0.0.1:8000/madrasatic/blocs/", {
         method: "GET",
@@ -130,12 +115,7 @@ export default function DetailDeclaration() {
           return response.json();
         })
         .then((data) => {
-            setBlocs(data.results);
-            if(data.count !== 5){
-              setNombreBlocs(Math.ceil(data.count /5) );
-            }else{
-              setNombreBlocs(0);
-            }
+            setBlocs(data);
             
         });
   
@@ -150,12 +130,7 @@ export default function DetailDeclaration() {
           return response.json();
         })
         .then((data) => {
-          setSites(data.results);
-          if(data.count !== 5){
-            setNombreSites(Math.ceil(data.count /5));
-          }else{
-            setNombreSites(0);
-          }
+          setSites(data);
           
         });
         fetch("http://127.0.0.1:8000/madrasatic/endroits/", {
@@ -169,13 +144,7 @@ export default function DetailDeclaration() {
           return response.json();
         })
         .then((data) => {
-          setEndroits(data.results);
-          console.log("nb endroits"+Math.ceil(data.count /5));
-          if(data.count !== 5){
-            setNombreEndroits(Math.ceil(data.count /5));
-          }else{
-            setNombreEndroits(0);
-          }
+          setEndroits(data);
           
         });
       fetch("http://127.0.0.1:8000/madrasatic/lieux/", {
@@ -189,152 +158,10 @@ export default function DetailDeclaration() {
           return response.json();
         })
         .then((data) => {
-          setLieux(data.results);
-          if(data.count !== 5){
-            setNombreLieux(Math.ceil(data.count /5));
-          }else{
-            setNombreLieux(0);
-          }
+          setLieux(data);
          
         });
     },[])
-    //
-    useEffect(()=>{
-      if(nombreRapports > 1){
-        fetch("http://127.0.0.1:8000/madrasatic/reports/?page="+nombreRapports - 1 +"/", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json",
-          "Authorization":`Token ${token}`
-        },
-      }).then((response) => {
-        if(response.ok){
-          console.log("marche")
-        }else{
-          console.log("erreuuuuur")
-        }
-          return response.json();
-        })
-        .then((data) => {
-          setNombreRapports(nombreRapports - 1);
-          setRapport(previousState =>(
-            [...previousState,data.results]
-        ));
-        });
-      }
-    },[nombreRapports]);
-    useEffect(()=>{
-      if(nombreRapportsEnregistrés > 1){
-        fetch("http://127.0.0.1:8000/madrasatic/draft_reports/?page="+nombreRapportsEnregistrés - 1 +"/", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json",
-          "Authorization":`Token ${token}`
-        },
-      }).then((response) => {
-        if(response.ok){
-          console.log("marche")
-        }else{
-          console.log("erreuuuuur")
-        }
-          return response.json();
-        })
-        .then((data) => {
-          setNombreRapportsEnregistrés(nombreRapportsEnregistrés - 1);
-          setRapportsEnregistrés(previousState =>(
-            [...previousState,data.results]
-        ));
-        });
-      }
-    },[nombreRapportsEnregistrés]);
-    useEffect(()=>{
-      if(nombreSites > 1){
-        console.log("nb sites"+nombreSites);
-        fetch("http://127.0.0.1:8000/madrasatic/sites/?page="+nombreSites - 1 +"/", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json",
-          "Authorization":`Token ${token}`
-        },
-      }).then((response) => {
-        if(response.ok){
-          console.log("marche")
-        }else{
-          console.log("erreuuuuur")
-        }
-          return response.json();
-        })
-        .then((data) => {
-          setNombreSites(nombreSites - 1);
-          setSites(previousState =>(
-            [...previousState,data.results]
-        ));
-        });
-      }
-    },[nombreSites]);
-    useEffect(()=>{
-      if(nombreBlocs > 1){
-        fetch("http://127.0.0.1:8000/madrasatic/blocs/?page="+nombreBlocs - 1 +"/", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json",
-          "Authorization":`Token ${token}`
-        },
-      }).then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          setBlocs(previousState =>(
-            [...previousState,data.results]
-        ));
-          setNombreBlocs(nombreBlocs - 1);
-        });
-      }
-    },[nombreBlocs]);
-    useEffect(()=>{
-      if(nombreEndroits > 1){
-        fetch("http://127.0.0.1:8000/madrasatic/endroits/?page="+nombreEndroits - 1 +"/", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json",
-          "Authorization":`Token ${token}`
-        },
-      }).then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          setEndroits(previousState =>(
-            [...previousState,data.results]
-        ));
-          setNombreEndroits(nombreEndroits - 1);
-        });
-      }
-    },[nombreEndroits]);
-    useEffect(()=>{
-      if(nombreLieux > 1){
-        fetch("http://127.0.0.1:8000/madrasatic/lieux/?page="+nombreLieux - 1+"/", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json",
-          "Authorization":`Token ${token}`
-        },
-      }).then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          setLieux(previousState =>(
-            [...previousState,data.results]
-        ));
-          setNombreLieux(nombreLieux - 1);
-        });
-      }
-    },[nombreLieux]);
     const detail=((id)=>{
         setId(id);
         setConsulter(true);
@@ -412,11 +239,6 @@ export default function DetailDeclaration() {
             "Authorization":`Token ${token}`
           },
         }).then((response) => {
-            if (response.ok) {
-              console.log("donnees recup");
-            } else {
-              console.log("y'a une erreur");
-            }
             return response.json();
           })
           .then((data) => {
@@ -432,25 +254,6 @@ export default function DetailDeclaration() {
             setPriorité(data.priorité);
             setEtat(data.etat);
           });
-          fetch("http://127.0.0.1:8000/madrasatic/categories/", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-                "Authorization":`Token ${token}`
-            },
-            }).then((response) => {
-                if (response.ok) {
-                console.log("donnees recup");
-                } else {
-                console.log("y'a une erreur");
-                }
-                return response.json();
-            })
-            .then((data) => {
-                console.log(data.results);
-                setCategories(data.results);
-            });
     },[]);
     const EnCoursDeTraitement=(()=>{
         fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/${id}/`, {
@@ -466,7 +269,6 @@ export default function DetailDeclaration() {
             })
     })
     const ChangePage=((data)=>{
-        console.log(data.selected);
         setPageCourrente(data.selected+1);
         if(data.selected == 0){
           fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
@@ -520,16 +322,36 @@ export default function DetailDeclaration() {
       })
       const validerRapport=((val,e)=>{
         e.preventDefault();
-        fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/${val}/`, {
-            method: "PUT",
+        fetch(`http://127.0.0.1:8000/madrasatic/draft_reports/${val}/`, {
+            method: "GET",
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json",
                 "Authorization":`Token ${token}`
             },
-            body: JSON.stringify({etat:'traitée'}),
-            }).then(()=>{
-              setReussi(true);
+            }).then((response)=>{
+              if(response.ok){
+                console.log("oh cool detail rapport recup")
+              }
+              return response.json();
+            }).then(data =>{
+              fetch(`http://127.0.0.1:8000/madrasatic/draft_reports/${val}/`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "Authorization":`Token ${token}`
+                },
+                body: JSON.stringify({title:data.title ,desc:data.desc, service:data.service, declaration:data.declaration ,status:'validé'}),
+                }).then((response)=>{
+                  if(response.ok){
+                    setReussi(true);
+                    console.log("oh cool")
+                  }
+                  return response.json();
+                }).then(data =>{
+                  console.log(data)
+                })
             })
       })
   return (
@@ -625,7 +447,7 @@ export default function DetailDeclaration() {
           {
             rapport.filter(item => item.declaration == id).map(item => (
                 <div class="card" style={{width: "500px",marginLeft:'30%'}}>
-                  <img class="card-img-top" src={image} alt="Image" style={{borderRadius:'8px'}}/>
+                  <img class="card-img-top" src={item.image} alt="Image" style={{borderRadius:'8px'}}/>
                   <div class="card-body">
                     <h5 class="card-title">{item.title}</h5>
                     <p class="card-text">{item.desc}</p>

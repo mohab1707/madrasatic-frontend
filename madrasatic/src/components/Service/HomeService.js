@@ -59,10 +59,10 @@ export const HomeService= () => {
             return response.json();
           })
           .then((data) => {
-            setCatégories(data.results);
+            setCatégories(data);
           });
             
-    },[]);
+    },[declaration]);
     const ChangePage=((data)=>{
       console.log(data.selected);
       setPageCourrente(data.selected+1);
@@ -79,6 +79,8 @@ export const HomeService= () => {
           })
           .then((data) => {
             setMyData(data.results);
+            setNombre(data.count);
+                setNombresPages(Math.ceil(data.count /5));
           });
       }else{
         fetch(`http://127.0.0.1:8000/madrasatic/service_declarations/?page=${data.selected + 1}`, {
@@ -93,6 +95,8 @@ export const HomeService= () => {
           })
           .then((data) => {
             setMyData(data.results);
+            setNombre(data.count);
+                setNombresPages(Math.ceil(data.count /5));
           });
       }
     })
@@ -110,6 +114,8 @@ export const HomeService= () => {
           })
           .then((data) => {
             setMyData(data.results);
+            setNombre(data.count);
+            setNombresPages(Math.ceil(data.count /5));
           });
         }else if(val === '1' || val=== '2' || val ==='3'){
             fetch(`http://127.0.0.1:8000/madrasatic/service_declarations/?priorité=${val}`, {
@@ -124,6 +130,8 @@ export const HomeService= () => {
           })
           .then((data) => {
             setMyData(data.results);
+            setNombre(data.count);
+                setNombresPages(Math.ceil(data.count /5));
           });
         }else{
             fetch(`http://127.0.0.1:8000/madrasatic/service_declarations/?etat=${val}`, {
@@ -138,6 +146,8 @@ export const HomeService= () => {
           })
           .then((data) => {
             setMyData(data.results);
+            setNombre(data.count);
+                setNombresPages(Math.ceil(data.count /5));
           });
         }
     }

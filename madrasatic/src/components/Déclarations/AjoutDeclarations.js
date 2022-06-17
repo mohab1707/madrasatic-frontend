@@ -239,12 +239,6 @@ export const AjoutDeclaration =()=>{
               <option value={lieu.id}>{lieu.identification}</option>
               ))}
           </select>
-        {/* <label>Lieux :</label>
-        <textarea
-            placeholder='Lieux'
-            value={corps}
-            onChange={e=>setLieu(e.target.value)}
-        ></textarea> */}
         <label>Photo la décrivant:</label>
         <input
             type="file"

@@ -164,24 +164,14 @@ export const ListeDeclaPourAttacher = () => {
     const attacher=(e)=>{
         e.preventDefault();
             declarations.map(dec=>{
-              fetch(`http://localhost:8000/madrasatic/responsable_declarations/${dec.id}/`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json",
-                    "Authorization":`Token ${token}`
-                },
-                }).then((response) => {
-                    return response.json();
-                }).then((data)=>{
                   fetch(`http://localhost:8000/madrasatic/responsable_declarations/${dec.id}/`, {
-                    method: "PATCH",
+                    method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
                         "Accept": "application/json",
                         "Authorization":`Token ${token}`
                     },
-                    body:JSON.stringify({auteur:data.auteur,parent_declaration:idparent})
+                    body:JSON.stringify({parent_declaration:idparent})
                     }).then((response) => {
                         if (response.ok) {
                         console.log("parent modifié");
@@ -191,7 +181,7 @@ export const ListeDeclaPourAttacher = () => {
                         }
                         return response.json();
                     })
-                })
+                
                 
         })
             

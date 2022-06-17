@@ -11,6 +11,7 @@ export const ModifierRapportEnregistrée =()=>{
     const [corps,setCorps]=useState("");
     const{ idRapport}=useParams()
     const [reussi , setReussi ] = useState(false);
+    const [image,setImage]=useState(null);
     const token = sessionStorage.getItem("key");
     useEffect(()=>{
       fetch("http://127.0.0.1:8000/madrasatic/user/", {
@@ -42,14 +43,21 @@ export const ModifierRapportEnregistrée =()=>{
     },[]);
     const saveRapport=((e)=>{ 
       e.preventDefault(); 
+      const form_data = new FormData();
+      form_data.append("title",objet);
+      form_data.append("desc",corps);
+      form_data.append("service",service);
+      form_data.append("declaration",idDeclaration);
+      form_data.append("status",'brouillon');
+      if( image !== null){
+        form_data.append("image",image);
+      }
       fetch(`http://localhost:8000/madrasatic/draft_reports/${idRapport}/`, {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
         "Authorization":`Token ${token}`
       },
-      body:JSON.stringify({title:objet,desc:corps,service:service,declaration:idDeclaration,status:'brouillon'}),
+      body:form_data,
     }).then((response)=>{
       if(response.ok)
       {
@@ -69,21 +77,28 @@ export const ModifierRapportEnregistrée =()=>{
             },
             body: JSON.stringify({etat:'traitée'}),
             })
-        fetch(`http://localhost:8000/madrasatic/draft_reports/${idRapport}/`, {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-              "Accept": "application/json",
-              "Authorization":`Token ${token}`
-            },
-            body:JSON.stringify({title:objet,desc:corps,service:service,declaration:idDeclaration,status:'publié'}),
-          }).then((response)=>{
-            if(response.ok)
-            {
-                setReussi(true);
+            const form_data = new FormData();
+            form_data.append("title",objet);
+            form_data.append("desc",corps);
+            form_data.append("service",service);
+            form_data.append("declaration",idDeclaration);
+            form_data.append("status",'publié');
+            if( image !== null){
+              form_data.append("image",image);
             }
-            return response.json();
-          })
+            fetch(`http://localhost:8000/madrasatic/draft_reports/${idRapport}/`, {
+                method: "PUT",
+                headers: {
+                  "Authorization":`Token ${token}`
+                },
+                body:form_data,
+              }).then((response)=>{
+                if(response.ok)
+                {
+                    setReussi(true);
+                }
+                return response.json();
+              })
     })
     const supprimerRapport=((e)=>{
       e.preventDefault(); 
@@ -124,6 +139,12 @@ export const ModifierRapportEnregistrée =()=>{
             value={corps}
             onChange={e=>setCorps(e.target.value)}
         ></textarea>
+        <label>Image:</label>
+        <input
+            type="file"
+            accept="image/jpeg,image/png,image/gif"
+            onChange={(e) => setImage(e.target.files[0])}
+          />
         <table>
             <tr>
             <td ><button onClick={saveRapport} style={{margin:'90px'}}>Enregistrer</button></td>

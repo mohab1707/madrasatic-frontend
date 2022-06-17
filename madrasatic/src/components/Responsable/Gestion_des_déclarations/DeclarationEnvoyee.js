@@ -482,7 +482,7 @@ export default function DeclarationEnvoyee() {
                 <h5 style={{marginTop:'5%'}}>Rapport associé :</h5>
               
                 <div class="card" style={{width: "450px",marginLeft:'0%'}}>
-                  <img class="card-img-top" src={image} alt="Image" style={{borderRadius:'8px'}}/>
+                  <img class="card-img-top" src={item.image} alt="Image" style={{borderRadius:'8px'}}/>
                   <div class="card-body">
                     <h5 class="card-title">{item.title}</h5>
                     <p class="card-text">{item.desc}</p>
