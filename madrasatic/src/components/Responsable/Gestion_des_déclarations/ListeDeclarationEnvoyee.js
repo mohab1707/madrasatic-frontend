@@ -31,15 +31,9 @@ export const ListeDeclarationEnvoyee = () => {
             "Authorization":`Token ${token}`
           },
         }).then((response) => {
-            if (response.ok){
-                    console.log("decla du service recuuup")
-            }else{
-                console.log("y'a une erreeeuuur")
-            }
             return response.json();
           })
           .then((data) => {
-              console.log("response +"+data.results);
             setMyData(data.results);
             setNombre(data.count);
             setNombresPages(Math.ceil(data.count /5));
@@ -56,8 +50,7 @@ export const ListeDeclarationEnvoyee = () => {
           })
           .then((data) => {
             setCatégories(data);
-          });
-        
+          });  
 },[]);
     const afficher=(val)=>{
       if(val === 'tout'){
@@ -177,6 +170,7 @@ export const ListeDeclarationEnvoyee = () => {
                                                 <option value='incompléte'>Etat: incompléte</option>
                                                 <option value='non traitée'>Etat: non traitée</option>
                                                 <option value='traitée'>Etat: traitée</option>
+                                                <option value='en_cours_de_traitement'>Etat : en cours de traitement</option>
                                         </select>
                                     </div>
                                 </div>

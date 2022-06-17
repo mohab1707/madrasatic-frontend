@@ -1,18 +1,13 @@
 import { useState,useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import {AiOutlineDelete} from "react-icons/ai"
 import { MDBContainer } from 'mdb-react-ui-kit';
-import ReactPaginate from "react-paginate";
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 export const Categories = () => {
     const [catégories,setCatégories]=useState ([]);
-    const [nbD,setNbD]=useState();
-    const [reussi , setReussi ] = useState(false);
     const token = sessionStorage.getItem("key");
     const [nombreDecla,setNombreDecla]=useState(0);
     const[data,setMyData]=useState([]);
-    function refreshPage() {
-        window.location.reload(false);
-      }
       useEffect(()=>{
         fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
           method: "GET",
@@ -41,7 +36,7 @@ export const Categories = () => {
           .then((data) => {
             setCatégories(data);
           });
-      },[])
+      },[catégories])
       useEffect(()=>{
         if(nombreDecla > 0){
           fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/?page=${nombreDecla}`, {
@@ -64,7 +59,7 @@ export const Categories = () => {
       },[nombreDecla])
     const supprimerCatégorie=((id)=>{     
                if (data.some(item=> item.catégorie === id)){
-                console.log("existe deja ne doit pas etre supprimerrr dans : ");
+                return toast("Il existe une déclaration avec cette catégorie , donc elle ne peut pas être supprimer");
               }else{
                 fetch(`http://127.0.0.1:8000/madrasatic/categories/${id}/`, {
                 method: "DELETE",
@@ -80,6 +75,9 @@ export const Categories = () => {
     })
   return (
     <MDBContainer className='categories'>
+      <ToastContainer 
+        position="bottom-center"
+        />
        <h2 id='title'>Liste des catégories</h2>
        <hr style={{border: '2px solid #b78429'}}/>
       <div className="blog-list" style={{width:'55%',marginLeft:'20%'}}>

@@ -47,6 +47,10 @@ import { AjouterBloc } from './components/Responsable/Gestion_des_déclarations/
 import { AjouterSite } from './components/Responsable/Gestion_des_déclarations/Localisation/AjouterSite';
 import { AjouterEndroit } from './components/Responsable/Gestion_des_déclarations/Localisation/AjouterEndroit';
 import { AjouterIdentification } from './components/Responsable/Gestion_des_déclarations/Localisation/AjouterIdentification';
+import DeclarationStats from './components/Admin/Gestion_des_comptes/declaStats/declarationsStatistiques';
+import UsersStats from './components/Admin/Gestion_des_comptes/UserStat/UserStat';
+import { AnnoncesPubliées } from './components/Responsable/AnnoncesPubliées';
+import { RejeterAnnonce } from './components/Responsable/RejeterAnnonce';
 export default function App() {
 
   return (
@@ -554,6 +558,50 @@ export default function App() {
           <div className='ajoutdeclarationclass'>
           <br></br>
             <NouvelleAnnonce />
+            <br /><br />
+          </div>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'0%' , left: '0', bottom: '0', width: '100%'}}>
+            &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
+          </div>
+        </Route>
+        < Route exact path="/DeclarationsStatistiques">
+          <Gestion_des_comptes></Gestion_des_comptes>
+          <div className='gestiondescomptes'>
+            <br />
+               <DeclarationStats/>
+               <br /><br />
+        </div>
+        <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'0%', left: '0', bottom: '0', width: '100%'}}>
+              &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
+        </div>
+        </Route>
+        < Route exact path="/UtilisateursStatistiques">
+          <Gestion_des_comptes></Gestion_des_comptes>
+          <div className='gestiondescomptes'>
+            <br />
+               <UsersStats/>
+               <br /><br />
+        </div>
+        <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'0%', left: '0', bottom: '0', width: '100%'}}>
+              &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
+        </div>
+        </Route>
+        < Route exact path="/ListesAnnoncesPubliées">
+          <Gestion_des_declarations />
+          <div className='ajoutdeclarationclass'>
+            <br /><br />
+            <AnnoncesPubliées />
+            <br /><br />
+          </div>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'0%' , left: '0', bottom: '0', width: '100%'}}>
+            &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
+          </div>
+        </Route>
+        < Route exact path="/RejeterAnnonce/:id">
+          <Gestion_des_declarations />
+          <div className='ajoutdeclarationclass'>
+            <br /><br />
+            <RejeterAnnonce />
             <br /><br />
           </div>
           <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'0%' , left: '0', bottom: '0', width: '100%'}}>

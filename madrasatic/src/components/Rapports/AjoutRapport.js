@@ -76,8 +76,6 @@ export const AjoutRapport =()=>{
             fetch("http://localhost:8000/madrasatic/reports/", {
             method: "POST",
             headers: {
-              "Content-Type": "application/json",
-              "Accept": "application/json",
               "Authorization":`Token ${token}`
             },
             body:form_data,

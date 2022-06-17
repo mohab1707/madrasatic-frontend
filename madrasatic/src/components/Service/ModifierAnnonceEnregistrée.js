@@ -2,8 +2,8 @@
 import { useEffect, useState } from 'react'
 import { Redirect } from "react-router-dom"
 import { MDBContainer } from 'mdb-react-ui-kit';
-import Datetime from 'react-datetime';
-import "react-datetime/css/react-datetime.css";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 // import './Declaration.css'
 export const ModifierAnnonceEnregistrée=()=>{
@@ -14,10 +14,29 @@ export const ModifierAnnonceEnregistrée=()=>{
     const [auteur,setAuteur]=useState("");
     const [corps,setCorps]=useState("");
     const [reussi , setReussi ] = useState(false);
+    const [utilisateur,setUtilisateur]=useState(false);
+    const [service,setService]=useState(false);
     const token = sessionStorage.getItem("key");
     const [image, setImage] = useState("image");
     useEffect(()=>{
-        console.log("haja")
+      fetch("http://127.0.0.1:8000/madrasatic/user/", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization":`Token ${token}`
+      },
+    }).then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setAuteur(data.id);
+        if(data.role === "Président du club"){
+          setUtilisateur(true);
+        }else{
+          setService(true);
+        }
+      });
       fetch("http://127.0.0.1:8000/madrasatic/annonceedit/"+idAnnonce+"/", {
       method: "GET",
       headers: {
@@ -41,8 +60,8 @@ export const ModifierAnnonceEnregistrée=()=>{
       form_data.append("auteur",auteur);
       form_data.append("objet",objet);
       form_data.append("corps", corps);
-      form_data.append("pubDate",dateDebut.toJSON());
-      form_data.append("dateFin",dateValue.toJSON());
+      form_data.append("pubDate",dateDebut.toLocaleDateString('fr-CA'));
+      form_data.append("dateFin",dateValue.toLocaleDateString('fr-CA'));
       form_data.append("etat", "brouillon");
       if(image !== "image"){
             form_data.append('image', image);
@@ -72,10 +91,16 @@ export const ModifierAnnonceEnregistrée=()=>{
       form_data.append("auteur",auteur);
       form_data.append("objet",objet);
       form_data.append("corps", corps);
-      form_data.append("pubDate",dateDebut.toJSON());
-      form_data.append("dateFin",dateValue.toJSON());
-      form_data.append("etat", "publiée");
-      form_data.append('image', image);
+      form_data.append("pubDate",dateDebut.toLocaleDateString('fr-CA'));
+      form_data.append("dateFin",dateValue.toLocaleDateString('fr-CA'));
+      if( utilisateur === true){
+        form_data.append("etat", "publiée");
+      }else if( service === true){
+        form_data.append("etat", "validé");
+      }
+      if(image !== "image"){
+        form_data.append('image', image);
+    }
       e.preventDefault(); 
       fetch("http://localhost:8000/madrasatic/annonceedit/"+idAnnonce+"/", {
       method: "PUT",
@@ -99,8 +124,11 @@ export const ModifierAnnonceEnregistrée=()=>{
     return(
       <MDBContainer className='form'>
         <div className="create">
+        {
+            reussi && service ? <Redirect to='/HomeService' /> : null
+      }
       {
-            reussi? <Redirect to='/HomeService' /> : null
+            reussi && utilisateur ? <Redirect to='/HomePage' /> : null
       }
       <h2>Modifier l'annonce</h2>
       <hr style={{border: '2px solid #b78429'}}/>
@@ -119,15 +147,17 @@ export const ModifierAnnonceEnregistrée=()=>{
             onChange={e=>setCorps(e.target.value)}
         ></textarea>
         <label>Date début :</label>
-            <Datetime 
-                value={dateDebut}
-                onChange={date=>setDateDebut(date)}
-                />
+          <DatePicker
+              selected={dateDebut}
+              onChange={date=>setDateDebut(date)}
+              dateFormat = "yyyy-MM-dd"
+          />
         <label>Date fin :</label>
-            <Datetime
-                value={dateValue}
-                onChange={date=>setDate(date)}
-            > </ Datetime>
+            <DatePicker
+            selected={dateValue}
+            onChange={date=>setDate(date)}
+            dateFormat = "yyyy-MM-dd"
+          />
         <label>Image :</label>
         <input
             type="file"

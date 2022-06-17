@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react'
 import { Redirect } from "react-router-dom"
 import { MDBContainer } from 'mdb-react-ui-kit';
-import Datetime from 'react-datetime';
 import "react-datetime/css/react-datetime.css";
 import {BsCalendar2DateFill} from 'react-icons/bs'
+import {AiOutlineDelete} from "react-icons/ai"
 import ReactPaginate from "react-paginate";
-import './annonce.css'
-// import './Declaration.css'
-export const AfficherAnnonces=()=>{
+export const AnnoncesPubliées=()=>{
     const [annonces,setAnnonces]=useState([]);
     const [nombre,setNombre]=useState("");
     const [nombrePages,setNombresPages]=useState("");
     const [pageCourrente,setPageCourrente]=useState();
+    const [rejeter,setRejeter]=useState(false);
     const token = sessionStorage.getItem("key");
+    const [idAnnonce,setIdAnnonce]=useState("");
     useEffect(()=>{
       fetch("http://127.0.0.1:8000/madrasatic/annonceslist/", {
       method: "GET",
@@ -62,8 +62,15 @@ export const AfficherAnnonces=()=>{
             });
         }
       })
+      const rejeterAnnonce =((idAnnonce)=>{
+        setRejeter(true);
+        setIdAnnonce(idAnnonce);      
+      })
     return(
         <div>
+            {
+                rejeter ? <Redirect to ={`/RejeterAnnonce/${idAnnonce}`}></Redirect> : null
+            }
         <MDBContainer className='categories'>
             <br></br>
             <div className="blog-list">
@@ -81,12 +88,12 @@ export const AfficherAnnonces=()=>{
                                                 <th scope="col">Image</th>
                                                 <th scope="col">Objet et dates</th>
                                                 <th scope="col" style={{width :'20%'}}>Corps</th>
-                                                {/* <th class="text-center" scope="col">Venue</th> */}
+                                                <th class="text-center" scope="col">Rejeter</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                         {
-                                            annonces.filter(item => item.etat === "validé").map(ann =>(
+                                            annonces.filter(item => item.etat === "publiée").map(ann =>(
                                                 <tr class="inner-box">
                                                 <th scope="row">
                                                     <div class="event-date">
@@ -200,6 +207,21 @@ export const AfficherAnnonces=()=>{
                                                     <div class="event-date">
                                                         <span style={{fontWeight: 'bold'}}>{ann.corps}</span>
                                                     </div>
+                                                </td>
+                                                <td>
+                                                   
+                                                        <div style={{
+                                                            position: "absolute",
+                                                            left:"95%",
+                                                            fontSize:"25px",
+                                                            // right:"10%",
+                                                            marginTop: "0%",
+                                                            padding: "0% 0%",
+                                                            color: "red",
+                                                        }} onClick={()=>{rejeterAnnonce(ann.id)}}>
+                                                            <AiOutlineDelete />
+                                                        </div>
+                                                    
                                                 </td>
                                             </tr>
                                             ))

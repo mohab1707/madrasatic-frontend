@@ -227,9 +227,9 @@ export const ListeDeclaPourAttacher = () => {
                                     <select class="custom-select" onChange={(e)=>{afficher(e.target.value)}}>
                                             <option value='tout'>Toutes les etats</option>
                                             <option value='publiée'>Etat: publiée</option>
-                                            <option value='non traitée'>Etat: non traitée</option>
+                                            <option value='non_traitée'>Etat: non traitée</option>
                                             <option value='traitée'>Etat : traitée</option>
-                                            <option value='en cours de traitement'>Etat : en cours de traitement</option>
+                                            <option value='en_cours_de_traitement'>Etat : en cours de traitement</option>
                                     </select>
                                   </MDBCol>
                                   <MDBCol>

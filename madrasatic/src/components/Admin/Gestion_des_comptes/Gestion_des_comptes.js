@@ -64,6 +64,12 @@ export const Gestion_des_comptes = () => {
                         <MDBNavbarLink href='/Home' style={{color:'#ffffff'}}>Gestion des comptes</MDBNavbarLink>
                     </MDBNavbarItem>
                     <MDBNavbarItem>
+                        <MDBNavbarLink href='/UtilisateursStatistiques' style={{color:'#ffffff'}}>Statistiques des comptes</MDBNavbarLink>
+                    </MDBNavbarItem>
+                    <MDBNavbarItem>
+                        <MDBNavbarLink href='/DeclarationsStatistiques' style={{color:'#ffffff'}}>Statistiques des déclarations</MDBNavbarLink>
+                    </MDBNavbarItem>
+                    <MDBNavbarItem>
                         <MDBDropdown>
                             <MDBDropdownToggle tag='a' className='nav-link' style={{color:'#ffffff'}}>
                                 

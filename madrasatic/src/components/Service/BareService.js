@@ -1,4 +1,4 @@
-import React , { useState } from 'react';
+import React , { useState,useEffect } from 'react';
 import {
     MDBNavbar,
     MDBNavbarBrand,
@@ -18,10 +18,28 @@ import {
     } from 'mdb-react-ui-kit';
     import { Redirect } from "react-router-dom"
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+import Pusher from 'pusher-js';
 export const BareService = () => {
     const [showNavRight, setShowNavRight] = useState(false);
     const [reussi , setReussi ] = useState(false);
+    const [isNotifated, setIsNotifated] = useState(false);
+    useEffect(()=>{
+          const pusher = new Pusher("718db103e05e52a72795", {
+            cluster: "eu",
+            authEndpoint: "http://127.0.0.1:8000/madrasatic/pusher/auth",
+          });
+          var channel2 = pusher.subscribe("Report");
+          channel2.bind("Rejet", function ({ message }) {
+            setIsNotifated(true);
+            return toast(message.title + message.body );
+          });
+          channel2.bind("Demander complement", function ({ message }) {
+            setIsNotifated(true);
+            return toast(message.title + message.body);
+          });
+    },[isNotifated])
     const deconnexion =(e) => {
         e.preventDefault();
         fetch("http://127.0.0.1:8000/madrasatic/logout/", {
@@ -42,6 +60,17 @@ export const BareService = () => {
          {
             reussi? <Redirect to='/' /> : null
         }
+        <ToastContainer 
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+        />
         <MDBNavbar expand='lg' light style={{backgroundColor:'#24344f'}} fixed='top'>
             <MDBContainer fluid>
             <MDBNavbarBrand href='/HomeService'style={{color:'#ffffff'}}>MADRASA-TIC</MDBNavbarBrand>

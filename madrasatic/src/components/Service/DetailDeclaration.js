@@ -263,7 +263,7 @@ export default function DetailDeclaration() {
                 "Accept": "application/json",
                 "Authorization":`Token ${token}`
             },
-            body: JSON.stringify({auteur:auteur,etat:'en cours de traitement'}),
+            body: JSON.stringify({auteur:auteur,etat:'en_cours_de_traitement'}),
             }).then(()=>{
                 setReussi(true);
             })

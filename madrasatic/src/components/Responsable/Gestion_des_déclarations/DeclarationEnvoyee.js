@@ -49,6 +49,7 @@ export default function DeclarationEnvoyee() {
     const [nombreRapports,setNombreRapports]=useState("");
     const [completerRapport,setCompleterRapport]=useState(false);
     const [declarations,setDeclarations]=useState([]);
+    const [etat,setEtat]=useState("");
     useEffect(()=>{
       fetch("http://127.0.0.1:8000/madrasatic/reports/", {
             method: "GET",
@@ -227,6 +228,7 @@ export default function DeclarationEnvoyee() {
             setImage(data.image);
             setObjet(data.objet);
             setPriorité(data.priorité);
+            setEtat(data.etat);
           });
     },[]);
     const supp =(()=>{
@@ -265,7 +267,7 @@ export default function DeclarationEnvoyee() {
                 "Accept": "application/json",
                 "Authorization":`Token ${token}`
             },
-            body: JSON.stringify({catégorie:catégorie,etat:'non traitée'}),
+            body: JSON.stringify({catégorie:catégorie,etat:'non_traitée'}),
             }).then((response) => {
                 if (response.ok) {
                 console.log("donnees envoyée");
@@ -455,6 +457,7 @@ export default function DeclarationEnvoyee() {
           </ul>
 
           <div class="col-12 col-md-4 text-center">
+          { etat !== "non_traitée" && etat !== "en_cours_de_traitement" && etat !== "traitée" && 
             <ul class ="list-unstyled">
               <li>
                 <button onClick={()=>{setAttacher(true)}} class="btn btn-dark" style={{width:'280px',margin:'5px'}}>Attacher Déclaration</button>
@@ -472,6 +475,7 @@ export default function DeclarationEnvoyee() {
                 <button onClick={supp} class="btn btn-dark" style={{width:'280px',margin:'5px'}}>Rejeter</button>
               </li>
             </ul>
+            }
           </div>
           <br></br> <br></br>          
         </div>

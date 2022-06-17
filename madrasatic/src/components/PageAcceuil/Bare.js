@@ -17,12 +17,16 @@ import {
     MDBBtn
     } from 'mdb-react-ui-kit';
 import { Redirect } from "react-router-dom"
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 import Pusher from 'pusher-js';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { SemanticToastContainer, toast } from "react-semantic-toasts";
+// import { SemanticToastContainer, toast } from "react-semantic-toasts";
 import 'react-semantic-toasts/styles/react-semantic-alert.css';
 export const Bare = () => {
     const [showNavRight, setShowNavRight] = useState(false);
+    const [title,setTitle]=useState("");
+    const [body,setBody]=useState("");
     const [reussi , setReussi ] = useState(false);
     const [user,setUser]=useState(false);
     const [chefClub,setChefClub]=useState(false);
@@ -48,16 +52,21 @@ export const Bare = () => {
           var channel = pusher.subscribe("Declaration");
           channel.bind("Demande complement", function ({ message }) {
             setIsNotifated(true);
-            return toast({
-              type: "info",
-              icon: "info",
-              title: message.title,
-              description: message.body,
-              time: 5000,
-              onDismiss: () => {
-                setIsNotifated(false);
-              },
-            });
+            return toast(message.title + message.body);
+            
+          });
+          channel.bind("Modification", function ({ message }) {
+            setIsNotifated(true);
+            return toast(message.title + message.body);
+          });
+          channel.bind("Rejet", function ({ message }) {
+            setIsNotifated(true);
+            return toast(message.title + message.body);
+          });
+          var channel3 = pusher.subscribe("Annonce");
+          channel3.bind("Rejet", function ({ message }) {
+            setIsNotifated(true);
+            return toast(message.title + message.body);
           });
     },[isNotifated])
     const deconnexion =(e) => {
@@ -81,7 +90,8 @@ export const Bare = () => {
         {
             reussi? <Redirect to='/' /> : null
         }
-        <SemanticToastContainer class="container_toastr" />
+        <ToastContainer 
+        />
         <MDBNavbar expand='lg' light fixed='top' style={{backgroundColor:'#24344f'}}>
             <MDBContainer fluid>
             <MDBNavbarBrand href='/HomePage'style={{color:'#ffffff'}}>MADRASA-TIC</MDBNavbarBrand>

@@ -65,7 +65,7 @@ export const Gestion_des_declarations = () => {
                         <MDBNavbarLink href='/NewCatégorie' style={{color:'#ffffff'}}>Nouvelle catégorie</MDBNavbarLink>
                     </MDBNavbarItem>
                     <MDBNavbarItem>
-                        <MDBNavbarLink href='/ListesAnnonces' style={{color:'#ffffff'}}>Annonces</MDBNavbarLink>
+                        <MDBNavbarLink href='/ListesAnnoncesPubliées' style={{color:'#ffffff'}}>Annonces</MDBNavbarLink>
                     </MDBNavbarItem>
                     <MDBNavbarItem>
                         <MDBDropdown>
