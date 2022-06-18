@@ -151,15 +151,15 @@ export const Bare = () => {
                             <MDBDropdownItem>
                                 <MDBDropdownLink href='/MesDeclarationsEnregistrées'>Déclarations enregistrées</MDBDropdownLink>
                             </MDBDropdownItem>
-                            <MDBDropdownItem>
+                            {/* <MDBDropdownItem>
                                 <MDBDropdownLink href='/MesDeclarationsRejetées'>Déclarations rejetées</MDBDropdownLink>
-                            </MDBDropdownItem>
+                            </MDBDropdownItem> */}
                             <MDBDropdownItem>
                                 <MDBDropdownLink href='/MesDéclarationsACompleter'>Déclarations à compléter</MDBDropdownLink>
                             </MDBDropdownItem>
                             {
                                 chefClub ? <MDBDropdownItem>
-                                <MDBDropdownLink href='/MesAnnoncesRejetées'>Mes annonces rejetées</MDBDropdownLink>
+                                <MDBDropdownLink href='/MesAnnoncesEnregistrées'>Mes annonces enregistrées</MDBDropdownLink>
                             </MDBDropdownItem> : null
                             }
                             {

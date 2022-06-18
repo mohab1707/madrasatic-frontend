@@ -10,7 +10,7 @@ export const ListeDeclarationEnvoyee = () => {
     const [recherche,setRecherche]=useState();
     const [nombrePages,setNombresPages]=useState();
     const [nombre,setNombre]=useState("");
-    const [pageCourrente,setPageCourrente]=useState();
+    const [pageCourrente,setPageCourrente]=useState(0);
     const token = sessionStorage.getItem("key");
     const[data,setMyData]=useState([]);
     const [RechercheFaite, setRechercheFaite]=useState(false);
@@ -18,28 +18,15 @@ export const ListeDeclarationEnvoyee = () => {
     const [catégories,setCatégories]=useState ([]);
     const path=sessionStorage.getItem("path");
     const [id,setId]=useState();
-    
+    const [categFiltrage,setCategFiltrage]=useState("");
+    const [prioFiltrage,setPrioFiltrage]=useState("");
+    const [etatFiltrage,setEtatFiltrage]=useState("");
     const detail=((id)=>{
         setId(id);
         setConsulter(true);
         
     })
     useEffect(()=>{
-      fetch(path+"madrasatic/responsable_declarations/", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "Authorization":`Token ${token}`
-          },
-        }).then((response) => {
-            return response.json();
-          })
-          .then((data) => {
-            setMyData(data.results);
-            setNombre(data.count);
-            setNombresPages(Math.ceil(data.count /5));
-          });
           fetch(path+"madrasatic/categories/", {
           method: "GET",
           headers: {
@@ -54,9 +41,34 @@ export const ListeDeclarationEnvoyee = () => {
             setCatégories(data);
           });  
 },[]);
-    const afficher=(val)=>{
-      if(val === 'tout'){
-        fetch(path+"madrasatic/responsable_declarations/", {
+useEffect(()=>{
+  if(pageCourrente == 0){
+    fetch(path+"madrasatic/responsable_declarations/?priorité="+prioFiltrage+"&etat="+etatFiltrage+"&catégorie="+categFiltrage, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization":`Token ${token}`
+      },
+    }).then((response) => {
+        if(response.ok){
+          console.log("coool");
+        }else {
+          console.log("erreuuuur");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setMyData(data.results);
+        setNombre(data.count);
+        if((data.count % 5) == 0){
+          setNombresPages(Math.ceil(data.count /5) - 1);
+        }else{
+          setNombresPages(Math.ceil(data.count /5));
+        }
+      });
+  }else{
+    fetch(path+"madrasatic/responsable_declarations/?page="+pageCourrente+"&priorité="+prioFiltrage+"&etat="+etatFiltrage+"&catégorie="+categFiltrage, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -68,68 +80,17 @@ export const ListeDeclarationEnvoyee = () => {
       })
       .then((data) => {
         setMyData(data.results);
+        setNombre(data.count);
+        if((data.count % 5) == 0){
+          setNombresPages(Math.ceil(data.count /5) - 1);
+        }else{
+          setNombresPages(Math.ceil(data.count /5));
+        }
       });
-    }else if(val === '1' || val=== '2' || val ==='3'){
-        fetch(path+`madrasatic/responsable_declarations/?priorité=${val}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "Authorization":`Token ${token}`
-      },
-    }).then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setMyData(data.results);
-      });
-    }else{
-        fetch(path+`madrasatic/responsable_declarations/?etat=${val}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "Authorization":`Token ${token}`
-      },
-    }).then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setMyData(data.results);
-      });
-    }
-    }
+  }
+},[data]);
     const ChangePage=((data)=>{
       setPageCourrente(data.selected+1);
-      if(data.selected == 0){
-        fetch(path+"madrasatic/responsable_declarations/", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "Authorization":`Token ${token}`
-          },
-        }).then((response) => {
-            return response.json();
-          })
-          .then((data) => {
-            setMyData(data.results);
-          });
-      }else{
-        fetch(path+`madrasatic/responsable_declarations/?page=${data.selected + 1}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "Authorization":`Token ${token}`
-          },
-        }).then((response) => {
-            return response.json();
-          })
-          .then((data) => {
-            setMyData(data.results);
-          });
-      }
     })
     const Rechercher=(e)=>{
       e.preventDefault();
@@ -166,23 +127,37 @@ export const ListeDeclarationEnvoyee = () => {
                             <div class="row">
                                 <div class="col-md-8 col-lg-4 my-4">
                                     <div class="select-container">
-                                        <select class="custom-select" onChange={(e)=>{afficher(e.target.value)}}>
-                                                <option value='tout'>Tous les états</option>
+                                        <select class="custom-select" onChange={(e)=>{setEtatFiltrage(e.target.value)}}>
+                                                <option value=''>Tous les états</option>
                                                 <option value='publiée'>Etat: publiée</option>
                                                 <option value='incompléte'>Etat: incompléte</option>
-                                                <option value='non traitée'>Etat: non traitée</option>
+                                                <option value='non_traitée'>Etat: non traitée</option>
                                                 <option value='traitée'>Etat: traitée</option>
                                                 <option value='en_cours_de_traitement'>Etat : en cours de traitement</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-8 col-lg-4 my-4">
-                                    <div class="select-container" onChange={(e)=>{afficher(e.target.value)}}>
+                                    <div class="select-container" onChange={(e)=>{setPrioFiltrage(e.target.value)}}>
                                         <select class="custom-select">
-                                                <option value='tout'>Toutes les priorités</option>
+                                                <option value=''>Toutes les priorités</option>
                                                 <option value='1'>Urgence</option>
                                                 <option value='2'>Etat critique</option>
                                                 <option value='3'>Etat normal</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-4 my-4">
+                                    <div class="select-container" onChange={(e)=>{setCategFiltrage(e.target.value)}}>
+                                        <select class="custom-select">
+                                          <option value=''>Toutes les catégories</option>
+                                          {
+                                            catégories.map(
+                                              categ =>(
+                                                <option value={categ.id}>{categ.name}</option>
+                                              )
+                                            )
+                                           }
                                         </select>
                                     </div>
                                 </div>

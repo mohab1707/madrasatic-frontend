@@ -21,29 +21,12 @@ export const ListeDeclaPourAttacher = () => {
     const [envoyer,setEnvoyer]=useState(false);
     const [nombrePages,setNombresPages]=useState();
     const [nombre,setNombre]=useState("");
-    const [pageCourrente,setPageCourrente]=useState();
+    const [pageCourrente,setPageCourrente]=useState(0);
     const path=sessionStorage.getItem("path");
+    const [categFiltrage,setCategFiltrage]=useState("");
+    const [prioFiltrage,setPrioFiltrage]=useState("");
+    const [etatFiltrage,setEtatFiltrage]=useState("");
     useEffect(()=>{
-      fetch(path+"madrasatic/responsable_declarations/", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "Authorization":`Token ${token}`
-          },
-        }).then((response) => {
-            if (response.ok){
-                    console.log("decla du service recuuup")
-            }else{
-                console.log("y'a une erreeeuuur")
-            }
-            return response.json();
-          })
-          .then((data) => {
-            setMyData(data.results);
-            setNombre(data.count);
-            setNombresPages(Math.ceil(data.count /5));
-          });
           fetch(path+"madrasatic/categories/", {
           method: "GET",
           headers: {
@@ -57,63 +40,10 @@ export const ListeDeclaPourAttacher = () => {
           .then((data) => {
             setCatégories(data);
           });
-    },[])
-    const afficher=(val)=>{
-      if(val === 'tout'){
-        fetch(path+"madrasatic/responsable_declarations/", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "Authorization":`Token ${token}`
-      },
-    }).then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setMyData(data.results);
-        setNombre(data.count);
-        setNombresPages(Math.ceil(data.count /5));
-      });
-    }else if(val === '1' || val=== '2' || val ==='3'){
-        fetch(path+`madrasatic/responsable_declarations/?priorité=${val}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "Authorization":`Token ${token}`
-      },
-    }).then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setMyData(data.results);
-        setNombre(data.count);
-        setNombresPages(Math.ceil(data.count /5));
-      });
-    }else{
-        fetch(path+`madrasatic/responsable_declarations/?etat=${val}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "Authorization":`Token ${token}`
-      },
-    }).then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setMyData(data.results);
-        setNombre(data.count);
-        setNombresPages(Math.ceil(data.count /5));
-      });
-    }
-    }
-    const ChangePage=((data)=>{
-      console.log(data.selected);
-      setPageCourrente(data.selected+1);
-      if(data.selected == 0){
-        fetch(path+"madrasatic/responsable_declarations/", {
+    },[]);
+    useEffect(()=>{
+      if(pageCourrente == 0){
+        fetch(path+"madrasatic/responsable_declarations/?priorité="+prioFiltrage+"&etat="+etatFiltrage+"&catégorie="+categFiltrage, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -121,13 +51,24 @@ export const ListeDeclaPourAttacher = () => {
             "Authorization":`Token ${token}`
           },
         }).then((response) => {
+            if(response.ok){
+              console.log("coool");
+            }else {
+              console.log("erreuuuur");
+            }
             return response.json();
           })
           .then((data) => {
             setMyData(data.results);
+            setNombre(data.count);
+            if((data.count % 5) == 0){
+              setNombresPages(Math.ceil(data.count /5) - 1);
+            }else{
+              setNombresPages(Math.ceil(data.count /5));
+            }
           });
       }else{
-        fetch(path+`madrasatic/responsable_declarations/?page=${data.selected + 1}`, {
+        fetch(path+"madrasatic/responsable_declarations/?page="+pageCourrente+"&priorité="+prioFiltrage+"&etat="+etatFiltrage+"&catégorie="+categFiltrage, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -139,9 +80,18 @@ export const ListeDeclaPourAttacher = () => {
           })
           .then((data) => {
             setMyData(data.results);
+            setNombre(data.count);
+            if((data.count % 5) == 0){
+              setNombresPages(Math.ceil(data.count /5) - 1);
+            }else{
+              setNombresPages(Math.ceil(data.count /5));
+            }
           });
       }
-    })
+    },[MyData]);
+    const ChangePage=((data)=>{
+      setPageCourrente(data.selected+1);
+    });
     const putData = (dec)=>{
       setEnvoyer(true)
       fetch(path+`madrasatic/responsable_declarations/${dec.id}/`, {
@@ -225,8 +175,8 @@ export const ListeDeclaPourAttacher = () => {
                             <div class="row align-items-center">
                               <MDBRow style={{marginTop:'10px', marginBottom:'40px'}}>
                                   <MDBCol>
-                                    <select class="custom-select" onChange={(e)=>{afficher(e.target.value)}}>
-                                            <option value='tout'>Toutes les etats</option>
+                                    <select class="custom-select" onChange={(e)=>{setEtatFiltrage(e.target.value)}}>
+                                            <option value=''>Toutes les etats</option>
                                             <option value='publiée'>Etat: publiée</option>
                                             <option value='non_traitée'>Etat: non traitée</option>
                                             <option value='traitée'>Etat : traitée</option>
@@ -234,12 +184,24 @@ export const ListeDeclaPourAttacher = () => {
                                     </select>
                                   </MDBCol>
                                   <MDBCol>
-                                    <select class="custom-select" onChange={(e)=>{afficher(e.target.value)}}>
-                                                <option>Priorité</option>
+                                    <select class="custom-select" onChange={(e)=>{setPrioFiltrage(e.target.value)}}>
+                                                <option value=''>Toute les priorités</option>
                                                 <option value="1">Urgent</option>
                                                 <option value="2">Etat critique</option>
                                                 <option value="3">Etat normal</option>
                                     </select>
+                                  </MDBCol>
+                                  <MDBCol>
+                                  <select class="custom-select">
+                                          <option value=''>Toutes les catégories</option>
+                                          {
+                                            catégories.map(
+                                              categ =>(
+                                                <option value={categ.id}>{categ.name}</option>
+                                              )
+                                            )
+                                           }
+                                        </select>
                                   </MDBCol>
                                   <MDBCol>
                                     <button onClick={attacher} class="btn btn-dark" style={{width:'200px',margin:'5px'}}>Attacher</button>

@@ -328,6 +328,15 @@ export default function DetailDeclaration() {
       })
       const validerRapport=((val,e)=>{
         e.preventDefault();
+        fetch(path+`madrasatic/responsable_declarations/${id}/`, {
+          method: "PUT",
+          headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json",
+              "Authorization":`Token ${token}`
+          },
+          body: JSON.stringify({etat:'en_cours_de_traitement'}),
+          })
         fetch(path+`madrasatic/draft_reports/${val}/`, {
             method: "GET",
             headers: {

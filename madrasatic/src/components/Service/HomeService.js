@@ -22,33 +22,21 @@ export const HomeService= () => {
     const [nombre,setNombre]=useState("");
     const [nombrePages,setNombresPages]=useState("");
     const token = sessionStorage.getItem("key");
-    const [pageCourrente,setPageCourrente]=useState();
+    const [pageCourrente,setPageCourrente]=useState(0);
     const[declaration,setMyData]=useState([]);
     const [Consulter,setConsulter]=useState(false);
     const [catégories,setCatégories]=useState ([]);
     const path=sessionStorage.getItem("path");
     const [id,setId]=useState();
+    const [categFiltrage,setCategFiltrage]=useState("");
+    const [prioFiltrage,setPrioFiltrage]=useState("");
+    const [etatFiltrage,setEtatFiltrage]=useState("");
     const detail=((id)=>{
         setId(id);
         setConsulter(true);
         
     })
     useEffect(()=>{
-          fetch(path+"madrasatic/service_declarations/", {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-                "Authorization":`Token ${token}`
-              },
-            }).then((response) => {
-                return response.json();
-              })
-              .then((data) => {
-                setMyData(data.results);
-                setNombre(data.count);
-                setNombresPages(Math.ceil(data.count /5));
-              });
               fetch(path+"madrasatic/categories/", {
           method: "GET",
           headers: {
@@ -64,11 +52,9 @@ export const HomeService= () => {
           });
             
     },[declaration]);
-    const ChangePage=((data)=>{
-      console.log(data.selected);
-      setPageCourrente(data.selected+1);
-      if(data.selected == 0){
-        fetch(path+"madrasatic/service_declarations/", {
+    useEffect(()=>{
+      if(pageCourrente == 0){
+        fetch(path+"madrasatic/service_declarations/?priorité="+prioFiltrage+"&etat="+etatFiltrage+"&catégorie="+categFiltrage, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -76,15 +62,24 @@ export const HomeService= () => {
             "Authorization":`Token ${token}`
           },
         }).then((response) => {
+            if(response.ok){
+              console.log("coool");
+            }else {
+              console.log("erreuuuur");
+            }
             return response.json();
           })
           .then((data) => {
             setMyData(data.results);
             setNombre(data.count);
-                setNombresPages(Math.ceil(data.count /5));
+            if((data.count % 5) == 0){
+              setNombresPages(Math.ceil(data.count /5) - 1);
+            }else{
+              setNombresPages(Math.ceil(data.count /5));
+            }
           });
       }else{
-        fetch(path+`madrasatic/service_declarations/?page=${data.selected + 1}`, {
+        fetch(path+"madrasatic/service_declarations/?page="+pageCourrente+"&priorité="+prioFiltrage+"&etat="+etatFiltrage+"&catégorie="+categFiltrage, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -97,9 +92,16 @@ export const HomeService= () => {
           .then((data) => {
             setMyData(data.results);
             setNombre(data.count);
-                setNombresPages(Math.ceil(data.count /5));
+            if((data.count % 5) == 0){
+              setNombresPages(Math.ceil(data.count /5) - 1);
+            }else{
+              setNombresPages(Math.ceil(data.count /5));
+            }
           });
       }
+    },[declaration]);
+    const ChangePage=((data)=>{
+      setPageCourrente(data.selected+1);
     })
     const afficher=(val)=>{
         if(val === 'tout'){
@@ -181,21 +183,35 @@ export const HomeService= () => {
                             <div class="row">
                                 <div class="col-md-8 col-lg-4 my-4">
                                     <div class="select-container">
-                                        <select class="custom-select" onChange={(e)=>{afficher(e.target.value)}}>
-                                                <option value='tout'>Tous les états</option>
-                                                <option value='en cours de traitement'>Etat: en cours de traitement</option>
-                                                <option value='non traitée'>Etat: non traitée</option>
-                                                <option value='non traitée'>Etat: traitée</option>
+                                        <select class="custom-select" onChange={(e)=>{setEtatFiltrage(e.target.value)}}>
+                                                <option value=''>Tous les états</option>
+                                                <option value='en_cours_de_traitement'>Etat: en cours de traitement</option>
+                                                <option value='non_traitée'>Etat: non traitée</option>
+                                                <option value='traitée'>Etat: traitée</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-8 col-lg-4 my-4">
-                                    <div class="select-container" onChange={(e)=>{afficher(e.target.value)}}>
+                                    <div class="select-container" onChange={(e)=>{setPrioFiltrage(e.target.value)}}>
                                         <select class="custom-select">
-                                                <option value='tout'>Toutes les priorités</option>
+                                                <option value=''>Toutes les priorités</option>
                                                 <option value='1'>Urgence</option>
                                                 <option value='2'>Etat critique</option>
                                                 <option value='3'>Etat normal</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-4 my-4">
+                                    <div class="select-container" onChange={(e)=>{setCategFiltrage(e.target.value)}}>
+                                        <select class="custom-select">
+                                          <option value=''>Toutes les catégories</option>
+                                          {
+                                            catégories.map(
+                                              categ =>(
+                                                <option value={categ.id}>{categ.name}</option>
+                                              )
+                                            )
+                                           }
                                         </select>
                                     </div>
                                 </div>

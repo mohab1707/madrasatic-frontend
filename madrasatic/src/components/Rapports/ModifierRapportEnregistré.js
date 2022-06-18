@@ -78,7 +78,7 @@ export const ModifierRapportEnregistrée =()=>{
                 "Accept": "application/json",
                 "Authorization":`Token ${token}`
             },
-            body: JSON.stringify({etat:'traitée'}),
+            body: JSON.stringify({etat:'en_cours_de_traitement'}),
             })
             const form_data = new FormData();
             form_data.append("title",objet);

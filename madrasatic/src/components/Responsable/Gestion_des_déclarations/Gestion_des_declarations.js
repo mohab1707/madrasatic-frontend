@@ -53,6 +53,11 @@ export const Gestion_des_declarations = () => {
             setIsNotifated(true);
             return toast(message.title + message.body);
           });
+          var channel4 = pusher.subscribe("Rapport");
+          channel4.bind("Creation", function ({ message }) {
+            setIsNotifated(true);
+            return toast(message.title + message.body);
+          });
     },[isNotifated])
     const deconnexion =(e) => {
         e.preventDefault();
@@ -121,6 +126,9 @@ export const Gestion_des_declarations = () => {
                             </MDBDropdownItem>
                             <MDBDropdownItem>
                                 <MDBDropdownLink href='/ChoixLocalisation'>Ajouter localisation</MDBDropdownLink>
+                            </MDBDropdownItem>
+                            <MDBDropdownItem>
+                                <MDBDropdownLink href='/ResponsableNotifications'>Notifications</MDBDropdownLink>
                             </MDBDropdownItem>
                             <MDBDropdownItem>
                                 <MDBBtn className='text-white' color='dark' onClick={deconnexion}>Se déconnecter</MDBBtn>

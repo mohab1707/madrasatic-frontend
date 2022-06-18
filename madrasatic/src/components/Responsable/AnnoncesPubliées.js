@@ -10,65 +10,65 @@ export const AnnoncesPubliées=()=>{
     const [annonces,setAnnonces]=useState([]);
     const [nombre,setNombre]=useState("");
     const [nombrePages,setNombresPages]=useState("");
-    const [pageCourrente,setPageCourrente]=useState();
+    const [pageCourrente,setPageCourrente]=useState(0);
     const [rejeter,setRejeter]=useState(false);
     const token = sessionStorage.getItem("key");
     const [idAnnonce,setIdAnnonce]=useState("");
     const path=sessionStorage.getItem("path");
     useEffect(()=>{
-      fetch(path+"madrasatic/annonceslist/", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "Authorization":`Token ${token}`
-      },
-    }).then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setAnnonces(data.results);
-        setNombre(data.count);
-        setNombresPages(Math.ceil(data.count /5));
-      });
-    },[]);
+        if(pageCourrente == 0){
+            fetch(path+"madrasatic/annonceslist/", {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                  "Accept": "application/json",
+                  "Authorization":`Token ${token}`
+                },
+              }).then((response) => {
+                  return response.json();
+                })
+                .then((data) => {
+                  setAnnonces(data.results);
+                  setNombre(data.count);
+                  setNombresPages(Math.ceil(data.count /5));
+                });
+        }else{
+            fetch(path+"madrasatic/annonceslist/?page="+pageCourrente, {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                  "Accept": "application/json",
+                  "Authorization":`Token ${token}`
+                },
+              }).then((response) => {
+                  return response.json();
+                })
+                .then((data) => {
+                  setAnnonces(data.results);
+                  setNombre(data.count);
+                  setNombresPages(Math.ceil(data.count /5));
+                });
+        }
+    },[annonces]);
     const ChangePage=((data)=>{
         setPageCourrente(data.selected+1);
-        if(data.selected == 0){
-          fetch(path+"madrasatic/annonceslist/", {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              "Accept": "application/json",
-              "Authorization":`Token ${token}`
-            },
-          }).then((response) => {
-              return response.json();
-            })
-            .then((data) => {
-              setAnnonces(data.results);
-            });
-        }else{
-          fetch(path+`madrasatic/annonceslist/?page=${data.selected + 1}`, {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              "Accept": "application/json",
-              "Authorization":`Token ${token}`
-            },
-          }).then((response) => {
-              return response.json();
-            })
-            .then((data) => {
-              setAnnonces(data.results);
-            });
-        }
       })
       const rejeterAnnonce =((idAnnonce)=>{
         setRejeter(true);
         setIdAnnonce(idAnnonce);      
       })
-      const ValiderAnnonce=(()=>{
+      const ValiderAnnonce=((val)=>{
+        fetch(path+`madrasatic/annonceedit/${val}/`, {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json",
+              "Authorization":`Token ${token}`
+            },
+            body:JSON.stringify({etat:'validé'}),
+          }).then((response) => {
+              return response.json();
+            })
       })
     return(
         <div>

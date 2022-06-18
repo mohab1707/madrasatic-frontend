@@ -322,6 +322,15 @@ export default function DeclarationEnvoyee() {
     })
     const validerRapport=((val,titre,desc,service,declaration,e)=>{
       e.preventDefault();
+      fetch(path+`madrasatic/responsable_declarations/${declaration}/`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+            "Authorization":`Token ${token}`
+        },
+        body: JSON.stringify({etat:'traitée'}),
+        })
         fetch(path+`madrasatic/reports/${val}/`, {
             method: "PUT",
             headers: {

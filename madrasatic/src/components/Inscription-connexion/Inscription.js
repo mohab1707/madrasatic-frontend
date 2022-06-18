@@ -16,8 +16,10 @@ export const Inscription = () => {
     const [erreurPassword2,setErreurPassword2]=useState();
     const [erreur_non_field_errors,setErreur_non_field_errors]=useState();
     const path=sessionStorage.getItem("path");
+    const [isPending,setIsPending]=useState(false);
     const register = (e) => {
         e.preventDefault(); 
+        setIsPending(true);
         fetch(path+"madrasatic/register/", {
           method: "POST",
           headers: { "Content-Type": "application/json",'Accept': 'application/json' },
@@ -27,10 +29,13 @@ export const Inscription = () => {
             {
                 console.log("ça marche!!");
                 setReussi(true);
+                setIsPending(false);
+                
                 
             }else
             {
                 console.log("y'a une erreur");
+                setIsPending(false);
             }
             return response.json();
         }).then(data => {
@@ -42,6 +47,10 @@ export const Inscription = () => {
         })
       }
     return(
+        <>
+            {isPending ? <div class="spinner-border" role="status" style={{marginLeft:'35%',marginTop:'15%'}}>
+                <span class="visually-hidden" >Loading...</span>
+            </div> : 
         <div className="inscription">
             {
             reussi? <Redirect to='/' /> : null
@@ -107,5 +116,7 @@ export const Inscription = () => {
             </div>
             <br></br>
         </div>
+}
+    </>
     );
 }

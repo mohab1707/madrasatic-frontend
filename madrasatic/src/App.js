@@ -55,6 +55,7 @@ import { MesAnnoncesRejetées } from './components/Annonces/MesAnnoncesRejetées
 import { ChefClubNotifications } from './components/Notifications/ChefClubNotifications';
 import { NotificationsService } from './components/Notifications/NotificationsService';
 import { CompleterRapport } from './components/Rapports/CompleterRapport';
+import { ResponsableNotifications } from './components/Notifications/ResponsableNotifications';
 export default function App() {
 
   return (
@@ -634,17 +635,6 @@ export default function App() {
             &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
           </div>
         </Route>
-        < Route exact path="/MesAnnoncesRejetées">
-          <Bare />
-          <div className='ajoutdeclarationclass'>
-          <br></br>
-            <MesAnnoncesRejetées />
-            <br /><br />
-          </div>
-          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'0%' , left: '0', bottom: '0', width: '100%'}}>
-            &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
-          </div>
-        </Route>
         < Route exact path="/Notifications">
           <Bare />
           <div className='ajoutdeclarationclass'>
@@ -672,6 +662,17 @@ export default function App() {
           <div className='ajoutdeclarationclass'>
           <br></br>
             <CompleterRapport/>
+            <br /><br />
+          </div>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'0%' , left: '0', bottom: '0', width: '100%'}}>
+            &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
+          </div>
+        </Route>
+        < Route exact path="/ResponsableNotifications">
+          <Gestion_des_declarations />
+          <div className='ajoutdeclarationclass'>
+            <br /><br />
+            <ResponsableNotifications />
             <br /><br />
           </div>
           <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'0%' , left: '0', bottom: '0', width: '100%'}}>

@@ -61,12 +61,14 @@ export const AjoutRapport =()=>{
     const validateRapport=((e)=>{
         e.preventDefault();
         fetch(path+`madrasatic/responsable_declarations/${id}/`, {
-            method: "PUT",
-            headers: {
-                "Authorization":`Token ${token}`
-            },
-            body: JSON.stringify({etat:'traitée'}),
-            })
+          method: "PUT",
+          headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json",
+              "Authorization":`Token ${token}`
+          },
+          body: JSON.stringify({etat:'en_cours_de_traitement'}),
+          })
             const form_data = new FormData();
             form_data.append("title",objet);
             form_data.append("desc",corps);
