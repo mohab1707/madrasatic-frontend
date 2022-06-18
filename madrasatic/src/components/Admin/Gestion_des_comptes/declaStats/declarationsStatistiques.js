@@ -6,8 +6,9 @@ const DeclarationStats = () => {
   const [data, setData] = useState(null);
   const [clicked, setClicked] = useState("");
   const token = sessionStorage.getItem("key");
+  const path=sessionStorage.getItem("path");
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/madrasatic/declaration_stat/", {
+    fetch(path+"madrasatic/declaration_stat/", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

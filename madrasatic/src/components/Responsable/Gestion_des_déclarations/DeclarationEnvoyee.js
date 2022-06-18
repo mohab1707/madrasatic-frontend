@@ -50,8 +50,9 @@ export default function DeclarationEnvoyee() {
     const [completerRapport,setCompleterRapport]=useState(false);
     const [declarations,setDeclarations]=useState([]);
     const [etat,setEtat]=useState("");
+    const path=sessionStorage.getItem("path");
     useEffect(()=>{
-      fetch("http://127.0.0.1:8000/madrasatic/reports/", {
+      fetch(path+"madrasatic/reports/", {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
@@ -64,7 +65,7 @@ export default function DeclarationEnvoyee() {
             .then((data) => {
               setRapport(data);
             });
-      fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
+      fetch(path+"madrasatic/responsable_declarations/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -84,7 +85,7 @@ export default function DeclarationEnvoyee() {
             setNombre(data.count);
             setNombresPages(Math.ceil(data.count /5));
           });
-          fetch("http://127.0.0.1:8000/madrasatic/categories/", {
+          fetch(path+"madrasatic/categories/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -97,7 +98,7 @@ export default function DeclarationEnvoyee() {
           .then((data) => {
             setCatégories(data);
           });
-          fetch("http://127.0.0.1:8000/madrasatic/blocs/", {
+          fetch(path+"madrasatic/blocs/", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -111,7 +112,7 @@ export default function DeclarationEnvoyee() {
             setBlocs(data);
         });
   
-        fetch("http://127.0.0.1:8000/madrasatic/sites/", {
+        fetch(path+"madrasatic/sites/", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -124,7 +125,7 @@ export default function DeclarationEnvoyee() {
         .then((data) => {
           setSites(data);
         });
-        fetch("http://127.0.0.1:8000/madrasatic/endroits/", {
+        fetch(path+"madrasatic/endroits/", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -137,7 +138,7 @@ export default function DeclarationEnvoyee() {
         .then((data) => {
           setEndroits(data);
         });
-      fetch("http://127.0.0.1:8000/madrasatic/lieux/", {
+      fetch(path+"madrasatic/lieux/", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -158,7 +159,7 @@ export default function DeclarationEnvoyee() {
     })
     const afficher=(val)=>{
       if(val === 'tout'){
-        fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
+        fetch(path+"madrasatic/responsable_declarations/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -172,7 +173,7 @@ export default function DeclarationEnvoyee() {
         setMyData(data.results);
       });
     }else if(val === '1' || val=== '2' || val ==='3'){
-        fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/?priorité=${val}`, {
+        fetch(path+`madrasatic/responsable_declarations/?priorité=${val}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -186,7 +187,7 @@ export default function DeclarationEnvoyee() {
         setMyData(data.results);
       });
     }else{
-        fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/?etat=${val}`, {
+        fetch(path+`madrasatic/responsable_declarations/?etat=${val}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -202,7 +203,7 @@ export default function DeclarationEnvoyee() {
     }
     }
     useEffect(()=>{
-        fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/${id}/`, {
+        fetch(path+`madrasatic/responsable_declarations/${id}/`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -238,7 +239,7 @@ export default function DeclarationEnvoyee() {
         setComplement(true);
     })
     const enregistrerModification =((auteur)=>{
-        fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/${id}/`, {
+        fetch(path+`madrasatic/responsable_declarations/${id}/`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -260,7 +261,7 @@ export default function DeclarationEnvoyee() {
             });
     })
     const validerDeclaration=(()=>{
-        fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/${id}/`, {
+        fetch(path+`madrasatic/responsable_declarations/${id}/`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -285,7 +286,7 @@ export default function DeclarationEnvoyee() {
       console.log(data.selected);
       setPageCourrente(data.selected+1);
       if(data.selected == 0){
-        fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
+        fetch(path+"madrasatic/responsable_declarations/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -299,7 +300,7 @@ export default function DeclarationEnvoyee() {
             setMyData(data.results);
           });
       }else{
-        fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/?page=${data.selected + 1}`, {
+        fetch(path+`madrasatic/responsable_declarations/?page=${data.selected + 1}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -321,7 +322,7 @@ export default function DeclarationEnvoyee() {
     })
     const validerRapport=((val,titre,desc,service,declaration,e)=>{
       e.preventDefault();
-        fetch(`http://127.0.0.1:8000/madrasatic/reports/${val}/`, {
+        fetch(path+`madrasatic/reports/${val}/`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -347,7 +348,7 @@ export default function DeclarationEnvoyee() {
   }
   const Dettacher =(()=>{
     declarations.map(dec=>{
-      fetch(`http://localhost:8000/madrasatic/responsable_declarations/${dec.id}/`, {
+      fetch(path+`madrasatic/responsable_declarations/${dec.id}/`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
@@ -398,7 +399,7 @@ export default function DeclarationEnvoyee() {
           <div class="col-12 col-md-4">
               {/* <img src={image} alt='Une image' style={{width: '300px',borderRadius:'8px'}}/> */}
               <div class="card" style={{width: "300px",marginLeft:'20px'}}>
-                  <img src={image} alt='Une image' style={{borderRadius:'8px'}}/>
+                  <img src={image} alt='Une image' style={{borderRadius:'8px',height:'150px'}}/>
                   <div class="card-body">
                     <p class="card-text">{corps}</p>
                   </div>
@@ -486,7 +487,7 @@ export default function DeclarationEnvoyee() {
                 <h5 style={{marginTop:'5%'}}>Rapport associé :</h5>
               
                 <div class="card" style={{width: "450px",marginLeft:'0%'}}>
-                  <img class="card-img-top" src={item.image} alt="Image" style={{borderRadius:'8px'}}/>
+                  <img class="card-img-top" src={item.image} alt="Image" style={{borderRadius:'8px',height:'150px'}}/>
                   <div class="card-body">
                     <h5 class="card-title">{item.title}</h5>
                     <p class="card-text">{item.desc}</p>
@@ -515,7 +516,7 @@ export default function DeclarationEnvoyee() {
                                   backgroundColor: '#1f2833',
                                   color: 'white',
                                   textAlign: 'center'
-                                  }}>Liste des déclarations</Card.Title>
+                                  }}>Liste des déclarations attachées</Card.Title>
                                 
                                 
                             </Card.Header>

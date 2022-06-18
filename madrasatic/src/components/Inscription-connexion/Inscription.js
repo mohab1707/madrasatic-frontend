@@ -15,9 +15,10 @@ export const Inscription = () => {
     const [erreurPassword1,setErreurPassword1]=useState();
     const [erreurPassword2,setErreurPassword2]=useState();
     const [erreur_non_field_errors,setErreur_non_field_errors]=useState();
+    const path=sessionStorage.getItem("path");
     const register = (e) => {
         e.preventDefault(); 
-        fetch("http://127.0.0.1:8000/madrasatic/register/", {
+        fetch(path+"madrasatic/register/", {
           method: "POST",
           headers: { "Content-Type": "application/json",'Accept': 'application/json' },
           body: JSON.stringify({username : nom , email: email , password1: motDePasse ,password2: motDePasseConfirmation}), 

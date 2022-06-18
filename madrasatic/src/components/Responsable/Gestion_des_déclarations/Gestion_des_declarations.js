@@ -1,4 +1,4 @@
-import React , { useState } from 'react';
+import React , { useState ,useEffect} from 'react';
 import { TableDeclarationEnvoyee } from './TableDeclarationEnvoyee';
 import {
     MDBNavbar,
@@ -23,9 +23,26 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 export const Gestion_des_declarations = () => {
     const [showNavRight, setShowNavRight] = useState(false);
     const [reussi , setReussi ] = useState(false);
+    const path=sessionStorage.getItem("path");
+    const [nom,setNom]=useState("");
+    const [image,setImage]=useState(null);
+    const token = sessionStorage.getItem("key");
+    useEffect(()=>{
+        fetch("http://127.0.0.1:8000/madrasatic/user/", {
+          method: "GET",
+          headers: { "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization":`Token ${token}` },
+        }).then((response) => {
+            return response.json();
+        }).then((data)=>{
+            setImage(data.img);
+            setNom(data.username);
+        })
+    },[])
     const deconnexion =(e) => {
         e.preventDefault();
-        fetch("http://127.0.0.1:8000/madrasatic/logout/", {
+        fetch(path+"madrasatic/logout/", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
         }).then((response) => {
@@ -45,7 +62,9 @@ export const Gestion_des_declarations = () => {
         }
         <MDBNavbar expand='lg' light style={{backgroundColor:'#24344f'}} fixed='top'>
             <MDBContainer fluid>
-            <MDBNavbarBrand href='/HomeResponsable'style={{color:'#ffffff'}}>MADRASA-TIC</MDBNavbarBrand>
+            <MDBNavbarBrand href=''style={{color:'#ffffff'}}>{
+                image ? <img src={image} alt='Une image' style={{borderRadius:'50%',width:'50px',height:'50px'}} /> : null
+            } {nom}</MDBNavbarBrand>
 
             <MDBNavbarToggler
             type='button'
@@ -62,10 +81,13 @@ export const Gestion_des_declarations = () => {
             <MDBCollapse navbar show={showNavRight}>
                 <MDBNavbarNav right fullWidth={false} className='mb-2 mb-lg-0'>
                     <MDBNavbarItem>
-                        <MDBNavbarLink href='/NewCatégorie' style={{color:'#ffffff'}}>Nouvelle catégorie</MDBNavbarLink>
+                        <MDBNavbarLink href='/HomeResponsable' style={{color:'#ffffff'}}>Déclarations</MDBNavbarLink>
                     </MDBNavbarItem>
                     <MDBNavbarItem>
                         <MDBNavbarLink href='/ListesAnnoncesPubliées' style={{color:'#ffffff'}}>Annonces</MDBNavbarLink>
+                    </MDBNavbarItem>
+                    <MDBNavbarItem>
+                        <MDBNavbarLink href='/NewCatégorie' style={{color:'#ffffff'}}>Nouvelle catégorie</MDBNavbarLink>
                     </MDBNavbarItem>
                     <MDBNavbarItem>
                         <MDBDropdown>

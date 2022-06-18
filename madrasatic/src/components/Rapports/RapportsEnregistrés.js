@@ -16,8 +16,9 @@ export const MesRapportsEnregistrées =()=>{
     const [nombrePages,setNombresPages]=useState();
     const [nombre,setNombre]=useState("");
     const [pageCourrente,setPageCourrente]=useState();
+    const path=sessionStorage.getItem("path");
     useEffect(()=>{
-      fetch("http://127.0.0.1:8000/madrasatic/draft_reports/", {
+      fetch(path+"madrasatic/draft_reports/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -41,7 +42,7 @@ export const MesRapportsEnregistrées =()=>{
       console.log(data.selected);
       setPageCourrente(data.selected+1);
       if(data.selected == 0){
-        fetch("http://127.0.0.1:8000/madrasatic/draft_reports/", {
+        fetch(path+"madrasatic/draft_reports/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -55,7 +56,7 @@ export const MesRapportsEnregistrées =()=>{
             setMyData(data.results);
           });
       }else{
-        fetch(`http://127.0.0.1:8000/madrasatic/draft_reports/?page=${data.selected + 1}`, {
+        fetch(path+`madrasatic/draft_reports/?page=${data.selected + 1}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -71,7 +72,7 @@ export const MesRapportsEnregistrées =()=>{
       }
     })
     const supprimerRapport=((idRapp)=>{
-        fetch(`http://localhost:8000/madrasatic/draft_reports/${idRapp}/`, {
+        fetch(path+`madrasatic/draft_reports/${idRapp}/`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

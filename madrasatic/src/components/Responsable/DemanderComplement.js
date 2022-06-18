@@ -7,8 +7,9 @@ export const DemanderComplement= () => {
         const [raison,setRaison]=useState("");
         const [pageAcceuil,setPageAcceuil]=useState(false);
         const [erreurReason,setErrorReason]=useState("");
+        const path=sessionStorage.getItem("path");
         useEffect(()=>{
-            fetch("http://127.0.0.1:8000/madrasatic/user/", {
+            fetch(path+"madrasatic/user/", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -30,7 +31,7 @@ export const DemanderComplement= () => {
         const demandercomplement=((e)=>{
             e.preventDefault(); 
             console.log("id decla"+id +" idresponsable +" + idResponsable);
-            fetch(`http://127.0.0.1:8000/madrasatic/declaration_complement_demand/`, {
+            fetch(path+`madrasatic/declaration_complement_demand/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -52,7 +53,7 @@ export const DemanderComplement= () => {
     })
     return(
 
-        <div className="card" style={{backgroundColor:'#e8e8e8',borderRadius:'17px'}}>
+        <div className="card" style={{backgroundColor:'white',borderRadius:'17px'}}>
             {
                 pageAcceuil? <Redirect to ="/HomeResponsable"></Redirect> : null
             }
@@ -67,7 +68,7 @@ export const DemanderComplement= () => {
                     ></textarea>
                     {erreurReason ? <p style={{color: 'red',marginLeft:'10%'} }>{erreurReason}</p> : null}
             </div>
-            <button onClick={demandercomplement}>Confirmer</button>
+            <button onClick={demandercomplement}>Confirme</button>
             <br></br> <br></br>
         </div>
     );

@@ -12,8 +12,9 @@ export const AjoutRapport =()=>{
     const [reussi , setReussi ] = useState(false);
     const [image,setImage]=useState(null);
     const token = sessionStorage.getItem("key");
+    const path=sessionStorage.getItem("path");
     useEffect(()=>{
-      fetch("http://127.0.0.1:8000/madrasatic/user/", {
+      fetch(path+"madrasatic/user/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -36,7 +37,7 @@ export const AjoutRapport =()=>{
         form_data.append("declaration",id);
         form_data.append("status",'brouillon');
         form_data.append("image",image);
-        fetch("http://localhost:8000/madrasatic/reports/", {
+        fetch(path+"madrasatic/reports/", {
         method: "POST",
         headers: {
           "Authorization":`Token ${token}`
@@ -59,7 +60,7 @@ export const AjoutRapport =()=>{
     })
     const validateRapport=((e)=>{
         e.preventDefault();
-        fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/${id}/`, {
+        fetch(path+`madrasatic/responsable_declarations/${id}/`, {
             method: "PUT",
             headers: {
                 "Authorization":`Token ${token}`
@@ -73,7 +74,7 @@ export const AjoutRapport =()=>{
             form_data.append("declaration",id);
             form_data.append("status",'publié');
             form_data.append("image",image);
-            fetch("http://localhost:8000/madrasatic/reports/", {
+            fetch(path+"madrasatic/reports/", {
             method: "POST",
             headers: {
               "Authorization":`Token ${token}`

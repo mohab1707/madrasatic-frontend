@@ -51,6 +51,7 @@ import DeclarationStats from './components/Admin/Gestion_des_comptes/declaStats/
 import UsersStats from './components/Admin/Gestion_des_comptes/UserStat/UserStat';
 import { AnnoncesPubliées } from './components/Responsable/AnnoncesPubliées';
 import { RejeterAnnonce } from './components/Responsable/RejeterAnnonce';
+import { MesAnnoncesRejetées } from './components/Annonces/MesAnnoncesRejetées';
 export default function App() {
 
   return (
@@ -602,6 +603,39 @@ export default function App() {
           <div className='ajoutdeclarationclass'>
             <br /><br />
             <RejeterAnnonce />
+            <br /><br />
+          </div>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'0%' , left: '0', bottom: '0', width: '100%'}}>
+            &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
+          </div>
+        </Route>
+        < Route exact path="/MesAnnoncesEnregistrées">
+          <Bare />
+          <div className='ajoutdeclarationclass'>
+          <br></br>
+            <AnnoncesEnregistrées />
+            <br /><br />
+          </div>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'0%' , left: '0', bottom: '0', width: '100%'}}>
+            &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
+          </div>
+        </Route>
+        < Route exact path="/ModifierMonAnnonceEnregistrée/:idAnnonce">
+          <Bare />
+          <div className='ajoutdeclarationclass'>
+          <br></br>
+            <ModifierAnnonceEnregistrée />
+            <br /><br />
+          </div>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'0%' , left: '0', bottom: '0', width: '100%'}}>
+            &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
+          </div>
+        </Route>
+        < Route exact path="/MesAnnoncesRejetées">
+          <Bare />
+          <div className='ajoutdeclarationclass'>
+          <br></br>
+            <MesAnnoncesRejetées />
             <br /><br />
           </div>
           <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'0%' , left: '0', bottom: '0', width: '100%'}}>

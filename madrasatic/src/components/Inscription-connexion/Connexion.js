@@ -14,10 +14,11 @@ export const Connexion = () => {
     const [erreurPassword,setErreurPassword]=useState();
     const [erreur_non_field_errors,setErreur_non_field_errors]=useState();
     const [isPending,setIsPending]=useState(false);
+    const path=sessionStorage.getItem("path");
     const login = (e) => {
         e.preventDefault();  
         setIsPending(true);  
-        fetch("http://127.0.0.1:8000/madrasatic/login/", {
+        fetch(path+"madrasatic/login/", {
           method: "POST",
           headers: { "Content-Type": "application/json"},
           body: JSON.stringify({email: email , password: motDePasse }), 
@@ -43,8 +44,7 @@ export const Connexion = () => {
         }
         ).then(()=>{
             const token=sessionStorage.getItem("key");
-                console.log("tokeeen est :" + token);
-                fetch("http://127.0.0.1:8000/madrasatic/user/", {
+                fetch(path+"madrasatic/user/", {
                 method: "GET",
                 headers: { "Content-Type": "application/json",'Accept': 'application/json',"Authorization":`Token ${token}`}, 
                 }).then((response) => {

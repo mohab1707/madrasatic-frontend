@@ -24,8 +24,9 @@ export const Profil = () => {
   const [erreurTel, setErreurTel] = useState();
   const token = sessionStorage.getItem("key");
   const is_superuser=sessionStorage.getItem("is_superuser");
+  const path=sessionStorage.getItem("path");
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/madrasatic/user/", {
+    fetch(path+"madrasatic/user/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -70,7 +71,7 @@ export const Profil = () => {
     form_data.append('img', image);
     e.preventDefault();
     console.log("img "+image+ " username "+nom+" tel "+tel);
-    fetch(`http://localhost:8000/madrasatic/updateprofile/${id}/`, {
+    fetch(path+`madrasatic/updateprofile/${id}/`, {
       method: "PATCH",
       headers: {
         // 'Content-Type': 'multipart/form-data',

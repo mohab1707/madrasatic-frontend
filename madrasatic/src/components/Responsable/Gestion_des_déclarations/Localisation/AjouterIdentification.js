@@ -12,8 +12,9 @@ export const AjouterIdentification =()=>{
     const [site,setSite]=useState("");
     const [endroit,setEndroit]=useState("");
     const token = sessionStorage.getItem("key");
+    const path=sessionStorage.getItem("path");
     useEffect(()=>{
-        fetch("http://127.0.0.1:8000/madrasatic/blocs/", {
+        fetch(path+"madrasatic/blocs/", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -27,7 +28,7 @@ export const AjouterIdentification =()=>{
             setBlocs(data);
         });
   
-        fetch("http://127.0.0.1:8000/madrasatic/sites/", {
+        fetch(path+"madrasatic/sites/", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -45,7 +46,7 @@ export const AjouterIdentification =()=>{
         .then((data) => {
           setSites(data);
         });
-        fetch("http://127.0.0.1:8000/madrasatic/endroits/", {
+        fetch(path+"madrasatic/endroits/", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -66,7 +67,7 @@ export const AjouterIdentification =()=>{
       },[]);
     const saveBloc=((e)=>{
       e.preventDefault(); 
-      fetch("http://localhost:8000/madrasatic/lieux/", {
+      fetch(path+"madrasatic/lieux/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -32,6 +32,21 @@ export const Bare = () => {
     const [chefClub,setChefClub]=useState(false);
     const token = sessionStorage.getItem("key");
     const [isNotifated, setIsNotifated] = useState(false);
+    const [nom,setNom]=useState("");
+    const [image,setImage]=useState(null);
+    useEffect(()=>{
+        fetch("http://127.0.0.1:8000/madrasatic/user/", {
+          method: "GET",
+          headers: { "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization":`Token ${token}` },
+        }).then((response) => {
+            return response.json();
+        }).then((data)=>{
+            setImage(data.img);
+            setNom(data.username);
+        })
+    },[])
     useEffect(()=>{
         fetch("http://127.0.0.1:8000/madrasatic/user/", {
             method: "GET",
@@ -94,7 +109,9 @@ export const Bare = () => {
         />
         <MDBNavbar expand='lg' light fixed='top' style={{backgroundColor:'#24344f'}}>
             <MDBContainer fluid>
-            <MDBNavbarBrand href='/HomePage'style={{color:'#ffffff'}}>MADRASA-TIC</MDBNavbarBrand>
+            <MDBNavbarBrand href=''style={{color:'#ffffff'}}>{
+                image ? <img src={image} alt='Une image' style={{borderRadius:'50%',width:'50px',height:'50px'}} /> : null
+            } {nom}</MDBNavbarBrand>
             <MDBNavbarToggler
             type='button'
             data-target='#navbarRightAlignExample'
@@ -110,10 +127,10 @@ export const Bare = () => {
             <MDBCollapse navbar show={showNavRight}>
                 <MDBNavbarNav right fullWidth={false} className='mb-2 mb-lg-0'>
                     <MDBNavbarItem>
-                        <MDBNavbarLink href='/NewDeclaration' style={{color:'#ffffff'}}>Nouvelle déclaration</MDBNavbarLink>
+                        <MDBNavbarLink href='/HomePage' style={{color:'#ffffff'}}>Déclarations</MDBNavbarLink>
                     </MDBNavbarItem>
                     <MDBNavbarItem>
-                        <MDBNavbarLink href='/HomePage' style={{color:'#ffffff'}}>Déclarations</MDBNavbarLink>
+                        <MDBNavbarLink href='/NewDeclaration' style={{color:'#ffffff'}}>Nouvelle déclaration</MDBNavbarLink>
                     </MDBNavbarItem>
                     <MDBNavbarItem>
                         <MDBNavbarLink href='/LesAnnonces' style={{color:'#ffffff'}}>Annonces</MDBNavbarLink>
@@ -138,11 +155,22 @@ export const Bare = () => {
                                 <MDBDropdownLink href='/MesDeclarationsEnregistrées'>Déclarations enregistrées</MDBDropdownLink>
                             </MDBDropdownItem>
                             <MDBDropdownItem>
-                                <MDBDropdownLink href='/MesDéclarationsACompleter'>Déclarations à compléter</MDBDropdownLink>
+                                <MDBDropdownLink href='/MesDeclarationsRejetées'>Déclarations rejetées</MDBDropdownLink>
                             </MDBDropdownItem>
                             <MDBDropdownItem>
-                                <MDBDropdownLink href='/Profil'>Mes annonces</MDBDropdownLink>
+                                <MDBDropdownLink href='/MesDéclarationsACompleter'>Déclarations à compléter</MDBDropdownLink>
                             </MDBDropdownItem>
+                            {
+                                chefClub ? <MDBDropdownItem>
+                                <MDBDropdownLink href='/MesAnnoncesRejetées'>Mes annonces rejetées</MDBDropdownLink>
+                            </MDBDropdownItem> : null
+                            }
+                            {
+                                chefClub ? <MDBDropdownItem>
+                                <MDBDropdownLink href='/MesAnnoncesEnregistrées'>Mes annonces enregistrées</MDBDropdownLink>
+                            </MDBDropdownItem> : null
+                            }
+                            
                             <MDBDropdownItem>
                                 {/* <MDBDropdownLink href='/deconnexion'>Se déconnecter</MDBDropdownLink> */}
                                 <MDBBtn className='text-white' color='dark' onClick={deconnexion} style={{marginLeft:'25px'}}>Se déconnecter</MDBBtn>

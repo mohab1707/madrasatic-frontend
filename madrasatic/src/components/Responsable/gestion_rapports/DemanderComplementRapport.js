@@ -11,8 +11,9 @@ export const DemanderComplementRapport= () => {
         const [desc,setDesc]=useState("");
         const [service,setService]=useState("");
         const [declaration,setDeclaration]=useState("");
+        const path=sessionStorage.getItem("path");
         useEffect(()=>{
-            fetch("http://127.0.0.1:8000/madrasatic/user/", {
+            fetch(path+"madrasatic/user/", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -25,7 +26,7 @@ export const DemanderComplementRapport= () => {
                 .then((data) => {
                     setIdResponsable(data.id);
                 });
-                fetch("http://127.0.0.1:8000/madrasatic/reports/"+idRapport+"/", {
+                fetch(path+"madrasatic/reports/"+idRapport+"/", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -44,7 +45,7 @@ export const DemanderComplementRapport= () => {
         },[])
         const demandercomplement=((e)=>{
             e.preventDefault(); 
-            fetch(`http://127.0.0.1:8000/madrasatic/reports/${idRapport}/`, {
+            fetch(path+`madrasatic/reports/${idRapport}/`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -53,7 +54,7 @@ export const DemanderComplementRapport= () => {
             },
             body: JSON.stringify({title:title,desc:desc,service:service,declaration:declaration,status:'incomplet'}),
             })
-            fetch(`http://127.0.0.1:8000/madrasatic/report_complement_demand/`, {
+            fetch(path+`madrasatic/report_complement_demand/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

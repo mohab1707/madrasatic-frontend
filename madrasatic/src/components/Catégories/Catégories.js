@@ -8,8 +8,9 @@ export const Categories = () => {
     const token = sessionStorage.getItem("key");
     const [nombreDecla,setNombreDecla]=useState(0);
     const[data,setMyData]=useState([]);
+    const path=sessionStorage.getItem("path");
       useEffect(()=>{
-        fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
+        fetch(path+"madrasatic/responsable_declarations/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -23,7 +24,7 @@ export const Categories = () => {
             setNombreDecla(Math.ceil(data.count /5));
             setMyData(data.results);
           });
-          fetch("http://127.0.0.1:8000/madrasatic/categories/", {
+          fetch(path+"madrasatic/categories/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -39,7 +40,7 @@ export const Categories = () => {
       },[catégories])
       useEffect(()=>{
         if(nombreDecla > 0){
-          fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/?page=${nombreDecla}`, {
+          fetch(path+`madrasatic/responsable_declarations/?page=${nombreDecla}`, {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
@@ -61,7 +62,7 @@ export const Categories = () => {
                if (data.some(item=> item.catégorie === id)){
                 return toast("Il existe une déclaration avec cette catégorie , donc elle ne peut pas être supprimer");
               }else{
-                fetch(`http://127.0.0.1:8000/madrasatic/categories/${id}/`, {
+                fetch(path+`madrasatic/categories/${id}/`, {
                 method: "DELETE",
                 headers: {
                   "Content-Type": "application/json",

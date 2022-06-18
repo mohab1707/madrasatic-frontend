@@ -22,9 +22,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 export const Gestion_des_comptes = () => {
     const [showNavRight, setShowNavRight] = useState(false);
     const [reussi , setReussi ] = useState(false);
+    const path=sessionStorage.getItem("path");
     const deconnexion =(e) => {
         e.preventDefault();
-        fetch("http://127.0.0.1:8000/madrasatic/logout/", {
+        fetch(path+"madrasatic/logout/", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
         }).then((response) => {

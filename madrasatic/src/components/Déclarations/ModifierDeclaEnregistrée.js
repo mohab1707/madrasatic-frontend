@@ -23,8 +23,9 @@ export const ModifierDeclarationEnregistrée =()=>{
     const [endroit,setEndroit]=useState();
     const [reussi , setReussi ] = useState(false);
     const token = sessionStorage.getItem("key");
+    const path=sessionStorage.getItem("path");
     useEffect(()=>{
-      fetch("http://127.0.0.1:8000/madrasatic/user/", {
+      fetch(path+"madrasatic/user/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -38,7 +39,7 @@ export const ModifierDeclarationEnregistrée =()=>{
         setAuteur(data.id);
       });
 
-      fetch("http://127.0.0.1:8000/madrasatic/categories/", {
+      fetch(path+"madrasatic/categories/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -52,7 +53,7 @@ export const ModifierDeclarationEnregistrée =()=>{
         setCategories(data);
       });
       console.log("id Declaration + "+idDeclaration)
-      fetch(`http://localhost:8000/madrasatic/declarationdelete/${idDeclaration}/`, {
+      fetch(path+`madrasatic/declarationdelete/${idDeclaration}/`, {
       method: "GET",
       headers: {
         "Authorization":`Token ${token}`
@@ -68,7 +69,7 @@ export const ModifierDeclarationEnregistrée =()=>{
       setSite(data.site);
       setEndroit(data.endroit);
     });
-    fetch("http://127.0.0.1:8000/madrasatic/blocs/", {
+    fetch(path+"madrasatic/blocs/", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -82,7 +83,7 @@ export const ModifierDeclarationEnregistrée =()=>{
             setBlocs(data);
         });
   
-        fetch("http://127.0.0.1:8000/madrasatic/sites/", {
+        fetch(path+"madrasatic/sites/", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -95,7 +96,7 @@ export const ModifierDeclarationEnregistrée =()=>{
         .then((data) => {
           setSites(data);
         });
-        fetch("http://127.0.0.1:8000/madrasatic/endroits/", {
+        fetch(path+"madrasatic/endroits/", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -108,7 +109,7 @@ export const ModifierDeclarationEnregistrée =()=>{
         .then((data) => {
           setEndroits(data);
         });
-      fetch("http://127.0.0.1:8000/madrasatic/lieux/", {
+      fetch(path+"madrasatic/lieux/", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -139,7 +140,7 @@ export const ModifierDeclarationEnregistrée =()=>{
         form_data.append('image', image);
       }
       e.preventDefault(); 
-      fetch(`http://localhost:8000/madrasatic/declarationedit/${idDeclaration}/`, {
+      fetch(path+`madrasatic/declarationedit/${idDeclaration}/`, {
       method: "PATCH",
       headers: {
         "Authorization":`Token ${token}`
@@ -177,7 +178,7 @@ export const ModifierDeclarationEnregistrée =()=>{
         form_data.append('image', image);
       }
       e.preventDefault(); 
-      fetch(`http://localhost:8000/madrasatic/responsable_declarations/${idDeclaration}/`, {
+      fetch(path+`madrasatic/declarationedit/${idDeclaration}/`, {
       method: "PATCH",
       headers: {
         "Authorization":`Token ${token}`
@@ -200,7 +201,7 @@ export const ModifierDeclarationEnregistrée =()=>{
     })
     const supprimerDeclaration=((e)=>{
       e.preventDefault(); 
-        fetch(`http://localhost:8000/madrasatic/declarationdelete/${idDeclaration}/`, {
+        fetch(path+`madrasatic/declarationdelete/${idDeclaration}/`, {
       method: "DELETE",
       headers: {
         "Authorization":`Token ${token}`

@@ -22,8 +22,9 @@ export const ListeDeclaPourAttacher = () => {
     const [nombrePages,setNombresPages]=useState();
     const [nombre,setNombre]=useState("");
     const [pageCourrente,setPageCourrente]=useState();
+    const path=sessionStorage.getItem("path");
     useEffect(()=>{
-      fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
+      fetch(path+"madrasatic/responsable_declarations/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -43,7 +44,7 @@ export const ListeDeclaPourAttacher = () => {
             setNombre(data.count);
             setNombresPages(Math.ceil(data.count /5));
           });
-          fetch("http://127.0.0.1:8000/madrasatic/categories/", {
+          fetch(path+"madrasatic/categories/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -59,7 +60,7 @@ export const ListeDeclaPourAttacher = () => {
     },[])
     const afficher=(val)=>{
       if(val === 'tout'){
-        fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
+        fetch(path+"madrasatic/responsable_declarations/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -75,7 +76,7 @@ export const ListeDeclaPourAttacher = () => {
         setNombresPages(Math.ceil(data.count /5));
       });
     }else if(val === '1' || val=== '2' || val ==='3'){
-        fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/?priorité=${val}`, {
+        fetch(path+`madrasatic/responsable_declarations/?priorité=${val}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -91,7 +92,7 @@ export const ListeDeclaPourAttacher = () => {
         setNombresPages(Math.ceil(data.count /5));
       });
     }else{
-        fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/?etat=${val}`, {
+        fetch(path+`madrasatic/responsable_declarations/?etat=${val}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -112,7 +113,7 @@ export const ListeDeclaPourAttacher = () => {
       console.log(data.selected);
       setPageCourrente(data.selected+1);
       if(data.selected == 0){
-        fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
+        fetch(path+"madrasatic/responsable_declarations/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -126,7 +127,7 @@ export const ListeDeclaPourAttacher = () => {
             setMyData(data.results);
           });
       }else{
-        fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/?page=${data.selected + 1}`, {
+        fetch(path+`madrasatic/responsable_declarations/?page=${data.selected + 1}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -143,7 +144,7 @@ export const ListeDeclaPourAttacher = () => {
     })
     const putData = (dec)=>{
       setEnvoyer(true)
-      fetch(`http://localhost:8000/madrasatic/responsable_declarations/${dec.id}/`, {
+      fetch(path+`madrasatic/responsable_declarations/${dec.id}/`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
@@ -164,7 +165,7 @@ export const ListeDeclaPourAttacher = () => {
     const attacher=(e)=>{
         e.preventDefault();
             declarations.map(dec=>{
-                  fetch(`http://localhost:8000/madrasatic/responsable_declarations/${dec.id}/`, {
+                  fetch(path+`madrasatic/responsable_declarations/${dec.id}/`, {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",

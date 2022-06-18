@@ -5,6 +5,7 @@ import "react-datetime/css/react-datetime.css";
 import {BsCalendar2DateFill} from 'react-icons/bs'
 import {AiOutlineDelete} from "react-icons/ai"
 import ReactPaginate from "react-paginate";
+import {GrValidate} from "react-icons/gr"
 export const AnnoncesPubliées=()=>{
     const [annonces,setAnnonces]=useState([]);
     const [nombre,setNombre]=useState("");
@@ -13,8 +14,9 @@ export const AnnoncesPubliées=()=>{
     const [rejeter,setRejeter]=useState(false);
     const token = sessionStorage.getItem("key");
     const [idAnnonce,setIdAnnonce]=useState("");
+    const path=sessionStorage.getItem("path");
     useEffect(()=>{
-      fetch("http://127.0.0.1:8000/madrasatic/annonceslist/", {
+      fetch(path+"madrasatic/annonceslist/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -33,7 +35,7 @@ export const AnnoncesPubliées=()=>{
     const ChangePage=((data)=>{
         setPageCourrente(data.selected+1);
         if(data.selected == 0){
-          fetch("http://127.0.0.1:8000/madrasatic/annonceslist/", {
+          fetch(path+"madrasatic/annonceslist/", {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
@@ -47,7 +49,7 @@ export const AnnoncesPubliées=()=>{
               setAnnonces(data.results);
             });
         }else{
-          fetch(`http://127.0.0.1:8000/madrasatic/annonceslist/?page=${data.selected + 1}`, {
+          fetch(path+`madrasatic/annonceslist/?page=${data.selected + 1}`, {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
@@ -65,6 +67,8 @@ export const AnnoncesPubliées=()=>{
       const rejeterAnnonce =((idAnnonce)=>{
         setRejeter(true);
         setIdAnnonce(idAnnonce);      
+      })
+      const ValiderAnnonce=(()=>{
       })
     return(
         <div>
@@ -89,6 +93,7 @@ export const AnnoncesPubliées=()=>{
                                                 <th scope="col">Objet et dates</th>
                                                 <th scope="col" style={{width :'20%'}}>Corps</th>
                                                 <th class="text-center" scope="col">Rejeter</th>
+                                                <th class="text-center" scope="col">Valider</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -212,7 +217,7 @@ export const AnnoncesPubliées=()=>{
                                                    
                                                         <div style={{
                                                             position: "absolute",
-                                                            left:"95%",
+                                                            left:"83%",
                                                             fontSize:"25px",
                                                             // right:"10%",
                                                             marginTop: "0%",
@@ -220,6 +225,21 @@ export const AnnoncesPubliées=()=>{
                                                             color: "red",
                                                         }} onClick={()=>{rejeterAnnonce(ann.id)}}>
                                                             <AiOutlineDelete />
+                                                        </div>
+                                                    
+                                                </td>
+                                                <td>
+                                                   
+                                                        <div style={{
+                                                            position: "absolute",
+                                                            left:"95%",
+                                                            fontSize:"25px",
+                                                            // right:"10%",
+                                                            marginTop: "0%",
+                                                            padding: "0% 0%",
+                                                            color: "red",
+                                                        }} onClick={()=>{ValiderAnnonce(ann.id)}}>
+                                                            <GrValidate />
                                                         </div>
                                                     
                                                 </td>

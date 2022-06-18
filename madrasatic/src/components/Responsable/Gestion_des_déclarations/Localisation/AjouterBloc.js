@@ -8,8 +8,9 @@ export const AjouterBloc =()=>{
     const token = sessionStorage.getItem("key");
     const [sites,setSites]=useState([]);
     const [site,setSite]=useState("");
+    const path=sessionStorage.getItem("path");
     useEffect(()=>{
-      fetch("http://127.0.0.1:8000/madrasatic/sites/", {
+      fetch(path+"madrasatic/sites/", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -30,7 +31,7 @@ export const AjouterBloc =()=>{
     },[]);
     const saveBloc=((e)=>{
       e.preventDefault(); 
-      fetch("http://localhost:8000/madrasatic/blocs/", {
+      fetch(path+"madrasatic/blocs/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

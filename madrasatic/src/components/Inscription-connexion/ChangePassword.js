@@ -14,8 +14,9 @@ export const ChangePassword= () => {
     const [admin, setAdmin] = useState(false);
     const [Utilisateur, setUtilisateur] = useState(false);
     const token=sessionStorage.getItem("key");
+    const path=sessionStorage.getItem("path");
     useEffect(() => {
-        fetch("http://127.0.0.1:8000/madrasatic/user/", {
+        fetch(path+"madrasatic/user/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -41,7 +42,7 @@ export const ChangePassword= () => {
       }, []);
     const changePassword = (e) => {
         e.preventDefault();    
-        fetch(`http://localhost:8000/madrasatic/password-change/`, {
+        fetch(path+`madrasatic/password-change/`, {
           method: 'POST',
           headers: { "Content-Type": "application/json","Authorization":`Token ${token}`},
           body: JSON.stringify({old_password:ancienMotDePasse ,new_password1 : motDePasse, new_password2: motDePasseConfirmation}), 

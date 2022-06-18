@@ -10,8 +10,9 @@ export const AjoutCatégorie =()=>{
     const [Service,setService]=useState("");
     const [reussi , setReussi ] = useState(false);
     const token = sessionStorage.getItem("key");
+    const path=sessionStorage.getItem("path");
     useEffect(()=>{
-      fetch("http://127.0.0.1:8000/madrasatic/services_list/", {
+      fetch(path+"madrasatic/services_list/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -22,13 +23,13 @@ export const AjoutCatégorie =()=>{
         return response.json();
       })
       .then((data) => {
-        setServices(data.results);
+        setServices(data);
       });
     },[]);
     const validateCategorie=((e)=>{
         console.log("serviiiice +" + Service + "noom + "+ nom)
     e.preventDefault(); 
-      fetch("http://localhost:8000/madrasatic/categories/", {
+      fetch(path+"madrasatic/categories/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

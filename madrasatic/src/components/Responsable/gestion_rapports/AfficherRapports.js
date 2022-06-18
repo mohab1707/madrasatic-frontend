@@ -14,8 +14,9 @@ export const AfficherRapports =()=>{
     const [nombrePages,setNombresPages]=useState();
     const [nombre,setNombre]=useState("");
     const [pageCourrente,setPageCourrente]=useState();
+    const path=sessionStorage.getItem("path");
     useEffect(()=>{
-      fetch("http://127.0.0.1:8000/madrasatic/reports/", {
+      fetch(path+"madrasatic/reports/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -39,7 +40,7 @@ export const AfficherRapports =()=>{
         console.log(data.selected);
         setPageCourrente(data.selected+1);
         if(data.selected == 0){
-          fetch("http://127.0.0.1:8000/madrasatic/reports/", {
+          fetch(path+"madrasatic/reports/", {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
@@ -53,7 +54,7 @@ export const AfficherRapports =()=>{
               setMyData(data.results);
             });
         }else{
-          fetch(`http://127.0.0.1:8000/madrasatic/reports/?page=${data.selected + 1}`, {
+          fetch(path+`madrasatic/reports/?page=${data.selected + 1}`, {
             method: "GET",
             headers: {
               "Content-Type": "application/json",

@@ -15,8 +15,9 @@ export const NouvelleAnnonce =()=>{
     const [image, setImage] = useState("");
     const [utilisateur,setUtilisateur]=useState(false);
     const [service,setService]=useState(false);
+    const path=sessionStorage.getItem("path");
     useEffect(()=>{
-      fetch("http://127.0.0.1:8000/madrasatic/user/", {
+      fetch(path+"madrasatic/user/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -45,7 +46,7 @@ export const NouvelleAnnonce =()=>{
       form_data.append("etat", "brouillon");
       form_data.append('image', image);
       e.preventDefault(); 
-      fetch("http://localhost:8000/madrasatic/annoncecreate/", {
+      fetch(path+"madrasatic/annoncecreate/", {
       method: "POST",
       headers: {
         "Authorization":`Token ${token}`
@@ -79,7 +80,7 @@ export const NouvelleAnnonce =()=>{
       
       form_data.append('image', image);
       e.preventDefault(); 
-      fetch("http://localhost:8000/madrasatic/annoncecreate/", {
+      fetch(path+"madrasatic/annoncecreate/", {
       method: "POST",
       headers: {
         "Authorization":`Token ${token}`

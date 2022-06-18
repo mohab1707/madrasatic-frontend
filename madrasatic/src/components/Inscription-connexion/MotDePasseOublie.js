@@ -5,9 +5,10 @@ export const MotDePasseOublie= () => {
     const [email , setEmail] = useState('');
     const [reussi , setReussi ] = useState(false);
     const [erreurEmail,setErreurEmail]=useState();
+    const path=sessionStorage.getItem("path");
     const forgotPassword = (e) => {
         e.preventDefault();  
-        fetch('http://localhost:8000/madrasatic/password-reset/', {
+        fetch(path+'madrasatic/password-reset/', {
           method: 'POST',
           headers: { "Content-Type": "application/json"},
           body: JSON.stringify({email: email }), 

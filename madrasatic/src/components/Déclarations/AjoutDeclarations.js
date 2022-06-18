@@ -20,11 +20,12 @@ export const AjoutDeclaration =()=>{
     const [site,setSite]=useState();
     const [endroit,setEndroit]=useState(2);
     const [lieu,setLieu]=useState("");
+    const path=sessionStorage.getItem("path");
     // const [etat,setEtat]=useState("");
     const [reussi , setReussi ] = useState(false);
     const token = sessionStorage.getItem("key");
     useEffect(()=>{
-      fetch("http://127.0.0.1:8000/madrasatic/user/", {
+      fetch(path+"madrasatic/user/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -38,7 +39,7 @@ export const AjoutDeclaration =()=>{
         setAuteur(data.id);
       });
 
-      fetch("http://127.0.0.1:8000/madrasatic/categories/", {
+      fetch(path+"madrasatic/categories/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -51,7 +52,7 @@ export const AjoutDeclaration =()=>{
       .then((data) => {
         setCategories(data);
       });
-      fetch("http://127.0.0.1:8000/madrasatic/blocs/", {
+      fetch(path+"madrasatic/blocs/", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -65,7 +66,7 @@ export const AjoutDeclaration =()=>{
             setBlocs(data);
         });
   
-        fetch("http://127.0.0.1:8000/madrasatic/sites/", {
+        fetch(path+"madrasatic/sites/", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -78,7 +79,7 @@ export const AjoutDeclaration =()=>{
         .then((data) => {
           setSites(data);
         });
-        fetch("http://127.0.0.1:8000/madrasatic/endroits/", {
+        fetch(path+"madrasatic/endroits/", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -91,7 +92,7 @@ export const AjoutDeclaration =()=>{
         .then((data) => {
           setEndroits(data);
         });
-      fetch("http://127.0.0.1:8000/madrasatic/lieux/", {
+      fetch(path+"madrasatic/lieux/", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -119,7 +120,7 @@ export const AjoutDeclaration =()=>{
       form_data.append("etat", "brouillon");
       form_data.append('image', image);
       e.preventDefault(); 
-      fetch("http://localhost:8000/madrasatic/declarationcreate/", {
+      fetch(path+"madrasatic/declarationcreate/", {
       method: "POST",
       headers: {
         "Authorization":`Token ${token}`
@@ -154,7 +155,7 @@ export const AjoutDeclaration =()=>{
       form_data.append("etat", "publiée");
       form_data.append('image', image);
       e.preventDefault(); 
-      fetch("http://localhost:8000/madrasatic/declarationcreate/", {
+      fetch(path+"madrasatic/declarationcreate/", {
       method: "POST",
       headers: {
         "Authorization":`Token ${token}`

@@ -6,8 +6,9 @@ import "./UsersStats.css";
 const UsersStats = () => {
     const [data, setData] = useState([]);
     const token = sessionStorage.getItem("key");
+    const path=sessionStorage.getItem("path");
     useEffect(() => {
-        fetch("http://127.0.0.1:8000/madrasatic/user_stat/", {
+        fetch(path+"madrasatic/user_stat/", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

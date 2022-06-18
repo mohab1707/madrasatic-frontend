@@ -13,8 +13,9 @@ export const ModifierRapportEnregistrée =()=>{
     const [reussi , setReussi ] = useState(false);
     const [image,setImage]=useState(null);
     const token = sessionStorage.getItem("key");
+    const path=sessionStorage.getItem("path");
     useEffect(()=>{
-      fetch("http://127.0.0.1:8000/madrasatic/user/", {
+      fetch(path+"madrasatic/user/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -27,7 +28,7 @@ export const ModifierRapportEnregistrée =()=>{
       .then((data) => {
         setService(data.id);
       });
-      fetch(`http://localhost:8000/madrasatic/draft_reports/${idRapport}/`, {
+      fetch(path+`madrasatic/draft_reports/${idRapport}/`, {
       method: "GET",
       headers: {
         "Authorization":`Token ${token}`
@@ -52,7 +53,7 @@ export const ModifierRapportEnregistrée =()=>{
       if( image !== null){
         form_data.append("image",image);
       }
-      fetch(`http://localhost:8000/madrasatic/draft_reports/${idRapport}/`, {
+      fetch(path+`madrasatic/draft_reports/${idRapport}/`, {
       method: "PUT",
       headers: {
         "Authorization":`Token ${token}`
@@ -68,7 +69,7 @@ export const ModifierRapportEnregistrée =()=>{
     })
     const validateRapport=((e)=>{
         e.preventDefault();
-        fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/${idDeclaration}/`, {
+        fetch(path+`madrasatic/responsable_declarations/${idDeclaration}/`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -86,7 +87,7 @@ export const ModifierRapportEnregistrée =()=>{
             if( image !== null){
               form_data.append("image",image);
             }
-            fetch(`http://localhost:8000/madrasatic/draft_reports/${idRapport}/`, {
+            fetch(path+`madrasatic/draft_reports/${idRapport}/`, {
                 method: "PUT",
                 headers: {
                   "Authorization":`Token ${token}`
@@ -102,7 +103,7 @@ export const ModifierRapportEnregistrée =()=>{
     })
     const supprimerRapport=((e)=>{
       e.preventDefault(); 
-        fetch(`http://localhost:8000/madrasatic/draft_reports/${idRapport}/`, {
+        fetch(path+`madrasatic/draft_reports/${idRapport}/`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

@@ -18,8 +18,9 @@ export const ModifierAnnonceEnregistrée=()=>{
     const [service,setService]=useState(false);
     const token = sessionStorage.getItem("key");
     const [image, setImage] = useState("image");
+    const path=sessionStorage.getItem("path");
     useEffect(()=>{
-      fetch("http://127.0.0.1:8000/madrasatic/user/", {
+      fetch(path+"madrasatic/user/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -37,7 +38,7 @@ export const ModifierAnnonceEnregistrée=()=>{
           setService(true);
         }
       });
-      fetch("http://127.0.0.1:8000/madrasatic/annonceedit/"+idAnnonce+"/", {
+      fetch(path+"madrasatic/annonceedit/"+idAnnonce+"/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -67,7 +68,7 @@ export const ModifierAnnonceEnregistrée=()=>{
             form_data.append('image', image);
         }
       e.preventDefault(); 
-      fetch("http://localhost:8000/madrasatic/annonceedit/"+idAnnonce+"/", {
+      fetch(path+"madrasatic/annonceedit/"+idAnnonce+"/", {
       method: "PUT",
       headers: {
         "Authorization":`Token ${token}`
@@ -102,7 +103,7 @@ export const ModifierAnnonceEnregistrée=()=>{
         form_data.append('image', image);
     }
       e.preventDefault(); 
-      fetch("http://localhost:8000/madrasatic/annonceedit/"+idAnnonce+"/", {
+      fetch(path+"madrasatic/annonceedit/"+idAnnonce+"/", {
       method: "PUT",
       headers: {
         "Authorization":`Token ${token}`

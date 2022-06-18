@@ -14,8 +14,9 @@ export const MesDeclarationsEnregistrées =()=>{
     const [nombre,setNombre]=useState();
     const [nombrePages,setNombresPages]=useState();
     const [pageCourrente,setPageCourrente]=useState(0);
+    const path=sessionStorage.getItem("path");
     useEffect(()=>{
-      fetch("http://127.0.0.1:8000/madrasatic/saveddeclarationslist/", {
+      fetch(path+"madrasatic/saveddeclarationslist/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -35,7 +36,7 @@ export const MesDeclarationsEnregistrées =()=>{
             setNombre(data.count);
             setNombresPages(Math.ceil(data.count /5));
           });
-          fetch("http://127.0.0.1:8000/madrasatic/categories/", {
+          fetch(path+"madrasatic/categories/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -51,7 +52,7 @@ export const MesDeclarationsEnregistrées =()=>{
     },[]);
     useEffect(()=>{
       if (pageCourrente==0){
-        fetch("http://127.0.0.1:8000/madrasatic/saveddeclarationslist/", {
+        fetch(path+"madrasatic/saveddeclarationslist/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -67,7 +68,7 @@ export const MesDeclarationsEnregistrées =()=>{
             setNombresPages(Math.ceil(data.count /5));
           });
       }else{
-        fetch(`http://127.0.0.1:8000/madrasatic/saveddeclarationslist/?page=${pageCourrente + 1}`, {
+        fetch(path+`madrasatic/saveddeclarationslist/?page=${pageCourrente + 1}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -97,7 +98,7 @@ export const MesDeclarationsEnregistrées =()=>{
     });
     const supprimerDeclaration=((e,idDeclaration)=>{
       e.preventDefault(); 
-        fetch(`http://localhost:8000/madrasatic/declarationdelete/${idDeclaration}/`, {
+        fetch(path+`madrasatic/declarationdelete/${idDeclaration}/`, {
       method: "DELETE",
       headers: {
         "Authorization":`Token ${token}`

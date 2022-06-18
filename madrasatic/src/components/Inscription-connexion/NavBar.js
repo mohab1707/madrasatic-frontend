@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 // import './index.css';
 import {
   MDBContainer,
@@ -6,6 +6,10 @@ import {
   MDBNavbarBrand
 } from 'mdb-react-ui-kit';
 export const NavBar = () => {
+  useEffect(()=>{
+    const path = "http://127.0.0.1:8000/";
+    sessionStorage.setItem("path", path);
+  },[]);
   return (
     <>
       <MDBNavbar light  style={{backgroundColor:'#24344f'}}>

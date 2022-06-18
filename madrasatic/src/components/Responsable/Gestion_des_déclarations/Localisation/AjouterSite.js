@@ -6,9 +6,10 @@ export const AjouterSite =()=>{
     const [objet,setObjet]=useState("");
     const [reussi , setReussi ] = useState(false);
     const token = sessionStorage.getItem("key");
+    const path=sessionStorage.getItem("path");
     const saveBloc=((e)=>{
       e.preventDefault(); 
-      fetch("http://localhost:8000/madrasatic/sites/", {
+      fetch(path+"madrasatic/sites/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

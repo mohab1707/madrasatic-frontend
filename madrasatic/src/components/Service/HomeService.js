@@ -26,6 +26,7 @@ export const HomeService= () => {
     const[declaration,setMyData]=useState([]);
     const [Consulter,setConsulter]=useState(false);
     const [catégories,setCatégories]=useState ([]);
+    const path=sessionStorage.getItem("path");
     const [id,setId]=useState();
     const detail=((id)=>{
         setId(id);
@@ -33,7 +34,7 @@ export const HomeService= () => {
         
     })
     useEffect(()=>{
-          fetch("http://127.0.0.1:8000/madrasatic/service_declarations/", {
+          fetch(path+"madrasatic/service_declarations/", {
               method: "GET",
               headers: {
                 "Content-Type": "application/json",
@@ -48,7 +49,7 @@ export const HomeService= () => {
                 setNombre(data.count);
                 setNombresPages(Math.ceil(data.count /5));
               });
-              fetch("http://127.0.0.1:8000/madrasatic/categories/", {
+              fetch(path+"madrasatic/categories/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -67,7 +68,7 @@ export const HomeService= () => {
       console.log(data.selected);
       setPageCourrente(data.selected+1);
       if(data.selected == 0){
-        fetch("http://127.0.0.1:8000/madrasatic/service_declarations/", {
+        fetch(path+"madrasatic/service_declarations/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -83,7 +84,7 @@ export const HomeService= () => {
                 setNombresPages(Math.ceil(data.count /5));
           });
       }else{
-        fetch(`http://127.0.0.1:8000/madrasatic/service_declarations/?page=${data.selected + 1}`, {
+        fetch(path+`madrasatic/service_declarations/?page=${data.selected + 1}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -102,7 +103,7 @@ export const HomeService= () => {
     })
     const afficher=(val)=>{
         if(val === 'tout'){
-            fetch("http://127.0.0.1:8000/madrasatic/service_declarations/", {
+            fetch(path+"madrasatic/service_declarations/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -118,7 +119,7 @@ export const HomeService= () => {
             setNombresPages(Math.ceil(data.count /5));
           });
         }else if(val === '1' || val=== '2' || val ==='3'){
-            fetch(`http://127.0.0.1:8000/madrasatic/service_declarations/?priorité=${val}`, {
+            fetch(path+`madrasatic/service_declarations/?priorité=${val}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -134,7 +135,7 @@ export const HomeService= () => {
                 setNombresPages(Math.ceil(data.count /5));
           });
         }else{
-            fetch(`http://127.0.0.1:8000/madrasatic/service_declarations/?etat=${val}`, {
+            fetch(path+`madrasatic/service_declarations/?etat=${val}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -209,7 +210,7 @@ export const HomeService= () => {
                                 <Table responsive hover>
                                 <tbody>
                                     <tr className="unread" class="candidates-list">
-                                        <td class="title" style={{width :'300px',borderRadius:'8px'}}><img  style={{width: '200px',borderRadius:'8px'}} src={dec.image} alt="Image du signalement"/></td>
+                                        <td class="title" style={{width :'300px',borderRadius:'8px'}}><img  style={{width: '200px',height:'150px',borderRadius:'8px'}} src={dec.image} alt="Image du signalement"/></td>
                                         <td style={{width:'400px'}}>
                                             <div class="candidate-list-details">
                                               <div class="candidate-list-info">

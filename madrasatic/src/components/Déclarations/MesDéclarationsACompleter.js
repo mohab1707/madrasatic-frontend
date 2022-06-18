@@ -10,8 +10,9 @@ export const MesDéclarationCompleter =()=>{
     const [catégories,setCatégories]=useState ([]);
     const [id, setId] = useState();
     const [idDeclaration,setIdDeclaration]=useState();
+    const path=sessionStorage.getItem("path");
     useEffect(()=>{
-      fetch("http://127.0.0.1:8000/madrasatic/categories/", {
+      fetch(path+"madrasatic/categories/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -24,7 +25,7 @@ export const MesDéclarationCompleter =()=>{
           .then((data) => {
             setCatégories(data);
           });
-      fetch("http://127.0.0.1:8000/madrasatic/user/", {
+      fetch(path+"madrasatic/user/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -37,7 +38,7 @@ export const MesDéclarationCompleter =()=>{
       .then((data) => {
         setId(data.id);
       });
-      fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/?etat=incompléte", {
+      fetch(path+"madrasatic/responsable_declarations/?etat=incompléte", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -78,25 +79,6 @@ export const MesDéclarationCompleter =()=>{
                                   }}>Mes déclarations incomplètes</Card.Title>
                             </Card.Header>
                             {MyData.filter(declaration=>declaration.auteur === id).map(dec => (
-                            // <Card.Body className='px-0 py-2'  onClick={(e)=>complet(dec.id)}>
-                            //     <Table responsive hover>
-                            //         <tbody>
-                            //         <tr className="unread">
-                            //             <td><img  style={{width: '150px'}} src={dec.image} alt="activity-user"/></td>
-                            //             <td>
-                            //                 <h6 className="mb-1">Objet :{dec.objet}</h6>
-                            //                 <p className="m-0">Etat :{dec.etat}</p>
-                            //             </td>
-                            //             <td>
-                            //                 <h6 className="text-muted"><i className="fa fa-circle text-c-green f-10 m-r-15"/>Catégorie :{dec.catégorie}</h6>
-                            //                 <h6 className="text-muted"><i className="fa fa-circle text-c-green f-10 m-r-15"/>Priorité :{dec.priorité}</h6>
-                            //             </td>
-                            //             {/* <td><a href={DEMO.BLANK_LINK} className="label theme-bg2 text-white f-12">Reject</a><a href={DEMO.BLANK_LINK} className="label theme-bg text-white f-12">Approve</a></td> */}
-                            //         </tr>
-                            //       </tbody>
-                            //     </Table>
-                            //   </Card.Body>
-
                                   <Card.Body className='px-0 py-2' >
                                   <Table responsive hover>
                                       <tbody>

@@ -17,8 +17,9 @@ export const CompleterDeclaration =()=>{
     const{ idDeclaration}=useParams()
     const [reussi , setReussi ] = useState(false);
     const token = sessionStorage.getItem("key");
+    const path=sessionStorage.getItem("path");
     useEffect(()=>{
-      fetch("http://127.0.0.1:8000/madrasatic/user/", {
+      fetch(path+"madrasatic/user/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -32,7 +33,7 @@ export const CompleterDeclaration =()=>{
         setAuteur(data.id);
       });
 
-      fetch("http://127.0.0.1:8000/madrasatic/categories/", {
+      fetch(path+"madrasatic/categories/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -45,7 +46,7 @@ export const CompleterDeclaration =()=>{
       .then((data) => {
         setCategories(data);
       });
-      fetch(`http://localhost:8000/madrasatic/responsable_declarations/${idDeclaration}/`, {
+      fetch(path+`madrasatic/responsable_declarations/${idDeclaration}/`, {
       method: "GET",
       headers: {
         "Authorization":`Token ${token}`
@@ -71,7 +72,7 @@ export const CompleterDeclaration =()=>{
         form_data.append('image', image);
       }
       e.preventDefault(); 
-      fetch(`http://localhost:8000/madrasatic/responsable_declarations/${idDeclaration}/`, {
+      fetch(path+`madrasatic/responsable_declarations/${idDeclaration}/`, {
       method: "PUT",
       headers: {
         "Authorization":`Token ${token}`
@@ -105,7 +106,7 @@ export const CompleterDeclaration =()=>{
         form_data.append('image', image);
       }
       e.preventDefault(); 
-      fetch(`http://localhost:8000/madrasatic/responsable_declarations/${idDeclaration}/`, {
+      fetch(path+`madrasatic/responsable_declarations/${idDeclaration}/`, {
       method: "PUT",
       headers: {
         "Authorization":`Token ${token}`

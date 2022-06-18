@@ -13,8 +13,9 @@ export const AfficherAnnonces=()=>{
     const [nombrePages,setNombresPages]=useState("");
     const [pageCourrente,setPageCourrente]=useState();
     const token = sessionStorage.getItem("key");
+    const path=sessionStorage.getItem("path");
     useEffect(()=>{
-      fetch("http://127.0.0.1:8000/madrasatic/annonceslist/", {
+      fetch(path+"madrasatic/annonceslist/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -33,7 +34,7 @@ export const AfficherAnnonces=()=>{
     const ChangePage=((data)=>{
         setPageCourrente(data.selected+1);
         if(data.selected == 0){
-          fetch("http://127.0.0.1:8000/madrasatic/annonceslist/", {
+          fetch(path+"madrasatic/annonceslist/", {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
@@ -47,7 +48,7 @@ export const AfficherAnnonces=()=>{
               setAnnonces(data.results);
             });
         }else{
-          fetch(`http://127.0.0.1:8000/madrasatic/annonceslist/?page=${data.selected + 1}`, {
+          fetch(path+`madrasatic/annonceslist/?page=${data.selected + 1}`, {
             method: "GET",
             headers: {
               "Content-Type": "application/json",

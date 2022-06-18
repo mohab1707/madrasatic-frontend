@@ -25,10 +25,27 @@ export const BareService = () => {
     const [showNavRight, setShowNavRight] = useState(false);
     const [reussi , setReussi ] = useState(false);
     const [isNotifated, setIsNotifated] = useState(false);
+    const [nom,setNom]=useState("");
+    const [image,setImage]=useState(null);
+    const token = sessionStorage.getItem("key");
+    const path=sessionStorage.getItem("path");
+    useEffect(()=>{
+        fetch(path+"madrasatic/user/", {
+          method: "GET",
+          headers: { "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization":`Token ${token}` },
+        }).then((response) => {
+            return response.json();
+        }).then((data)=>{
+            setImage(data.img);
+            setNom(data.username);
+        })
+    },[])
     useEffect(()=>{
           const pusher = new Pusher("718db103e05e52a72795", {
             cluster: "eu",
-            authEndpoint: "http://127.0.0.1:8000/madrasatic/pusher/auth",
+            authEndpoint: path+"madrasatic/pusher/auth",
           });
           var channel2 = pusher.subscribe("Report");
           channel2.bind("Rejet", function ({ message }) {
@@ -42,7 +59,7 @@ export const BareService = () => {
     },[isNotifated])
     const deconnexion =(e) => {
         e.preventDefault();
-        fetch("http://127.0.0.1:8000/madrasatic/logout/", {
+        fetch(path+"madrasatic/logout/", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
         }).then((response) => {
@@ -73,7 +90,9 @@ export const BareService = () => {
         />
         <MDBNavbar expand='lg' light style={{backgroundColor:'#24344f'}} fixed='top'>
             <MDBContainer fluid>
-            <MDBNavbarBrand href='/HomeService'style={{color:'#ffffff'}}>MADRASA-TIC</MDBNavbarBrand>
+            <MDBNavbarBrand href=''style={{color:'#ffffff'}}>{
+                image ? <img src={image} alt='Une image' style={{borderRadius:'50%',width:'50px',height:'50px'}} /> : null
+            } {nom}</MDBNavbarBrand>
 
             <MDBNavbarToggler
             type='button'
@@ -90,10 +109,13 @@ export const BareService = () => {
             <MDBCollapse navbar show={showNavRight}>
                 <MDBNavbarNav right fullWidth={false} className='mb-2 mb-lg-0'>
                         <MDBNavbarItem>
-                            <MDBNavbarLink href='/NouvelleAnnonce' style={{color:'#ffffff'}}>Nouvelle annonce</MDBNavbarLink>
+                            <MDBNavbarLink href='/HomeService' style={{color:'#ffffff'}}>Déclarations</MDBNavbarLink>
                         </MDBNavbarItem>
                         <MDBNavbarItem>
                             <MDBNavbarLink href='/Annonces' style={{color:'#ffffff'}}>Annonces</MDBNavbarLink>
+                        </MDBNavbarItem>
+                        <MDBNavbarItem>
+                            <MDBNavbarLink href='/NouvelleAnnonce' style={{color:'#ffffff'}}>Nouvelle annonce</MDBNavbarLink>
                         </MDBNavbarItem>
                     <MDBNavbarItem>
                         <MDBDropdown>

@@ -16,6 +16,7 @@ export const ListeDeclarationEnvoyee = () => {
     const [RechercheFaite, setRechercheFaite]=useState(false);
     const [filtrage,setFiltrage]=useState(false);
     const [catégories,setCatégories]=useState ([]);
+    const path=sessionStorage.getItem("path");
     const [id,setId]=useState();
     const detail=((id)=>{
         setId(id);
@@ -23,7 +24,7 @@ export const ListeDeclarationEnvoyee = () => {
         
     })
     useEffect(()=>{
-      fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
+      fetch(path+"madrasatic/responsable_declarations/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -38,7 +39,7 @@ export const ListeDeclarationEnvoyee = () => {
             setNombre(data.count);
             setNombresPages(Math.ceil(data.count /5));
           });
-          fetch("http://127.0.0.1:8000/madrasatic/categories/", {
+          fetch(path+"madrasatic/categories/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -54,7 +55,7 @@ export const ListeDeclarationEnvoyee = () => {
 },[]);
     const afficher=(val)=>{
       if(val === 'tout'){
-        fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
+        fetch(path+"madrasatic/responsable_declarations/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -68,7 +69,7 @@ export const ListeDeclarationEnvoyee = () => {
         setMyData(data.results);
       });
     }else if(val === '1' || val=== '2' || val ==='3'){
-        fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/?priorité=${val}`, {
+        fetch(path+`madrasatic/responsable_declarations/?priorité=${val}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -82,7 +83,7 @@ export const ListeDeclarationEnvoyee = () => {
         setMyData(data.results);
       });
     }else{
-        fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/?etat=${val}`, {
+        fetch(path+`madrasatic/responsable_declarations/?etat=${val}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -100,7 +101,7 @@ export const ListeDeclarationEnvoyee = () => {
     const ChangePage=((data)=>{
       setPageCourrente(data.selected+1);
       if(data.selected == 0){
-        fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
+        fetch(path+"madrasatic/responsable_declarations/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -114,7 +115,7 @@ export const ListeDeclarationEnvoyee = () => {
             setMyData(data.results);
           });
       }else{
-        fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/?page=${data.selected + 1}`, {
+        fetch(path+`madrasatic/responsable_declarations/?page=${data.selected + 1}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -196,7 +197,7 @@ export const ListeDeclarationEnvoyee = () => {
                                 <Table responsive hover>
                                     <tbody>
                                     <tr className="unread" class="candidates-list">
-                                        <td class="title" style={{width :'300px'}}><img  style={{width: '200px',borderRadius:'8px'}} src={dec.image} alt="Image du signalement"/></td>
+                                        <td class="title" style={{width :'300px'}}><img  style={{width: '200px',height:'150px',borderRadius:'8px'}} src={dec.image} alt="Image du signalement"/></td>
                                         <td style={{width:'400px'}}>
                                             <div class="candidate-list-details">
                                               <div class="candidate-list-info">

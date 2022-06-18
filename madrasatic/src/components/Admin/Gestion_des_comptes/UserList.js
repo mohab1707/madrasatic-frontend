@@ -14,9 +14,10 @@ const UserList = () => {
     const [RechercheFaite, setRechercheFaite]=useState(false);
     const [filtrage,setFiltrage]=useState(false);
     const[MyData,setMyData]=useState([]);
+    const path=sessionStorage.getItem("path");
       useEffect(() => {
         if(RechercheFaite == true){
-          fetch(`http://127.0.0.1:8000/madrasatic/manageusers/?search=${recherche}`, {
+          fetch(path+`madrasatic/manageusers/?search=${recherche}`, {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
@@ -25,7 +26,6 @@ const UserList = () => {
             },
           }).then((response) => {
               return response.json();
-              console.log(recherche);
             })
             .then((data) => {
               setMyData(data.results);
@@ -35,7 +35,7 @@ const UserList = () => {
         }else{
           if(filtrage == false){
           if(pageCourrente == 0){
-        fetch("http://127.0.0.1:8000/madrasatic/manageusers/", {
+        fetch(path+"madrasatic/manageusers/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -50,7 +50,7 @@ const UserList = () => {
               setNombre(data.count);
               setNombresPages(Math.ceil(data.count /5));
           });}else{
-            fetch(`http://127.0.0.1:8000/madrasatic/manageusers/?page=${pageCourrente +1}`, {
+            fetch(path+`madrasatic/manageusers/?page=${pageCourrente +1}`, {
                 method: "GET",
                 headers: {
                   "Content-Type": "application/json",
@@ -72,7 +72,6 @@ const UserList = () => {
       }, [MyData]);
     const sauvegarde=(id,userRole,user_is_active,e)=>{
         e.preventDefault();
-          console.log("rooole : "+role + " is_active : "+is_active);
                 if(role ==="role"){
                     setRole(userRole);
                   }
@@ -83,7 +82,7 @@ const UserList = () => {
               console.log("rooole : "+role + " is_active : "+is_active);
               if(role === "role" && is_active !=="is_active"){
                 console.log("haja1");
-                fetch(`http://127.0.0.1:8000/madrasatic/manageusers/${id}/`, {
+                fetch(path+`madrasatic/manageusers/${id}/`, {
                   method: "PUT",
                   headers: { "Content-Type": "application/json",'Accept': 'application/json',"Authorization":`Token ${token}`}, 
                   body: JSON.stringify({is_active:is_active,role:userRole})
@@ -97,7 +96,7 @@ const UserList = () => {
                   })
               }else if(role !=="role" && is_active !== "is_active"){
                 console.log("haja2");
-                fetch(`http://127.0.0.1:8000/madrasatic/manageusers/${id}/`, {
+                fetch(path+`madrasatic/manageusers/${id}/`, {
                   method: "PUT",
                   headers: { "Content-Type": "application/json",'Accept': 'application/json',"Authorization":`Token ${token}`}, 
                   body: JSON.stringify({is_active:is_active,role:role})
@@ -111,7 +110,7 @@ const UserList = () => {
                   })
               }else if(is_active==="is_active" && role!=="role"){
                 console.log("haja3");
-                fetch(`http://127.0.0.1:8000/madrasatic/manageusers/${id}/`, {
+                fetch(path+`madrasatic/manageusers/${id}/`, {
                   method: "PUT",
                   headers: { "Content-Type": "application/json",'Accept': 'application/json',"Authorization":`Token ${token}`}, 
                   body: JSON.stringify({role:role,is_active:user_is_active})
@@ -136,7 +135,7 @@ const UserList = () => {
       }
       const afficher=(val)=>{
         if(val === 'tout'){
-          fetch("http://127.0.0.1:8000/madrasatic/manageusers/", {
+          fetch(path+"madrasatic/manageusers/", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -152,7 +151,7 @@ const UserList = () => {
           setMyData(data.results);
         });
       }else if(val === 'Responsable' || val=== 'Admin' || val ==='Service' || val === 'Utilisateur'){
-          fetch(`http://127.0.0.1:8000/madrasatic/manageusers/?role=${val}`, {
+          fetch(path+`madrasatic/manageusers/?role=${val}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -168,7 +167,7 @@ const UserList = () => {
           setMyData(data.results);
         });
       }else{
-          fetch(`http://127.0.0.1:8000/madrasatic/manageusers/?is_active=${val}`, {
+          fetch(path+`madrasatic/manageusers/?is_active=${val}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

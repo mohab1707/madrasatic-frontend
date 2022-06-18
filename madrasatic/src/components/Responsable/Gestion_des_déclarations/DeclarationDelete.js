@@ -8,8 +8,9 @@ export const DeclarationDelete= () => {
         const [raison,setRaison]=useState("");
         const [pageAcceuil,setPageAcceuil]=useState(false);
         const [erreurReason,setErrorReason]=useState("");
+        const path=sessionStorage.getItem("path");
         useEffect(()=>{
-            fetch("http://127.0.0.1:8000/madrasatic/user/", {
+            fetch(path+"madrasatic/user/", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -31,7 +32,7 @@ export const DeclarationDelete= () => {
         const supprimerDeclaration=((e)=>{
             e.preventDefault(); 
             console.log("id decla"+id +" idresponsable +" + idResponsable);
-        fetch(`http://127.0.0.1:8000/madrasatic/declaration_rejection/`, {
+        fetch(path+`madrasatic/declaration_rejection/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -69,7 +70,7 @@ export const DeclarationDelete= () => {
                     ></textarea>
                     {erreurReason ? <p style={{color: 'red',marginLeft:'10%'} }>{erreurReason}</p> : null}
             </div>
-            <button onClick={supprimerDeclaration}>Confirmer</button>
+            <button onClick={supprimerDeclaration}>Confirme</button>
             <br></br> <br></br>
         </div>
     );

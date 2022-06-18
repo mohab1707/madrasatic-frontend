@@ -12,7 +12,7 @@ import {
   MDBDropdownLink,
   } from 'mdb-react-ui-kit';
   import ReactPaginate from "react-paginate";
-export const AfficherDeclaration= () => {
+export const DeclarationsRejetées= () => {
     const [nomCategorie,setNomCategorie]=useState();
     const [confirmé,setConfirmé]=useState();
     const[listeConfirmé,setListeConfirmé]=useState([]);
@@ -38,15 +38,9 @@ export const AfficherDeclaration= () => {
           "Authorization":`Token ${token}`
         },
       }).then((response) => {
-        if(response.ok){
-          console.log("reussi")
-        }else{
-          console.log("problem")
-        }
           return response.json();
         })
         .then((data) => {
-            console.log("idd :"+data.id)
             setUtilisateur(data.id);
         });
         fetch(path+"madrasatic/categories/", {
@@ -60,28 +54,12 @@ export const AfficherDeclaration= () => {
             return response.json();
           })
           .then((data) => {
-            console.log("data :");
             setCatégories(data);
           });
-          fetch(path+"madrasatic/responsable_declarations/", {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              "Accept": "application/json",
-              "Authorization":`Token ${token}`
-            },
-          }).then((response) => {
-              return response.json();
-            })
-            .then((data) => {
-              setMyData(data.results);
-              setNombre(data.count);
-              setNombresPages(Math.ceil(data.count /5));
-            });
     },[]);
     useEffect(()=>{
       if (pageCourrente==0){
-        fetch(path+"madrasatic/responsable_declarations/", {
+        fetch(path+"madrasatic/declaration_rejection/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -97,7 +75,7 @@ export const AfficherDeclaration= () => {
             setNombresPages(Math.ceil(data.count /5));
           });
       }else{
-        fetch(path+`madrasatic/responsable_declarations/?page=${pageCourrente + 1}`, {
+        fetch(path+`madrasatic/declaration_rejection/?page=${pageCourrente + 1}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -118,84 +96,6 @@ export const AfficherDeclaration= () => {
           });
       }    
 },[declaration]);
-    const confirmer=(id)=>{
-              fetch(path+`madrasatic/responsable_declarations/${id}/`, {
-              method: "PUT",
-              headers: {
-                  "Content-Type": "application/json",
-                  "Accept": "application/json",
-                  "Authorization":`Token ${token}`
-              },
-              body:JSON.stringify({confirmée_par:listeConfirmé})
-              }).then((response)=>{
-                if(response.ok){
-                  console.log("liste changer")
-                  setListeConfirmé([]);
-                  setListeSignaler([]);
-                }else{
-                  console.log("erreur dans le fetch")
-                }
-                setPeutConfirmer(!peutConfirmer);
-              })
-            }
-    const recupdata=((id)=>{
-      fetch(path+`madrasatic/responsable_declarations/${id}/`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "Authorization":`Token ${token}`
-        },
-        }).then((response) => {
-            if (response.ok) {
-            console.log("signalé par et recup par récuperer");
-            } else {
-            console.log("y'a une erreur");
-            }
-            return response.json();
-        }).then((data)=>{
-            setListeConfirmé(data.confirmée_par);
-            setSignalé(data.signalée_par);
-            if (data.confirmée_par.some(item=> item === utilisateur)){
-              console.log("existe deja dans liste confirmé")
-            }else{
-              console.log("existe pas dans liste confirmé")
-                setListeConfirmé(previousState =>(
-                    [...previousState,utilisateur]
-                ));
-            }
-            if (data.signalée_par.some(item=> item === utilisateur)){
-              console.log("existe deja dans liste signalé")
-            }else{
-              console.log("existe pas dans liste signalé")
-                setListeSignaler(previousState =>(
-                    [...previousState,utilisateur]
-                ));
-            }
-        })
-    })
-    const signaler=(id,e)=>{
-        e.preventDefault();
-            fetch(path+`madrasatic/responsable_declarations/${id}/`, {
-              method: "PUT",
-              headers: {
-                  "Content-Type": "application/json",
-                  "Accept": "application/json",
-                  "Authorization":`Token ${token}`
-              },
-              body:JSON.stringify({signalée_par:listeSignaler})
-              }).then((response) => {
-                if(response.ok){
-                  console.log("liste changer")
-                  setListeConfirmé([]);
-                  setListeSignaler([]);
-                }else{
-                  console.log("erreur dans le fetch")
-                }
-                setPeutConfirmer(!peutConfirmer);
-              })
-        
-    }
     const ChangePage=((data)=>{
       setPageCourrente(data.selected);
     })
@@ -219,14 +119,14 @@ export const AfficherDeclaration= () => {
                                   backgroundColor: '#1f2833',
                                   color: 'white',
                                   textAlign: 'center'
-                                  }}>Liste Des Déclarations</Card.Title>
+                                  }}>Liste des déclarations rejetées</Card.Title>
                             </Card.Header>
-                            {declaration.filter(decla=>decla.parent_declaration === null).filter(decl=>decl.signalée_par.length < 3).filter(dec => dec.etat !== "rejetée").map(dec => (
+                            {declaration.filter(decl=>decl.signalée_par.length < 3).map(dec => (
                             <Card.Body className='px-0 py-2'  onClick={()=>{recupdata(dec.id)}}>
                                 <Table responsive hover>
                                     <tbody>
                                     <tr className="unread" class="candidates-list">
-                                        <td class="title"><img  style={{width :'200px',height:'150px',borderRadius:'8px'}} src={dec.image} alt="Image du signalement"/></td>
+                                        <td class="title"><img  style={{width :'200px',borderRadius:'8px'}} src={dec.image} alt="Image du signalement"/></td>
                                         <td style={{width:'400px'}}>
                                             <div class="candidate-list-details">
                                               <div class="candidate-list-info">

@@ -7,8 +7,9 @@ export const RejeterAnnonce= () => {
         const [raison,setRaison]=useState("");
         const [pageAcceuil,setPageAcceuil]=useState(false);
         const [erreurReason,setErrorReason]=useState("");
+        const path=sessionStorage.getItem("path");
         useEffect(()=>{
-            fetch("http://127.0.0.1:8000/madrasatic/user/", {
+            fetch(path+"madrasatic/user/", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -24,18 +25,7 @@ export const RejeterAnnonce= () => {
         },[])
         const RejeterAnnonce=((e)=>{
             e.preventDefault(); 
-        //     fetch(`http://127.0.0.1:8000/madrasatic/annonceedit/${id}/`, {
-        //     method: "PATCH",
-        //     headers: {
-        //       "Content-Type": "application/json",
-        //       "Accept": "application/json",
-        //       "Authorization":`Token ${token}`
-        //     },
-        //     body: JSON.stringify({etat:"rejeté"})
-        //   }).then((response) => {
-        //       return response.json();
-        //     })
-            fetch(`http://127.0.0.1:8000/madrasatic/annonce_rejection/`, {
+            fetch(path+`madrasatic/annonce_rejection/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

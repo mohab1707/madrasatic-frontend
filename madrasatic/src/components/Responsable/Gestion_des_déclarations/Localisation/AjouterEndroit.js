@@ -10,8 +10,9 @@ export const AjouterEndroit =()=>{
     const [bloc,setBloc]=useState('');
     const [sites,setSites]=useState([]);
     const [site,setSite]=useState("");
+    const path=sessionStorage.getItem("path");
     useEffect(()=>{
-      fetch("http://127.0.0.1:8000/madrasatic/sites/", {
+      fetch(path+"madrasatic/sites/", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -29,7 +30,7 @@ export const AjouterEndroit =()=>{
         .then((data) => {
           setSites(data);
         });
-      fetch("http://127.0.0.1:8000/madrasatic/blocs/", {
+      fetch(path+"madrasatic/blocs/", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -45,7 +46,7 @@ export const AjouterEndroit =()=>{
     },[]);
     const saveBloc=((e)=>{
       e.preventDefault(); 
-      fetch("http://localhost:8000/madrasatic/endroits/", {
+      fetch(path+"madrasatic/endroits/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

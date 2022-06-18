@@ -29,9 +29,10 @@ export default function DetailRapport() {
     const [title,setTitile]=useState("");
     const [description,setDescription]=useState("");
     const[MyData,setMyData]=useState([]);
+    const path=sessionStorage.getItem("path");
     useEffect(()=>{
         // informations du rapport
-        fetch(`http://127.0.0.1:8000/madrasatic/reports/${idRapport}/`, {
+        fetch(path+`madrasatic/reports/${idRapport}/`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -47,7 +48,7 @@ export default function DetailRapport() {
             setService(data.service);
             console.log(data.declaration);
           }).then(()=>{
-                fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/${id2}/`, {
+                fetch(path+`madrasatic/responsable_declarations/${id2}/`, {
                     method: "GET",
                     headers: {
                     "Content-Type": "application/json",
@@ -72,7 +73,7 @@ export default function DetailRapport() {
         setComplement(true);
     })
     const validerRapport=(()=>{
-        fetch(`http://127.0.0.1:8000/madrasatic/reports/${idRapport}/`, {
+        fetch(path+`madrasatic/reports/${idRapport}/`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

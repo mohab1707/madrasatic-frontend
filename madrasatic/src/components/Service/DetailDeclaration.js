@@ -49,8 +49,9 @@ export default function DetailDeclaration() {
     const [rapport,setRapport]=useState([]);
     const [Consulter,setConsulter]=useState(false);
     const [nombreRapports,setNombreRapports]=useState("");
+    const path=sessionStorage.getItem("path");
     useEffect(()=>{
-      fetch("http://127.0.0.1:8000/madrasatic/draft_reports/", {
+      fetch(path+"madrasatic/draft_reports/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -63,7 +64,7 @@ export default function DetailDeclaration() {
           .then((data) => {
             setRapportsEnregistrés(data);
           });
-      fetch("http://127.0.0.1:8000/madrasatic/reports/", {
+      fetch(path+"madrasatic/reports/", {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
@@ -76,7 +77,7 @@ export default function DetailDeclaration() {
             .then((data) => {
               setRapport(data);
             });
-      fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
+      fetch(path+"madrasatic/responsable_declarations/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -91,7 +92,7 @@ export default function DetailDeclaration() {
             setNombre(data.count);
             setNombresPages(Math.ceil(data.count /5));
           });
-          fetch("http://127.0.0.1:8000/madrasatic/categories/", {
+          fetch(path+"madrasatic/categories/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -104,7 +105,7 @@ export default function DetailDeclaration() {
           .then((data) => {
             setCategories(data);
           });
-          fetch("http://127.0.0.1:8000/madrasatic/blocs/", {
+          fetch(path+"madrasatic/blocs/", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -119,7 +120,7 @@ export default function DetailDeclaration() {
             
         });
   
-        fetch("http://127.0.0.1:8000/madrasatic/sites/", {
+        fetch(path+"madrasatic/sites/", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -133,7 +134,7 @@ export default function DetailDeclaration() {
           setSites(data);
           
         });
-        fetch("http://127.0.0.1:8000/madrasatic/endroits/", {
+        fetch(path+"madrasatic/endroits/", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -147,7 +148,7 @@ export default function DetailDeclaration() {
           setEndroits(data);
           
         });
-      fetch("http://127.0.0.1:8000/madrasatic/lieux/", {
+      fetch(path+"madrasatic/lieux/", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -168,7 +169,7 @@ export default function DetailDeclaration() {
         
     })
     useEffect(()=>{
-      fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
+      fetch(path+"madrasatic/responsable_declarations/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -186,7 +187,7 @@ export default function DetailDeclaration() {
     },[])
     const afficher=(val)=>{
         if(val === 'tout'){
-            fetch("http://127.0.0.1:8000/madrasatic/service_declarations/", {
+            fetch(path+"madrasatic/service_declarations/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -200,7 +201,7 @@ export default function DetailDeclaration() {
             setMyData(data.results);
           });
         }else if(val === '1' || val=== '2' || val ==='3'){
-            fetch(`http://127.0.0.1:8000/madrasatic/service_declarations/?priorité=${val}`, {
+            fetch(path+`madrasatic/service_declarations/?priorité=${val}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -214,7 +215,7 @@ export default function DetailDeclaration() {
             setMyData(data.results);
           });
         }else{
-            fetch(`http://127.0.0.1:8000/madrasatic/service_declarations/?etat=${val}`, {
+            fetch(path+`madrasatic/service_declarations/?etat=${val}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -231,7 +232,7 @@ export default function DetailDeclaration() {
     }
     useEffect(()=>{
         console.log('iddd ++'+ id);
-        fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/${id}/`, {
+        fetch(path+`madrasatic/responsable_declarations/${id}/`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -256,7 +257,7 @@ export default function DetailDeclaration() {
           });
     },[]);
     const EnCoursDeTraitement=(()=>{
-        fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/${id}/`, {
+        fetch(path+`madrasatic/responsable_declarations/${id}/`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -271,7 +272,7 @@ export default function DetailDeclaration() {
     const ChangePage=((data)=>{
         setPageCourrente(data.selected+1);
         if(data.selected == 0){
-          fetch("http://127.0.0.1:8000/madrasatic/responsable_declarations/", {
+          fetch(path+"madrasatic/responsable_declarations/", {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
@@ -285,7 +286,7 @@ export default function DetailDeclaration() {
               setMyData(data.results);
             });
         }else{
-          fetch(`http://127.0.0.1:8000/madrasatic/responsable_declarations/?page=${data.selected + 1}`, {
+          fetch(path+`madrasatic/responsable_declarations/?page=${data.selected + 1}`, {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
@@ -306,7 +307,7 @@ export default function DetailDeclaration() {
       })
       const supprimerRapport=((val,e)=>{
         e.preventDefault(); 
-          fetch(`http://localhost:8000/madrasatic/draft_reports/${val}/`, {
+          fetch(path+`madrasatic/draft_reports/${val}/`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -322,7 +323,7 @@ export default function DetailDeclaration() {
       })
       const validerRapport=((val,e)=>{
         e.preventDefault();
-        fetch(`http://127.0.0.1:8000/madrasatic/draft_reports/${val}/`, {
+        fetch(path+`madrasatic/draft_reports/${val}/`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -335,7 +336,7 @@ export default function DetailDeclaration() {
               }
               return response.json();
             }).then(data =>{
-              fetch(`http://127.0.0.1:8000/madrasatic/draft_reports/${val}/`, {
+              fetch(path+`madrasatic/draft_reports/${val}/`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

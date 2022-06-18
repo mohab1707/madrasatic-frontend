@@ -14,8 +14,30 @@ export const AnnoncesEnregistrées =()=>{
     const [nombrePages,setNombresPages]=useState();
     const [nombre,setNombre]=useState("");
     const [pageCourrente,setPageCourrente]=useState();
+    const [utilisateur,setUtilisateur]=useState(false);
+    const [service,setService]=useState(false);
+    const path=sessionStorage.getItem("path");
     useEffect(()=>{
-      fetch("http://127.0.0.1:8000/madrasatic/savedannonces/", {
+      fetch(path+"madrasatic/user/", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization":`Token ${token}`
+      },
+    }).then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        if(data.role === "Président du club"){
+          setUtilisateur(true);
+        }else{
+          setService(true);
+        }
+      });
+    },[]);
+    useEffect(()=>{
+      fetch(path+"madrasatic/savedannonces/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -26,50 +48,15 @@ export const AnnoncesEnregistrées =()=>{
             return response.json();
           })
           .then((data) => {
-            setMyData(data.results);
-            setNombre(data.count);
-            setNombresPages(Math.ceil(data.count /5));
+            setMyData(data);
           });
     },[MyData])
     const complet =(e)=>{
       setIdRapport(e);
       setCompleter(true);
     }
-    const ChangePage=((data)=>{
-      console.log(data.selected);
-      setPageCourrente(data.selected+1);
-      if(data.selected == 0){
-        fetch("http://127.0.0.1:8000/madrasatic/draft_reports/", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "Authorization":`Token ${token}`
-          },
-        }).then((response) => {
-            return response.json();
-          })
-          .then((data) => {
-            setMyData(data.results);
-          });
-      }else{
-        fetch(`http://127.0.0.1:8000/madrasatic/draft_reports/?page=${data.selected + 1}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "Authorization":`Token ${token}`
-          },
-        }).then((response) => {
-            return response.json();
-          })
-          .then((data) => {
-            setMyData(data.results);
-          });
-      }
-    })
     const supprimerRapport=((idRapp)=>{
-        fetch(`http://localhost:8000/madrasatic/annoncedelete/${idRapp}/`, {
+        fetch(path+`madrasatic/annoncedelete/${idRapp}/`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -80,8 +67,9 @@ export const AnnoncesEnregistrées =()=>{
     })
     return(
     <MDBContainer >
-        {completer ? <Redirect to={`/ModifierAnnonceEnregistrée/${idRapport}`}/> :null}
-                    <div class="container d-flex justify-content-center">
+        {completer && service ? <Redirect to={`/ModifierAnnonceEnregistrée/${idRapport}`}/> :null}
+        {completer && utilisateur ? <Redirect to={`/ModifierMonAnnonceEnregistrée/${idRapport}`}/> :null}
+        <div class="container d-flex justify-content-center">
 
 <ul class="list-group mt-5 text-white">
 {MyData.map(rapport => (
@@ -98,31 +86,13 @@ export const AnnoncesEnregistrées =()=>{
         <h6 class="mb-0" style={{fontWeight:'bold'}}>{rapport.objet}</h6>
         <div class="about">
           <span><BsCalendar2Date style={{width :'8%',marginBottom:'3px',marginRight:'2px'}}/>
-            {rapport.pubDate.substring(
-                0,
-                rapport.pubDate.indexOf("T")
-            )}
+            {rapport.datedebut}
             </span>
-          <span>
-            <BiTime style={{width :'10%',marginBottom:'3px'}}/>
-            {rapport.pubDate.substring(
-                rapport.pubDate.indexOf("T") + 1,
-                rapport.pubDate.indexOf("T")+6
-            )}</span>
         </div>
         <div class="about">
           <span><BsCalendar2Date style={{width :'8%',marginBottom:'3px',marginRight:'2px'}}/>
-            {rapport.dateFin.substring(
-                0,
-                rapport.dateFin.indexOf("T")
-            )}
+            {rapport.dateFin}
             </span>
-          <span>
-            <BiTime style={{width :'10%',marginBottom:'3px'}}/>
-            {rapport.dateFin.substring(
-                rapport.dateFin.indexOf("T") + 1,
-                rapport.dateFin.indexOf("T")+6
-            )}</span>
         </div>
       </div>
     </div>
