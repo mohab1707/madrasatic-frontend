@@ -1,10 +1,9 @@
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect, useState } from 'react'
-import { MdSentimentSatisfied } from 'react-icons/md';
 import { Redirect, useParams } from "react-router-dom"
 import { MDBContainer } from 'mdb-react-ui-kit';
 import './Declaration.css'
-export const ModifierRapportEnregistrée =()=>{
+export const CompleterRapport =()=>{
     const [objet,setObjet]=useState("");
     const [service,setService]=useState("");
     const [idDeclaration,setIdDeclaration]=useState("")
@@ -28,7 +27,7 @@ export const ModifierRapportEnregistrée =()=>{
       .then((data) => {
         setService(data.id);
       });
-      fetch(path+`madrasatic/draft_reports/${idRapport}/`, {
+      fetch(path+`madrasatic/reports/${idRapport}/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -55,7 +54,7 @@ export const ModifierRapportEnregistrée =()=>{
       if( image !== null){
         form_data.append("image",image);
       }
-      fetch(path+`madrasatic/draft_reports/${idRapport}/`, {
+      fetch(path+`madrasatic/reports/${idRapport}/`, {
       method: "PUT",
       headers: {
         "Authorization":`Token ${token}`
@@ -89,7 +88,7 @@ export const ModifierRapportEnregistrée =()=>{
             if( image !== null){
               form_data.append("image",image);
             }
-            fetch(path+`madrasatic/draft_reports/${idRapport}/`, {
+            fetch(path+`madrasatic/reports/${idRapport}/`, {
                 method: "PUT",
                 headers: {
                   "Authorization":`Token ${token}`
@@ -102,22 +101,6 @@ export const ModifierRapportEnregistrée =()=>{
                 }
                 return response.json();
               })
-    })
-    const supprimerRapport=((e)=>{
-      e.preventDefault(); 
-        fetch(path+`madrasatic/draft_reports/${idRapport}/`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "Authorization":`Token ${token}`
-      },
-    }).then((response)=>{
-      if(response.ok)
-      {
-          setReussi(true);
-      }
-    })
     })
     return(
       <MDBContainer className='form'>
@@ -152,10 +135,8 @@ export const ModifierRapportEnregistrée =()=>{
             <tr>
             <td ><button onClick={saveRapport} style={{margin:'90px'}}>Enregistrer</button></td>
             <td ><button onClick={validateRapport}style={{margin:'90px'}}>Valider</button></td>
-            <td><button onClick={supprimerRapport}style={{margin:'90px'}}>Supprimer</button></td>
             </tr>
         </table>
-        
       </form>
     </div>
       </MDBContainer>

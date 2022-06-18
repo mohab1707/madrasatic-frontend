@@ -19,7 +19,9 @@ import {
     } from 'mdb-react-ui-kit';
     import { Redirect } from "react-router-dom"
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+import Pusher from 'pusher-js';
 export const Gestion_des_declarations = () => {
     const [showNavRight, setShowNavRight] = useState(false);
     const [reussi , setReussi ] = useState(false);
@@ -27,8 +29,9 @@ export const Gestion_des_declarations = () => {
     const [nom,setNom]=useState("");
     const [image,setImage]=useState(null);
     const token = sessionStorage.getItem("key");
+    const [isNotifated, setIsNotifated] = useState(false);
     useEffect(()=>{
-        fetch("http://127.0.0.1:8000/madrasatic/user/", {
+        fetch(path+"madrasatic/user/", {
           method: "GET",
           headers: { "Content-Type": "application/json",
           "Accept": "application/json",
@@ -39,7 +42,18 @@ export const Gestion_des_declarations = () => {
             setImage(data.img);
             setNom(data.username);
         })
-    },[])
+    },[]);
+    useEffect(()=>{
+          const pusher = new Pusher("718db103e05e52a72795", {
+            cluster: "eu",
+            authEndpoint: path+"madrasatic/pusher/auth",
+          });
+          var channel3 = pusher.subscribe("Declaration");
+          channel3.bind("Modification", function ({ message }) {
+            setIsNotifated(true);
+            return toast(message.title + message.body);
+          });
+    },[isNotifated])
     const deconnexion =(e) => {
         e.preventDefault();
         fetch(path+"madrasatic/logout/", {
@@ -60,6 +74,8 @@ export const Gestion_des_declarations = () => {
          {
             reussi? <Redirect to='/' /> : null
         }
+        <ToastContainer 
+        />
         <MDBNavbar expand='lg' light style={{backgroundColor:'#24344f'}} fixed='top'>
             <MDBContainer fluid>
             <MDBNavbarBrand href=''style={{color:'#ffffff'}}>{

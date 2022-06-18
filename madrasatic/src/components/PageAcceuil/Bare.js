@@ -34,8 +34,9 @@ export const Bare = () => {
     const [isNotifated, setIsNotifated] = useState(false);
     const [nom,setNom]=useState("");
     const [image,setImage]=useState(null);
+    const path=sessionStorage.getItem("path");
     useEffect(()=>{
-        fetch("http://127.0.0.1:8000/madrasatic/user/", {
+        fetch(path+"madrasatic/user/", {
           method: "GET",
           headers: { "Content-Type": "application/json",
           "Accept": "application/json",
@@ -48,7 +49,7 @@ export const Bare = () => {
         })
     },[])
     useEffect(()=>{
-        fetch("http://127.0.0.1:8000/madrasatic/user/", {
+        fetch(path+"madrasatic/user/", {
             method: "GET",
             headers: { "Content-Type": "application/json","Authorization":`Token ${token}`},
           }).then((response) => {
@@ -62,17 +63,13 @@ export const Bare = () => {
 
           const pusher = new Pusher("718db103e05e52a72795", {
             cluster: "eu",
-            authEndpoint: "http://127.0.0.1:8000/madrasatic/pusher/auth",
+            authEndpoint: path+"madrasatic/pusher/auth",
           });
           var channel = pusher.subscribe("Declaration");
           channel.bind("Demande complement", function ({ message }) {
             setIsNotifated(true);
             return toast(message.title + message.body);
             
-          });
-          channel.bind("Modification", function ({ message }) {
-            setIsNotifated(true);
-            return toast(message.title + message.body);
           });
           channel.bind("Rejet", function ({ message }) {
             setIsNotifated(true);
@@ -86,7 +83,7 @@ export const Bare = () => {
     },[isNotifated])
     const deconnexion =(e) => {
         e.preventDefault();
-        fetch("http://127.0.0.1:8000/madrasatic/logout/", {
+        fetch(path+"madrasatic/logout/", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
         }).then((response) => {
@@ -167,10 +164,9 @@ export const Bare = () => {
                             }
                             {
                                 chefClub ? <MDBDropdownItem>
-                                <MDBDropdownLink href='/MesAnnoncesEnregistrées'>Mes annonces enregistrées</MDBDropdownLink>
+                                <MDBDropdownLink href='/Notifications'>Notifications</MDBDropdownLink>
                             </MDBDropdownItem> : null
                             }
-                            
                             <MDBDropdownItem>
                                 {/* <MDBDropdownLink href='/deconnexion'>Se déconnecter</MDBDropdownLink> */}
                                 <MDBBtn className='text-white' color='dark' onClick={deconnexion} style={{marginLeft:'25px'}}>Se déconnecter</MDBBtn>

@@ -18,6 +18,7 @@ export const ListeDeclarationEnvoyee = () => {
     const [catégories,setCatégories]=useState ([]);
     const path=sessionStorage.getItem("path");
     const [id,setId]=useState();
+    
     const detail=((id)=>{
         setId(id);
         setConsulter(true);

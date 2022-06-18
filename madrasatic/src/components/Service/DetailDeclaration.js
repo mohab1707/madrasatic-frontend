@@ -50,6 +50,7 @@ export default function DetailDeclaration() {
     const [Consulter,setConsulter]=useState(false);
     const [nombreRapports,setNombreRapports]=useState("");
     const path=sessionStorage.getItem("path");
+    const [completerRapport,setCompleterRapport]=useState(false);
     useEffect(()=>{
       fetch(path+"madrasatic/draft_reports/", {
           method: "GET",
@@ -305,6 +306,10 @@ export default function DetailDeclaration() {
         setModifier(true);
         setIdRapport(val)
       })
+      const CompleterRapportIncomplet=((val)=>{
+        setCompleterRapport(true);
+        setIdRapport(val);
+      })
       const supprimerRapport=((val,e)=>{
         e.preventDefault(); 
           fetch(path+`madrasatic/draft_reports/${val}/`, {
@@ -361,6 +366,7 @@ export default function DetailDeclaration() {
         {reussi ? <Redirect to="/HomeService"/> : null}
         {rediger ? <Redirect to={`/AjoutRapport/${id}`}/> : null}
         {modifier ? <Redirect to={`/ModifierRapportEnregistré/${idRapport}`}/> :null}
+        {completerRapport ? <Redirect to={`/CompleterRapport/${idRapport}`}/> :null}
 <div class="mt-5" style={{backgroundColor:'white'}}>
       <div class="d-style btn btn-brc-tp border-2 bgc-white btn-outline-blue btn-h-outline-blue btn-a-outline-blue w-100 my-2 py-3 shadow-sm">
         <div class="row align-items-center">
@@ -452,6 +458,13 @@ export default function DetailDeclaration() {
                   <div class="card-body">
                     <h5 class="card-title">{item.title}</h5>
                     <p class="card-text">{item.desc}</p>
+                    {
+                      item.status === 'incomplet' ? <MDBRow>
+                      <MDBCol >
+                        <a href="" class="btn btn-dark" style={{width:"130px"}} onClick={()=>CompleterRapportIncomplet(item.id)}>Modifier</a>
+                      </MDBCol>
+                    </MDBRow> : null 
+                    }
                   </div>
               </div>
             ))

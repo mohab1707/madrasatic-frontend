@@ -7,7 +7,7 @@ import {
 } from 'mdb-react-ui-kit';
 export const NavBar = () => {
   useEffect(()=>{
-    const path = "http://127.0.0.1:8000/";
+    const path = "http://192.168.43.193:8000/";
     sessionStorage.setItem("path", path);
   },[]);
   return (

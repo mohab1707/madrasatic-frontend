@@ -130,6 +130,9 @@ export const BareService = () => {
                                 <MDBDropdownLink href='/AnnoncesEnregistrées'>Mes annonces enregistrées</MDBDropdownLink>
                             </MDBDropdownItem>
                             <MDBDropdownItem>
+                                <MDBDropdownLink href='/ListeNotifications'>Notifications</MDBDropdownLink>
+                            </MDBDropdownItem>
+                            <MDBDropdownItem>
                                 <MDBBtn className='text-white' color='dark' onClick={deconnexion}>Se déconnecter</MDBBtn>
                             </MDBDropdownItem>
                         </MDBDropdownMenu>

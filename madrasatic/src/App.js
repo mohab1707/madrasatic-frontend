@@ -52,6 +52,9 @@ import UsersStats from './components/Admin/Gestion_des_comptes/UserStat/UserStat
 import { AnnoncesPubliées } from './components/Responsable/AnnoncesPubliées';
 import { RejeterAnnonce } from './components/Responsable/RejeterAnnonce';
 import { MesAnnoncesRejetées } from './components/Annonces/MesAnnoncesRejetées';
+import { ChefClubNotifications } from './components/Notifications/ChefClubNotifications';
+import { NotificationsService } from './components/Notifications/NotificationsService';
+import { CompleterRapport } from './components/Rapports/CompleterRapport';
 export default function App() {
 
   return (
@@ -636,6 +639,39 @@ export default function App() {
           <div className='ajoutdeclarationclass'>
           <br></br>
             <MesAnnoncesRejetées />
+            <br /><br />
+          </div>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'0%' , left: '0', bottom: '0', width: '100%'}}>
+            &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
+          </div>
+        </Route>
+        < Route exact path="/Notifications">
+          <Bare />
+          <div className='ajoutdeclarationclass'>
+          <br></br>
+            <ChefClubNotifications />
+            <br /><br />
+          </div>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'0%' , left: '0', bottom: '0', width: '100%'}}>
+            &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
+          </div>
+        </Route>
+        < Route exact path='/ListeNotifications'>
+          <BareService />
+          <div className='ajoutdeclarationclass'>
+          <br></br>
+            <NotificationsService/>
+            <br /><br />
+          </div>
+          <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'0%' , left: '0', bottom: '0', width: '100%'}}>
+            &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
+          </div>
+        </Route>
+        < Route exact path="/CompleterRapport/:id">
+        <BareService />
+          <div className='ajoutdeclarationclass'>
+          <br></br>
+            <CompleterRapport/>
             <br /><br />
           </div>
           <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop:'0%' , left: '0', bottom: '0', width: '100%'}}>
