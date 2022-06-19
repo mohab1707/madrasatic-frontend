@@ -535,6 +535,7 @@ export default function DeclarationEnvoyee() {
                                                            <Table responsive hover>
                                                                <tbody>
                                                                <tr className="unread" class="candidates-list">
+                                                                    <td><input  type="checkbox" onChange={()=>{ajouterSupprimer(dec)}}/></td>
                                                                    <td class="title" style={{width :'300px'}}><img  style={{width: '200px',height:'150px',borderRadius:'8px'}} src={dec.image} alt="Image du signalement"/></td>
                                                                    <td style={{width:'400px'}}>
                                                                        <div class="candidate-list-details">
