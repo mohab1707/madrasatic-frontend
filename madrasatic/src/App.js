@@ -657,7 +657,7 @@ export default function App() {
             &copy; {new Date().getFullYear()} Copyright:{'Futuristic Community'}
           </div>
         </Route>
-        < Route exact path="/CompleterRapport/:id">
+        < Route exact path="/CompleterRapport/:idRapport">
         <BareService />
           <div className='ajoutdeclarationclass'>
           <br></br>

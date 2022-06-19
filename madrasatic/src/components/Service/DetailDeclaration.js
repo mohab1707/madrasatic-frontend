@@ -470,7 +470,7 @@ export default function DetailDeclaration() {
                     {
                       item.status === 'incomplet' ? <MDBRow>
                       <MDBCol >
-                        <a href="" class="btn btn-dark" style={{width:"130px"}} onClick={()=>CompleterRapportIncomplet(item.id)}>Modifier</a>
+                        <a href="" class="btn btn-dark" style={{width:"130px"}} onClick={()=>CompleterRapportIncomplet(item.id)}>Completer</a>
                       </MDBCol>
                     </MDBRow> : null 
                     }
