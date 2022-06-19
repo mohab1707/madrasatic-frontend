@@ -535,11 +535,8 @@ export default function DeclarationEnvoyee() {
                                                            <Table responsive hover>
                                                                <tbody>
                                                                <tr className="unread" class="candidates-list">
-                                                                    <td>
-                                                                      <input class="form-check-input" type="checkbox" onChange={()=>{ajouterSupprimer(dec)}} />
-                                                                    </td>
-                                                                   <td class="title"><img  style={{width: '50px'}} src={dec.image} alt="Image du signalement"/></td>
-                                                                   <td>
+                                                                   <td class="title" style={{width :'300px'}}><img  style={{width: '200px',height:'150px',borderRadius:'8px'}} src={dec.image} alt="Image du signalement"/></td>
+                                                                   <td style={{width:'400px'}}>
                                                                        <div class="candidate-list-details">
                                                                          <div class="candidate-list-info">
                                                                            <div class="candidate-list-title">
@@ -555,7 +552,7 @@ export default function DeclarationEnvoyee() {
                                                                          </div>
                                                                        </div>
                                                                    </td>
-                                                                   <td>
+                                                                   <td style={{width :'200px'}}>
                                                                       {
                                                                        catégories.filter(cat => cat.id === dec.catégorie).map(
                                                                          categ =>(
@@ -563,8 +560,16 @@ export default function DeclarationEnvoyee() {
                                                                          )
                                                                        )
                                                                       }
+                                                                       { 
+                                                                         dec.priorité == 1 ? <h6><i className="fa fa-circle f-10 m-r-15"/>Priorité : Urgente</h6> : null
+                                                                       }
+                                                                       { 
+                                                                         dec.priorité == 2 ? <h6><i className="fa fa-circle f-10 m-r-15"/>Priorité : etat critique</h6> : null
+                                                                       }
+                                                                       { 
+                                                                         dec.priorité == 3 ? <h6><i className="fa fa-circle f-10 m-r-15"/>Priorité : etat normal</h6> : null
+                                                                       }
                                                                        
-                                                                       <h6><i className="fa fa-circle f-10 m-r-15"/>Priorité :{dec.priorité}</h6>
                                                                    </td>
                                                                     
                                                                </tr>

@@ -382,7 +382,7 @@ export default function DetailDeclaration() {
           <div class="col-12 col-md-4">
               {/* <img src={image} alt='Une image' style={{width: '300px',borderRadius:'8px'}}/> */}
               <div class="card" style={{width: "300px",marginLeft:'20px'}}>
-                  <img src={image} alt='Une image' style={{borderRadius:'8px'}}/>
+                  <img src={image} alt='Une image' style={{borderRadius:'8px',height:'150px',borderRadius:'8px'}}/>
                   <div class="card-body">
                     <p class="card-text">{corps}</p>
                   </div>

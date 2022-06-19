@@ -75,7 +75,7 @@ export const ResponsableNotifications = () => {
   return (
     <>
     {
-            notification.filter(item => item.responsable === id).map(notif=>(
+            notification.filter(item => item.responsable === id).filter( item => item.user === null).map(notif=>(
                 <div class="container d-flex justify-content-center">
                     <div class="card mt-5 p-3">
                     <div class="media">

@@ -31,7 +31,7 @@ export const NouvelleAnnonce =()=>{
         setAuteur(data.id);
         if(data.role === "Président du club"){
           setUtilisateur(true);
-        }else{
+        }else if(data.role === 'Service'){
           setService(true);
         }
       });
